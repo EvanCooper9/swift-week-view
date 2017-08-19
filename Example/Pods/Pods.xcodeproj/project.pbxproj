@@ -1,0 +1,979 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0159917C43FE070A619A553D8DE2FE06 /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944EED141C798E806BC83CA9937AB100 /* Commons.swift */; };
+		10BF1FE2029C7EC3C02AF594EE9F513E /* Pods-SwiftWeekViewTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 006EC585CBEC295776312BDFAD45E1B2 /* Pods-SwiftWeekViewTests-dummy.m */; };
+		121A2419E56744B4EA84ADC1C9A54E78 /* DateComponents+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA80DB5F03E236A7C5DE123925D716BF /* DateComponents+Extension.swift */; };
+		12AE674844B37FB3C94EE437AD015EC2 /* SwiftDate-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FB15E5E964645BBCB3CFA7F387027EFD /* SwiftDate-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		15EB905C1806B5B7E66D95A954C98FF6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		17E7C42C4B20E60F4A674AFCCF7DD507 /* Date+Compare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABEA0B98ADABCD0ECB208A78E475611 /* Date+Compare.swift */; };
+		1F02647B989DB5886A39CB94595D0949 /* DateInRegion+Compare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9762C61489A06C5F499AEF85FA5720A4 /* DateInRegion+Compare.swift */; };
+		23078D1F27F73BC7A59CF6BCD2957C86 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		315C82AC8AF75A2BD96AE4E6FC854144 /* ISO8601Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2378A6B05249E8949A34229C2D1E1EB /* ISO8601Parser.swift */; };
+		35F6CC2AC300BC3380F6230E6646457D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		367D29CF805720CD01AD483016E4D4F3 /* TimeZoneName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C20B79154A9E94216283B3F7C86F80 /* TimeZoneName.swift */; };
+		3FD7130F1DDE9075D9F2F4816EEB286B /* DateInRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D4BE5A41BABB5539C7FA7A6317A8490 /* DateInRegion.swift */; };
+		501E39989B36AC85CDCC41AB5F24A1AD /* Pods-SwiftWeekViewTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B6C3BF6BDD99184D6AF391BF0C3CD696 /* Pods-SwiftWeekViewTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5E49CAABF6348C8B86E21234678BC777 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		66DD9D5771D1B04CA43C9AC71DE06EBD /* Pods-SwiftWeekView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 590A722925AFC4C89E81E6A223819889 /* Pods-SwiftWeekView-dummy.m */; };
+		6A947B8E66BA0F123788802A784B42F9 /* Pods-SwiftWeekView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2052A91E7E764B6907C692B5C3CC47A8 /* Pods-SwiftWeekView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6BE1C900B9AB84A1E4D931DD94E7E979 /* DateInRegion+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BB3D476341FB8AD3890C9FADEF4460 /* DateInRegion+Formatter.swift */; };
+		6D8A97676FCC738F10FBA498BB0637C5 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE904828499C4F130D9EC8282B7812FF /* Region.swift */; };
+		719D3734D35B04DB38246549E4CD0AD4 /* TimeInterval+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56398670EDD024B306C28F5A8FAA0019 /* TimeInterval+Extensions.swift */; };
+		7516A16DAD9269C9D375675A825151EF /* Pods-SwiftWeekViewUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 99BEFADA2EA103A4B99C9B72D49BD38D /* Pods-SwiftWeekViewUITests-dummy.m */; };
+		75EF9D750E09533D110CF5E13602F795 /* Date+Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC63DD4D8F3EE82AC30988CE9B69BBD /* Date+Formatter.swift */; };
+		7D39CBE874E6ABF0A995705A6E78DFA8 /* DateInRegion+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89AEF3D7159F8100AFD24E2E7F7F1E7F /* DateInRegion+Components.swift */; };
+		7DB47848AB945C57E0898F64431C8FCC /* ISO8601DateTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C352D700FB26F6BE0576E49B9C23D540 /* ISO8601DateTimeFormatter.swift */; };
+		805D3CAFF8F3A8EBD56E2474472837BE /* DateTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C648A17F2B90E498C6513958ECD467F /* DateTimeInterval.swift */; };
+		823186CCB0D849E76F00B026A4B86DD2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A899A9F57C42FBFF007749697EB0F09E /* Extensions.swift */; };
+		98A0438CD65A22AA41E071B2E2739871 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43FC739081797800F9BE5CA1B165F052 /* Localization.swift */; };
+		99CB62F423E2B48766A9FC454EFC2ACF /* CalendarName.swift in Sources */ = {isa = PBXBuildFile; fileRef = C346113E4D3D15BCE98A7FFA5E4CA69E /* CalendarName.swift */; };
+		9A974F100D4F38BC00ABC279EC9E502B /* DateInRegion+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20928BBD5D38EE092A5DB691C7A17A60 /* DateInRegion+Math.swift */; };
+		9CF42C274E43CB90EEE05158AF560480 /* SwiftDate-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7FA0EF990C783333DFEB7CC1233863 /* SwiftDate-dummy.m */; };
+		9FD81174C599E9C2710D1EB2866F7CF9 /* Date+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAA1BE54D908C1DEDA4FD30B876F3E1 /* Date+Components.swift */; };
+		C80373978965625ED70EDB31B87D8610 /* DateInRegionFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724FFDB5FAE69BD3C272DE2D2B1C3397 /* DateInRegionFormatter.swift */; };
+		CABCFE9A8B1020357CD2C5B849C2FD59 /* DOTNETDateTimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04662FCF6EA9D1E5FBF7283F1480A2FB /* DOTNETDateTimeFormatter.swift */; };
+		D5AE104EF592C0F98118D6022AFDDA46 /* SwiftDate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 210FF74B32230340A14AFBCA859FB2BA /* SwiftDate.bundle */; };
+		DA252C14DFB7D50B023AFAF90B6E070B /* Date+Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDA963C492F4E06F78DBDF8B23B2C43A /* Date+Math.swift */; };
+		EA3627CFBD305D46C27D2F4B7983B739 /* LocaleName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1522AFA0539CDE5D7BC15E5671630327 /* LocaleName.swift */; };
+		FFCE09886CC91B1042D5D634A39DFE0F /* Pods-SwiftWeekViewUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 25D14E3F3A7FF2BA1C6774D1140F8BC4 /* Pods-SwiftWeekViewUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9F796545BD026958B610D4ABF72E7593 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 987D345A2870206DE475A54622ED3424;
+			remoteInfo = SwiftDate;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		006EC585CBEC295776312BDFAD45E1B2 /* Pods-SwiftWeekViewTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SwiftWeekViewTests-dummy.m"; sourceTree = "<group>"; };
+		04662FCF6EA9D1E5FBF7283F1480A2FB /* DOTNETDateTimeFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DOTNETDateTimeFormatter.swift; path = Sources/SwiftDate/DOTNETDateTimeFormatter.swift; sourceTree = "<group>"; };
+		0DAA1BE54D908C1DEDA4FD30B876F3E1 /* Date+Components.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Date+Components.swift"; path = "Sources/SwiftDate/Date+Components.swift"; sourceTree = "<group>"; };
+		1522AFA0539CDE5D7BC15E5671630327 /* LocaleName.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocaleName.swift; path = Sources/SwiftDate/LocaleName.swift; sourceTree = "<group>"; };
+		16D57343624FA9BDFC83137D07DEB476 /* Pods-SwiftWeekView-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftWeekView-acknowledgements.markdown"; sourceTree = "<group>"; };
+		2052A91E7E764B6907C692B5C3CC47A8 /* Pods-SwiftWeekView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SwiftWeekView-umbrella.h"; sourceTree = "<group>"; };
+		20928BBD5D38EE092A5DB691C7A17A60 /* DateInRegion+Math.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DateInRegion+Math.swift"; path = "Sources/SwiftDate/DateInRegion+Math.swift"; sourceTree = "<group>"; };
+		210FF74B32230340A14AFBCA859FB2BA /* SwiftDate.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SwiftDate.bundle; path = Sources/SwiftDate/SwiftDate.bundle; sourceTree = "<group>"; };
+		238D145618778A11D250BA380E82F7E9 /* SwiftDate.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = SwiftDate.modulemap; sourceTree = "<group>"; };
+		25D14E3F3A7FF2BA1C6774D1140F8BC4 /* Pods-SwiftWeekViewUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SwiftWeekViewUITests-umbrella.h"; sourceTree = "<group>"; };
+		26E068B047F882D44D636091443CE814 /* SwiftDate.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftDate.xcconfig; sourceTree = "<group>"; };
+		2B6CED32B19E4E6CAC611110342E57E3 /* SwiftDate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftDate.framework; path = SwiftDate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E8C1A55B33C1AE6D74886F4FAA728D2 /* Pods-SwiftWeekViewUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftWeekViewUITests-frameworks.sh"; sourceTree = "<group>"; };
+		30BDBF97167F8195BDC9914E438AC295 /* Pods-SwiftWeekView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftWeekView.release.xcconfig"; sourceTree = "<group>"; };
+		38CDDB8F9AA8940E59763491A0858E6F /* Pods-SwiftWeekView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftWeekView.debug.xcconfig"; sourceTree = "<group>"; };
+		3AFD7A82AEB8C965911DFCD9035CE54F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3B554D330F497F16006EA8301DE931AC /* Pods-SwiftWeekView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SwiftWeekView.modulemap"; sourceTree = "<group>"; };
+		3E099470667FF90A0099904076620093 /* Pods-SwiftWeekViewUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftWeekViewUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		43FC739081797800F9BE5CA1B165F052 /* Localization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Localization.swift; path = Sources/SwiftDate/Localization.swift; sourceTree = "<group>"; };
+		4A662FC45A047EB278E0E534DD244462 /* Pods-SwiftWeekViewTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SwiftWeekViewTests.modulemap"; sourceTree = "<group>"; };
+		56398670EDD024B306C28F5A8FAA0019 /* TimeInterval+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "TimeInterval+Extensions.swift"; path = "Sources/SwiftDate/TimeInterval+Extensions.swift"; sourceTree = "<group>"; };
+		590A722925AFC4C89E81E6A223819889 /* Pods-SwiftWeekView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SwiftWeekView-dummy.m"; sourceTree = "<group>"; };
+		5B171F325EE4C0CB0D5B8DC59C08FF13 /* Pods-SwiftWeekViewUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftWeekViewUITests-resources.sh"; sourceTree = "<group>"; };
+		5B7FA0EF990C783333DFEB7CC1233863 /* SwiftDate-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftDate-dummy.m"; sourceTree = "<group>"; };
+		6578AF3093B75D00A25EFDB5C64003AD /* Pods-SwiftWeekViewTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftWeekViewTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		66AFAD8B23D54259720ABD42C29997F7 /* Pods-SwiftWeekViewUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftWeekViewUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		6D4BE5A41BABB5539C7FA7A6317A8490 /* DateInRegion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateInRegion.swift; path = Sources/SwiftDate/DateInRegion.swift; sourceTree = "<group>"; };
+		6F4C7BDB78D68E5B480B2745159722F3 /* SwiftDate-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftDate-prefix.pch"; sourceTree = "<group>"; };
+		724FFDB5FAE69BD3C272DE2D2B1C3397 /* DateInRegionFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateInRegionFormatter.swift; path = Sources/SwiftDate/DateInRegionFormatter.swift; sourceTree = "<group>"; };
+		76D63044D4CB2EE7C3A9247361BE86B4 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7ABEA0B98ADABCD0ECB208A78E475611 /* Date+Compare.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Date+Compare.swift"; path = "Sources/SwiftDate/Date+Compare.swift"; sourceTree = "<group>"; };
+		7AF2C3DA606512B43470CEF9D9A30F8F /* Pods-SwiftWeekViewUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftWeekViewUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		7BA0CAEA7553DD9D10746D5B359A34A3 /* Pods-SwiftWeekViewTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-SwiftWeekViewTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7CCA2C4A9AD307FA82C0111A1AB2CCD7 /* Pods_SwiftWeekViewUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SwiftWeekViewUITests.framework; path = "Pods-SwiftWeekViewUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F2CE187DCE50256EDC74C04A36355F8 /* Pods-SwiftWeekView-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftWeekView-frameworks.sh"; sourceTree = "<group>"; };
+		82127F67BC30009787D5BCEBCD1AC9BA /* Pods-SwiftWeekViewTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftWeekViewTests.release.xcconfig"; sourceTree = "<group>"; };
+		89AEF3D7159F8100AFD24E2E7F7F1E7F /* DateInRegion+Components.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DateInRegion+Components.swift"; path = "Sources/SwiftDate/DateInRegion+Components.swift"; sourceTree = "<group>"; };
+		8C648A17F2B90E498C6513958ECD467F /* DateTimeInterval.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateTimeInterval.swift; path = Sources/SwiftDate/DateTimeInterval.swift; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		944EED141C798E806BC83CA9937AB100 /* Commons.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Commons.swift; path = Sources/SwiftDate/Commons.swift; sourceTree = "<group>"; };
+		9762C61489A06C5F499AEF85FA5720A4 /* DateInRegion+Compare.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DateInRegion+Compare.swift"; path = "Sources/SwiftDate/DateInRegion+Compare.swift"; sourceTree = "<group>"; };
+		986CA7472CE6BEA9817EAE06A905B73C /* Pods-SwiftWeekViewUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SwiftWeekViewUITests.release.xcconfig"; sourceTree = "<group>"; };
+		99A7CD85EE2899E8C38E4F8E3D9592A2 /* Pods-SwiftWeekViewTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftWeekViewTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		99BEFADA2EA103A4B99C9B72D49BD38D /* Pods-SwiftWeekViewUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SwiftWeekViewUITests-dummy.m"; sourceTree = "<group>"; };
+		A183B50E5B31C563DCC0C98A55CCC0F9 /* Pods_SwiftWeekViewTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SwiftWeekViewTests.framework; path = "Pods-SwiftWeekViewTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7AA279C856F96BC2847D253DCE18583 /* Pods_SwiftWeekView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_SwiftWeekView.framework; path = "Pods-SwiftWeekView.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A899A9F57C42FBFF007749697EB0F09E /* Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Sources/SwiftDate/Extensions.swift; sourceTree = "<group>"; };
+		B6C3BF6BDD99184D6AF391BF0C3CD696 /* Pods-SwiftWeekViewTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SwiftWeekViewTests-umbrella.h"; sourceTree = "<group>"; };
+		BAD41F808421A9E7AA06ED0CC98B670F /* Pods-SwiftWeekViewTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftWeekViewTests-resources.sh"; sourceTree = "<group>"; };
+		BE904828499C4F130D9EC8282B7812FF /* Region.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Region.swift; path = Sources/SwiftDate/Region.swift; sourceTree = "<group>"; };
+		C346113E4D3D15BCE98A7FFA5E4CA69E /* CalendarName.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CalendarName.swift; path = Sources/SwiftDate/CalendarName.swift; sourceTree = "<group>"; };
+		C352D700FB26F6BE0576E49B9C23D540 /* ISO8601DateTimeFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISO8601DateTimeFormatter.swift; path = Sources/SwiftDate/ISO8601DateTimeFormatter.swift; sourceTree = "<group>"; };
+		C7BB3D476341FB8AD3890C9FADEF4460 /* DateInRegion+Formatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DateInRegion+Formatter.swift"; path = "Sources/SwiftDate/DateInRegion+Formatter.swift"; sourceTree = "<group>"; };
+		C8B690B424E7E52AF78D9C0A09BF37D2 /* Pods-SwiftWeekViewTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftWeekViewTests-frameworks.sh"; sourceTree = "<group>"; };
+		CC4A690B6AD35B679627FEEEC1F156EA /* Pods-SwiftWeekView-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-SwiftWeekView-acknowledgements.plist"; sourceTree = "<group>"; };
+		CDA963C492F4E06F78DBDF8B23B2C43A /* Date+Math.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Date+Math.swift"; path = "Sources/SwiftDate/Date+Math.swift"; sourceTree = "<group>"; };
+		CE3A99027D16723FFDC58C25D64F3F1B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA80DB5F03E236A7C5DE123925D716BF /* DateComponents+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DateComponents+Extension.swift"; path = "Sources/SwiftDate/DateComponents+Extension.swift"; sourceTree = "<group>"; };
+		DDAA295B83FC0F6A5D88F7B7614F5E45 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2378A6B05249E8949A34229C2D1E1EB /* ISO8601Parser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISO8601Parser.swift; path = Sources/SwiftDate/ISO8601Parser.swift; sourceTree = "<group>"; };
+		E3C20B79154A9E94216283B3F7C86F80 /* TimeZoneName.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TimeZoneName.swift; path = Sources/SwiftDate/TimeZoneName.swift; sourceTree = "<group>"; };
+		F036CB02F947DB235E8B6D713A99210B /* Pods-SwiftWeekViewUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-SwiftWeekViewUITests.modulemap"; sourceTree = "<group>"; };
+		F298C98C6DA05F5903DE3B83A7B8E837 /* Pods-SwiftWeekView-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-SwiftWeekView-resources.sh"; sourceTree = "<group>"; };
+		FB15E5E964645BBCB3CFA7F387027EFD /* SwiftDate-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftDate-umbrella.h"; sourceTree = "<group>"; };
+		FBC63DD4D8F3EE82AC30988CE9B69BBD /* Date+Formatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Date+Formatter.swift"; path = "Sources/SwiftDate/Date+Formatter.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4ACBFEA7F3E15C577AA02EDF068A4DF4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23078D1F27F73BC7A59CF6BCD2957C86 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BD2AEBFE90D73A67A2391B820FEBAEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15EB905C1806B5B7E66D95A954C98FF6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9261A3D605F037B4406734B6DC002D42 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35F6CC2AC300BC3380F6230E6646457D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F5DF416415E9DBAE37034BE71F60FF05 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E49CAABF6348C8B86E21234678BC777 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0DD248D673698F5D77CC79A77835DFD8 /* Pods-SwiftWeekViewUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DDAA295B83FC0F6A5D88F7B7614F5E45 /* Info.plist */,
+				F036CB02F947DB235E8B6D713A99210B /* Pods-SwiftWeekViewUITests.modulemap */,
+				66AFAD8B23D54259720ABD42C29997F7 /* Pods-SwiftWeekViewUITests-acknowledgements.markdown */,
+				3E099470667FF90A0099904076620093 /* Pods-SwiftWeekViewUITests-acknowledgements.plist */,
+				99BEFADA2EA103A4B99C9B72D49BD38D /* Pods-SwiftWeekViewUITests-dummy.m */,
+				2E8C1A55B33C1AE6D74886F4FAA728D2 /* Pods-SwiftWeekViewUITests-frameworks.sh */,
+				5B171F325EE4C0CB0D5B8DC59C08FF13 /* Pods-SwiftWeekViewUITests-resources.sh */,
+				25D14E3F3A7FF2BA1C6774D1140F8BC4 /* Pods-SwiftWeekViewUITests-umbrella.h */,
+				7AF2C3DA606512B43470CEF9D9A30F8F /* Pods-SwiftWeekViewUITests.debug.xcconfig */,
+				986CA7472CE6BEA9817EAE06A905B73C /* Pods-SwiftWeekViewUITests.release.xcconfig */,
+			);
+			name = "Pods-SwiftWeekViewUITests";
+			path = "Target Support Files/Pods-SwiftWeekViewUITests";
+			sourceTree = "<group>";
+		};
+		55090E1826F593A1459402A19665091A /* SwiftDate */ = {
+			isa = PBXGroup;
+			children = (
+				C346113E4D3D15BCE98A7FFA5E4CA69E /* CalendarName.swift */,
+				944EED141C798E806BC83CA9937AB100 /* Commons.swift */,
+				7ABEA0B98ADABCD0ECB208A78E475611 /* Date+Compare.swift */,
+				0DAA1BE54D908C1DEDA4FD30B876F3E1 /* Date+Components.swift */,
+				FBC63DD4D8F3EE82AC30988CE9B69BBD /* Date+Formatter.swift */,
+				CDA963C492F4E06F78DBDF8B23B2C43A /* Date+Math.swift */,
+				DA80DB5F03E236A7C5DE123925D716BF /* DateComponents+Extension.swift */,
+				6D4BE5A41BABB5539C7FA7A6317A8490 /* DateInRegion.swift */,
+				9762C61489A06C5F499AEF85FA5720A4 /* DateInRegion+Compare.swift */,
+				89AEF3D7159F8100AFD24E2E7F7F1E7F /* DateInRegion+Components.swift */,
+				C7BB3D476341FB8AD3890C9FADEF4460 /* DateInRegion+Formatter.swift */,
+				20928BBD5D38EE092A5DB691C7A17A60 /* DateInRegion+Math.swift */,
+				724FFDB5FAE69BD3C272DE2D2B1C3397 /* DateInRegionFormatter.swift */,
+				8C648A17F2B90E498C6513958ECD467F /* DateTimeInterval.swift */,
+				04662FCF6EA9D1E5FBF7283F1480A2FB /* DOTNETDateTimeFormatter.swift */,
+				A899A9F57C42FBFF007749697EB0F09E /* Extensions.swift */,
+				C352D700FB26F6BE0576E49B9C23D540 /* ISO8601DateTimeFormatter.swift */,
+				E2378A6B05249E8949A34229C2D1E1EB /* ISO8601Parser.swift */,
+				1522AFA0539CDE5D7BC15E5671630327 /* LocaleName.swift */,
+				43FC739081797800F9BE5CA1B165F052 /* Localization.swift */,
+				BE904828499C4F130D9EC8282B7812FF /* Region.swift */,
+				56398670EDD024B306C28F5A8FAA0019 /* TimeInterval+Extensions.swift */,
+				E3C20B79154A9E94216283B3F7C86F80 /* TimeZoneName.swift */,
+				5591D2D11583B1EBECB2808B6059AAD3 /* Resources */,
+				EE47BDB62136FDFC824E4A93AD0289C3 /* Support Files */,
+			);
+			name = SwiftDate;
+			path = SwiftDate;
+			sourceTree = "<group>";
+		};
+		5591D2D11583B1EBECB2808B6059AAD3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				210FF74B32230340A14AFBCA859FB2BA /* SwiftDate.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				E023FCAE18232E368DEF6ACE0BA1258E /* Pods */,
+				E4EF9C5E1C3FB91CE4A4DAC18A1C4959 /* Products */,
+				E6460218AFD80C1210809463D320DD31 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D35AF013A5F0BAD4F32504907A52519E /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BD22E3B5E59A8DFB0709245B3C26F76F /* Pods-SwiftWeekViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				CE3A99027D16723FFDC58C25D64F3F1B /* Info.plist */,
+				4A662FC45A047EB278E0E534DD244462 /* Pods-SwiftWeekViewTests.modulemap */,
+				7BA0CAEA7553DD9D10746D5B359A34A3 /* Pods-SwiftWeekViewTests-acknowledgements.markdown */,
+				99A7CD85EE2899E8C38E4F8E3D9592A2 /* Pods-SwiftWeekViewTests-acknowledgements.plist */,
+				006EC585CBEC295776312BDFAD45E1B2 /* Pods-SwiftWeekViewTests-dummy.m */,
+				C8B690B424E7E52AF78D9C0A09BF37D2 /* Pods-SwiftWeekViewTests-frameworks.sh */,
+				BAD41F808421A9E7AA06ED0CC98B670F /* Pods-SwiftWeekViewTests-resources.sh */,
+				B6C3BF6BDD99184D6AF391BF0C3CD696 /* Pods-SwiftWeekViewTests-umbrella.h */,
+				6578AF3093B75D00A25EFDB5C64003AD /* Pods-SwiftWeekViewTests.debug.xcconfig */,
+				82127F67BC30009787D5BCEBCD1AC9BA /* Pods-SwiftWeekViewTests.release.xcconfig */,
+			);
+			name = "Pods-SwiftWeekViewTests";
+			path = "Target Support Files/Pods-SwiftWeekViewTests";
+			sourceTree = "<group>";
+		};
+		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		D39C095A4655C67270DE72F3DF897159 /* Pods-SwiftWeekView */ = {
+			isa = PBXGroup;
+			children = (
+				76D63044D4CB2EE7C3A9247361BE86B4 /* Info.plist */,
+				3B554D330F497F16006EA8301DE931AC /* Pods-SwiftWeekView.modulemap */,
+				16D57343624FA9BDFC83137D07DEB476 /* Pods-SwiftWeekView-acknowledgements.markdown */,
+				CC4A690B6AD35B679627FEEEC1F156EA /* Pods-SwiftWeekView-acknowledgements.plist */,
+				590A722925AFC4C89E81E6A223819889 /* Pods-SwiftWeekView-dummy.m */,
+				7F2CE187DCE50256EDC74C04A36355F8 /* Pods-SwiftWeekView-frameworks.sh */,
+				F298C98C6DA05F5903DE3B83A7B8E837 /* Pods-SwiftWeekView-resources.sh */,
+				2052A91E7E764B6907C692B5C3CC47A8 /* Pods-SwiftWeekView-umbrella.h */,
+				38CDDB8F9AA8940E59763491A0858E6F /* Pods-SwiftWeekView.debug.xcconfig */,
+				30BDBF97167F8195BDC9914E438AC295 /* Pods-SwiftWeekView.release.xcconfig */,
+			);
+			name = "Pods-SwiftWeekView";
+			path = "Target Support Files/Pods-SwiftWeekView";
+			sourceTree = "<group>";
+		};
+		E023FCAE18232E368DEF6ACE0BA1258E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				55090E1826F593A1459402A19665091A /* SwiftDate */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E4EF9C5E1C3FB91CE4A4DAC18A1C4959 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A7AA279C856F96BC2847D253DCE18583 /* Pods_SwiftWeekView.framework */,
+				A183B50E5B31C563DCC0C98A55CCC0F9 /* Pods_SwiftWeekViewTests.framework */,
+				7CCA2C4A9AD307FA82C0111A1AB2CCD7 /* Pods_SwiftWeekViewUITests.framework */,
+				2B6CED32B19E4E6CAC611110342E57E3 /* SwiftDate.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E6460218AFD80C1210809463D320DD31 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D39C095A4655C67270DE72F3DF897159 /* Pods-SwiftWeekView */,
+				BD22E3B5E59A8DFB0709245B3C26F76F /* Pods-SwiftWeekViewTests */,
+				0DD248D673698F5D77CC79A77835DFD8 /* Pods-SwiftWeekViewUITests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		EE47BDB62136FDFC824E4A93AD0289C3 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3AFD7A82AEB8C965911DFCD9035CE54F /* Info.plist */,
+				238D145618778A11D250BA380E82F7E9 /* SwiftDate.modulemap */,
+				26E068B047F882D44D636091443CE814 /* SwiftDate.xcconfig */,
+				5B7FA0EF990C783333DFEB7CC1233863 /* SwiftDate-dummy.m */,
+				6F4C7BDB78D68E5B480B2745159722F3 /* SwiftDate-prefix.pch */,
+				FB15E5E964645BBCB3CFA7F387027EFD /* SwiftDate-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SwiftDate";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		0BFB0F094F0A4759D5A55D57FFCAB1BE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFCE09886CC91B1042D5D634A39DFE0F /* Pods-SwiftWeekViewUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0BFD0ADE1881F4BAE985ECEA3CCEE922 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				501E39989B36AC85CDCC41AB5F24A1AD /* Pods-SwiftWeekViewTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB2BB4BACEA51CD39722B18895B8D7BC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				12AE674844B37FB3C94EE437AD015EC2 /* SwiftDate-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B860AE9A8BEB52FFDD3C6D05F97EB5B7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A947B8E66BA0F123788802A784B42F9 /* Pods-SwiftWeekView-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2439A30D7762D527D62A2AD1464C475B /* Pods-SwiftWeekViewTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EE14A027B2764C1551AC3B827010DDF7 /* Build configuration list for PBXNativeTarget "Pods-SwiftWeekViewTests" */;
+			buildPhases = (
+				9A1DA9664AF93729FF357D5CFC122261 /* Sources */,
+				4ACBFEA7F3E15C577AA02EDF068A4DF4 /* Frameworks */,
+				0BFD0ADE1881F4BAE985ECEA3CCEE922 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-SwiftWeekViewTests";
+			productName = "Pods-SwiftWeekViewTests";
+			productReference = A183B50E5B31C563DCC0C98A55CCC0F9 /* Pods_SwiftWeekViewTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		35AE740EA9EF0039C16F81BF00BCD65E /* Pods-SwiftWeekViewUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D513E4B9DEA90091A6454F522FD4C3C /* Build configuration list for PBXNativeTarget "Pods-SwiftWeekViewUITests" */;
+			buildPhases = (
+				225FFC8F85829631B2277232BFB9B647 /* Sources */,
+				F5DF416415E9DBAE37034BE71F60FF05 /* Frameworks */,
+				0BFB0F094F0A4759D5A55D57FFCAB1BE /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-SwiftWeekViewUITests";
+			productName = "Pods-SwiftWeekViewUITests";
+			productReference = 7CCA2C4A9AD307FA82C0111A1AB2CCD7 /* Pods_SwiftWeekViewUITests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		62AD705FDF9ED242CF20DB73A6FFC7D4 /* Pods-SwiftWeekView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32FD75C5D741BF9EEE8669FBB85528BD /* Build configuration list for PBXNativeTarget "Pods-SwiftWeekView" */;
+			buildPhases = (
+				E5A6C7607EEACF1EFC1E63223D80D511 /* Sources */,
+				5BD2AEBFE90D73A67A2391B820FEBAEC /* Frameworks */,
+				B860AE9A8BEB52FFDD3C6D05F97EB5B7 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BC91D890FA58975E3963641A4BCEB8A4 /* PBXTargetDependency */,
+			);
+			name = "Pods-SwiftWeekView";
+			productName = "Pods-SwiftWeekView";
+			productReference = A7AA279C856F96BC2847D253DCE18583 /* Pods_SwiftWeekView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		987D345A2870206DE475A54622ED3424 /* SwiftDate */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 739752BD4EC0863B881EFC055F07DB02 /* Build configuration list for PBXNativeTarget "SwiftDate" */;
+			buildPhases = (
+				DF3B0A60B8D9AC98824664FEF8483357 /* Sources */,
+				9261A3D605F037B4406734B6DC002D42 /* Frameworks */,
+				4BF776263E511973DB7BD1ACF9844302 /* Resources */,
+				AB2BB4BACEA51CD39722B18895B8D7BC /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftDate;
+			productName = SwiftDate;
+			productReference = 2B6CED32B19E4E6CAC611110342E57E3 /* SwiftDate.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = E4EF9C5E1C3FB91CE4A4DAC18A1C4959 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				62AD705FDF9ED242CF20DB73A6FFC7D4 /* Pods-SwiftWeekView */,
+				2439A30D7762D527D62A2AD1464C475B /* Pods-SwiftWeekViewTests */,
+				35AE740EA9EF0039C16F81BF00BCD65E /* Pods-SwiftWeekViewUITests */,
+				987D345A2870206DE475A54622ED3424 /* SwiftDate */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4BF776263E511973DB7BD1ACF9844302 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5AE104EF592C0F98118D6022AFDDA46 /* SwiftDate.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		225FFC8F85829631B2277232BFB9B647 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7516A16DAD9269C9D375675A825151EF /* Pods-SwiftWeekViewUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A1DA9664AF93729FF357D5CFC122261 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10BF1FE2029C7EC3C02AF594EE9F513E /* Pods-SwiftWeekViewTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DF3B0A60B8D9AC98824664FEF8483357 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99CB62F423E2B48766A9FC454EFC2ACF /* CalendarName.swift in Sources */,
+				0159917C43FE070A619A553D8DE2FE06 /* Commons.swift in Sources */,
+				17E7C42C4B20E60F4A674AFCCF7DD507 /* Date+Compare.swift in Sources */,
+				9FD81174C599E9C2710D1EB2866F7CF9 /* Date+Components.swift in Sources */,
+				75EF9D750E09533D110CF5E13602F795 /* Date+Formatter.swift in Sources */,
+				DA252C14DFB7D50B023AFAF90B6E070B /* Date+Math.swift in Sources */,
+				121A2419E56744B4EA84ADC1C9A54E78 /* DateComponents+Extension.swift in Sources */,
+				1F02647B989DB5886A39CB94595D0949 /* DateInRegion+Compare.swift in Sources */,
+				7D39CBE874E6ABF0A995705A6E78DFA8 /* DateInRegion+Components.swift in Sources */,
+				6BE1C900B9AB84A1E4D931DD94E7E979 /* DateInRegion+Formatter.swift in Sources */,
+				9A974F100D4F38BC00ABC279EC9E502B /* DateInRegion+Math.swift in Sources */,
+				3FD7130F1DDE9075D9F2F4816EEB286B /* DateInRegion.swift in Sources */,
+				C80373978965625ED70EDB31B87D8610 /* DateInRegionFormatter.swift in Sources */,
+				805D3CAFF8F3A8EBD56E2474472837BE /* DateTimeInterval.swift in Sources */,
+				CABCFE9A8B1020357CD2C5B849C2FD59 /* DOTNETDateTimeFormatter.swift in Sources */,
+				823186CCB0D849E76F00B026A4B86DD2 /* Extensions.swift in Sources */,
+				7DB47848AB945C57E0898F64431C8FCC /* ISO8601DateTimeFormatter.swift in Sources */,
+				315C82AC8AF75A2BD96AE4E6FC854144 /* ISO8601Parser.swift in Sources */,
+				EA3627CFBD305D46C27D2F4B7983B739 /* LocaleName.swift in Sources */,
+				98A0438CD65A22AA41E071B2E2739871 /* Localization.swift in Sources */,
+				6D8A97676FCC738F10FBA498BB0637C5 /* Region.swift in Sources */,
+				9CF42C274E43CB90EEE05158AF560480 /* SwiftDate-dummy.m in Sources */,
+				719D3734D35B04DB38246549E4CD0AD4 /* TimeInterval+Extensions.swift in Sources */,
+				367D29CF805720CD01AD483016E4D4F3 /* TimeZoneName.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5A6C7607EEACF1EFC1E63223D80D511 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66DD9D5771D1B04CA43C9AC71DE06EBD /* Pods-SwiftWeekView-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BC91D890FA58975E3963641A4BCEB8A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftDate;
+			target = 987D345A2870206DE475A54622ED3424 /* SwiftDate */;
+			targetProxy = 9F796545BD026958B610D4ABF72E7593 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3C38621F0C5BBDE18489DE6A3376859E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 986CA7472CE6BEA9817EAE06A905B73C /* Pods-SwiftWeekViewUITests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SwiftWeekViewUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SwiftWeekViewUITests/Pods-SwiftWeekViewUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SwiftWeekViewUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		593865C0A8470879F6270E451A2E0CEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38CDDB8F9AA8940E59763491A0858E6F /* Pods-SwiftWeekView.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SwiftWeekView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SwiftWeekView/Pods-SwiftWeekView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SwiftWeekView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6152DB34996F1A15D7572DA8D8621A0D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6578AF3093B75D00A25EFDB5C64003AD /* Pods-SwiftWeekViewTests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SwiftWeekViewTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SwiftWeekViewTests/Pods-SwiftWeekViewTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SwiftWeekViewTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		707B86CFB21B645E37109F39754D4051 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		79171F91F80FDF3FA4464CFC70F01358 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 30BDBF97167F8195BDC9914E438AC295 /* Pods-SwiftWeekView.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SwiftWeekView/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SwiftWeekView/Pods-SwiftWeekView.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SwiftWeekView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		8F7F354B61321A53B26B6CF33A6D3945 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82127F67BC30009787D5BCEBCD1AC9BA /* Pods-SwiftWeekViewTests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SwiftWeekViewTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SwiftWeekViewTests/Pods-SwiftWeekViewTests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SwiftWeekViewTests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		A1C0E3468109DC040EF7B2899C371933 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 26E068B047F882D44D636091443CE814 /* SwiftDate.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftDate/SwiftDate-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftDate/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftDate/SwiftDate.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = SwiftDate;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D33C460210307D9BF819D4DFBCFA7CCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AF2C3DA606512B43470CEF9D9A30F8F /* Pods-SwiftWeekViewUITests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "Target Support Files/Pods-SwiftWeekViewUITests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-SwiftWeekViewUITests/Pods-SwiftWeekViewUITests.modulemap";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_SwiftWeekViewUITests;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E9936DA59A3D75F7A1F2E5F9DD942D55 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 26E068B047F882D44D636091443CE814 /* SwiftDate.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftDate/SwiftDate-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftDate/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/SwiftDate/SwiftDate.modulemap";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = SwiftDate;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		EF26A3C5B6EDA309192C6025F703DE0A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF26A3C5B6EDA309192C6025F703DE0A /* Debug */,
+				707B86CFB21B645E37109F39754D4051 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32FD75C5D741BF9EEE8669FBB85528BD /* Build configuration list for PBXNativeTarget "Pods-SwiftWeekView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				593865C0A8470879F6270E451A2E0CEE /* Debug */,
+				79171F91F80FDF3FA4464CFC70F01358 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D513E4B9DEA90091A6454F522FD4C3C /* Build configuration list for PBXNativeTarget "Pods-SwiftWeekViewUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D33C460210307D9BF819D4DFBCFA7CCA /* Debug */,
+				3C38621F0C5BBDE18489DE6A3376859E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		739752BD4EC0863B881EFC055F07DB02 /* Build configuration list for PBXNativeTarget "SwiftDate" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1C0E3468109DC040EF7B2899C371933 /* Debug */,
+				E9936DA59A3D75F7A1F2E5F9DD942D55 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EE14A027B2764C1551AC3B827010DDF7 /* Build configuration list for PBXNativeTarget "Pods-SwiftWeekViewTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6152DB34996F1A15D7572DA8D8621A0D /* Debug */,
+				8F7F354B61321A53B26B6CF33A6D3945 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}

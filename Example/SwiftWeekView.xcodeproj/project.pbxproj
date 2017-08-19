@@ -1,0 +1,766 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7CB862861F470AA0008F23EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862851F470AA0008F23EC /* AppDelegate.swift */; };
+		7CB862881F470AA0008F23EC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862871F470AA0008F23EC /* ViewController.swift */; };
+		7CB8628B1F470AA0008F23EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CB862891F470AA0008F23EC /* Main.storyboard */; };
+		7CB8628D1F470AA0008F23EC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7CB8628C1F470AA0008F23EC /* Assets.xcassets */; };
+		7CB862901F470AA0008F23EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CB8628E1F470AA0008F23EC /* LaunchScreen.storyboard */; };
+		7CB8629B1F470AA1008F23EC /* SwiftWeekViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB8629A1F470AA1008F23EC /* SwiftWeekViewTests.swift */; };
+		7CB862A61F470AA1008F23EC /* SwiftWeekViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862A51F470AA1008F23EC /* SwiftWeekViewUITests.swift */; };
+		7CB862B91F470B05008F23EC /* CalendarWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862B41F470B05008F23EC /* CalendarWeekView.swift */; };
+		7CB862BA1F470B05008F23EC /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862B51F470B05008F23EC /* Common.swift */; };
+		7CB862BB1F470B05008F23EC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862B61F470B05008F23EC /* Extensions.swift */; };
+		7CB862BC1F470B05008F23EC /* UIInfiniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862B71F470B05008F23EC /* UIInfiniteScrollView.swift */; };
+		7CB862BD1F470B05008F23EC /* WeekViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862B81F470B05008F23EC /* WeekViewEvent.swift */; };
+		903C522D0590048A76F3C6E4 /* Pods_SwiftWeekView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027101263AED3E1CD1535FDA /* Pods_SwiftWeekView.framework */; };
+		CFEA98EE18493FBC798431B1 /* Pods_SwiftWeekViewTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EABEDAF34C0404BCCB8FC935 /* Pods_SwiftWeekViewTests.framework */; };
+		FBA547C06F91A2ACC2D8A6BF /* Pods_SwiftWeekViewUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D6AB2FD7EF9CA98C9AAD752 /* Pods_SwiftWeekViewUITests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7CB862971F470AA1008F23EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7CB8627A1F470AA0008F23EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7CB862811F470AA0008F23EC;
+			remoteInfo = SwiftWeekView;
+		};
+		7CB862A21F470AA1008F23EC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7CB8627A1F470AA0008F23EC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7CB862811F470AA0008F23EC;
+			remoteInfo = SwiftWeekView;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		027101263AED3E1CD1535FDA /* Pods_SwiftWeekView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftWeekView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		13973A491FECE96760C066A4 /* Pods-SwiftWeekViewTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekViewTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekViewTests/Pods-SwiftWeekViewTests.debug.xcconfig"; sourceTree = "<group>"; };
+		270DF6917162F69C656CCA85 /* Pods-SwiftWeekViewUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekViewUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekViewUITests/Pods-SwiftWeekViewUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5D6AB2FD7EF9CA98C9AAD752 /* Pods_SwiftWeekViewUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftWeekViewUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		698585844DFFAF7BBD1705EA /* Pods-SwiftWeekView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekView/Pods-SwiftWeekView.debug.xcconfig"; sourceTree = "<group>"; };
+		7CB862821F470AA0008F23EC /* SwiftWeekView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftWeekView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB862851F470AA0008F23EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7CB862871F470AA0008F23EC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7CB8628A1F470AA0008F23EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7CB8628C1F470AA0008F23EC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7CB8628F1F470AA0008F23EC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7CB862911F470AA0008F23EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CB862961F470AA1008F23EC /* SwiftWeekViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftWeekViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB8629A1F470AA1008F23EC /* SwiftWeekViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftWeekViewTests.swift; sourceTree = "<group>"; };
+		7CB8629C1F470AA1008F23EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CB862A11F470AA1008F23EC /* SwiftWeekViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftWeekViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CB862A51F470AA1008F23EC /* SwiftWeekViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftWeekViewUITests.swift; sourceTree = "<group>"; };
+		7CB862A71F470AA1008F23EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CB862B41F470B05008F23EC /* CalendarWeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarWeekView.swift; sourceTree = "<group>"; };
+		7CB862B51F470B05008F23EC /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		7CB862B61F470B05008F23EC /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		7CB862B71F470B05008F23EC /* UIInfiniteScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIInfiniteScrollView.swift; sourceTree = "<group>"; };
+		7CB862B81F470B05008F23EC /* WeekViewEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekViewEvent.swift; sourceTree = "<group>"; };
+		AF04E5E425237E267C336888 /* Pods-SwiftWeekViewTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekViewTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekViewTests/Pods-SwiftWeekViewTests.release.xcconfig"; sourceTree = "<group>"; };
+		E15FF7D9F19FD62BDB7CA286 /* Pods-SwiftWeekViewUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekViewUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekViewUITests/Pods-SwiftWeekViewUITests.release.xcconfig"; sourceTree = "<group>"; };
+		EABEDAF34C0404BCCB8FC935 /* Pods_SwiftWeekViewTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftWeekViewTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB0B7DBE70538F3329D95A0F /* Pods-SwiftWeekView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekView.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekView/Pods-SwiftWeekView.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7CB8627F1F470AA0008F23EC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				903C522D0590048A76F3C6E4 /* Pods_SwiftWeekView.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB862931F470AA1008F23EC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CFEA98EE18493FBC798431B1 /* Pods_SwiftWeekViewTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB8629E1F470AA1008F23EC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBA547C06F91A2ACC2D8A6BF /* Pods_SwiftWeekViewUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		694ED5A08FB07C5EED6E1573 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				698585844DFFAF7BBD1705EA /* Pods-SwiftWeekView.debug.xcconfig */,
+				EB0B7DBE70538F3329D95A0F /* Pods-SwiftWeekView.release.xcconfig */,
+				13973A491FECE96760C066A4 /* Pods-SwiftWeekViewTests.debug.xcconfig */,
+				AF04E5E425237E267C336888 /* Pods-SwiftWeekViewTests.release.xcconfig */,
+				270DF6917162F69C656CCA85 /* Pods-SwiftWeekViewUITests.debug.xcconfig */,
+				E15FF7D9F19FD62BDB7CA286 /* Pods-SwiftWeekViewUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7722C1EB21EA5BCB0A78C251 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				027101263AED3E1CD1535FDA /* Pods_SwiftWeekView.framework */,
+				EABEDAF34C0404BCCB8FC935 /* Pods_SwiftWeekViewTests.framework */,
+				5D6AB2FD7EF9CA98C9AAD752 /* Pods_SwiftWeekViewUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7CB862791F470AA0008F23EC = {
+			isa = PBXGroup;
+			children = (
+				7CB862841F470AA0008F23EC /* SwiftWeekView */,
+				7CB862991F470AA1008F23EC /* SwiftWeekViewTests */,
+				7CB862A41F470AA1008F23EC /* SwiftWeekViewUITests */,
+				7CB862831F470AA0008F23EC /* Products */,
+				694ED5A08FB07C5EED6E1573 /* Pods */,
+				7722C1EB21EA5BCB0A78C251 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7CB862831F470AA0008F23EC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7CB862821F470AA0008F23EC /* SwiftWeekView.app */,
+				7CB862961F470AA1008F23EC /* SwiftWeekViewTests.xctest */,
+				7CB862A11F470AA1008F23EC /* SwiftWeekViewUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7CB862841F470AA0008F23EC /* SwiftWeekView */ = {
+			isa = PBXGroup;
+			children = (
+				7CB862851F470AA0008F23EC /* AppDelegate.swift */,
+				7CB862871F470AA0008F23EC /* ViewController.swift */,
+				7CB862891F470AA0008F23EC /* Main.storyboard */,
+				7CB8628C1F470AA0008F23EC /* Assets.xcassets */,
+				7CB8628E1F470AA0008F23EC /* LaunchScreen.storyboard */,
+				7CB862911F470AA0008F23EC /* Info.plist */,
+				7CB862B31F470ABE008F23EC /* Source */,
+			);
+			path = SwiftWeekView;
+			sourceTree = "<group>";
+		};
+		7CB862991F470AA1008F23EC /* SwiftWeekViewTests */ = {
+			isa = PBXGroup;
+			children = (
+				7CB8629A1F470AA1008F23EC /* SwiftWeekViewTests.swift */,
+				7CB8629C1F470AA1008F23EC /* Info.plist */,
+			);
+			path = SwiftWeekViewTests;
+			sourceTree = "<group>";
+		};
+		7CB862A41F470AA1008F23EC /* SwiftWeekViewUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7CB862A51F470AA1008F23EC /* SwiftWeekViewUITests.swift */,
+				7CB862A71F470AA1008F23EC /* Info.plist */,
+			);
+			path = SwiftWeekViewUITests;
+			sourceTree = "<group>";
+		};
+		7CB862B31F470ABE008F23EC /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				7CB862B41F470B05008F23EC /* CalendarWeekView.swift */,
+				7CB862B51F470B05008F23EC /* Common.swift */,
+				7CB862B61F470B05008F23EC /* Extensions.swift */,
+				7CB862B71F470B05008F23EC /* UIInfiniteScrollView.swift */,
+				7CB862B81F470B05008F23EC /* WeekViewEvent.swift */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7CB862811F470AA0008F23EC /* SwiftWeekView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CB862AA1F470AA1008F23EC /* Build configuration list for PBXNativeTarget "SwiftWeekView" */;
+			buildPhases = (
+				D3C3E0A94B993CA4364417A1 /* [CP] Check Pods Manifest.lock */,
+				7CB8627E1F470AA0008F23EC /* Sources */,
+				7CB8627F1F470AA0008F23EC /* Frameworks */,
+				7CB862801F470AA0008F23EC /* Resources */,
+				945DFC106E0E4E0E95A2D0BB /* [CP] Embed Pods Frameworks */,
+				FE26D5BF054CC58234ADC910 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftWeekView;
+			productName = SwiftWeekView;
+			productReference = 7CB862821F470AA0008F23EC /* SwiftWeekView.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7CB862951F470AA1008F23EC /* SwiftWeekViewTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CB862AD1F470AA1008F23EC /* Build configuration list for PBXNativeTarget "SwiftWeekViewTests" */;
+			buildPhases = (
+				3D845660B90B9AA9A66664CE /* [CP] Check Pods Manifest.lock */,
+				7CB862921F470AA1008F23EC /* Sources */,
+				7CB862931F470AA1008F23EC /* Frameworks */,
+				7CB862941F470AA1008F23EC /* Resources */,
+				4758C957BB732BC859CD46F3 /* [CP] Embed Pods Frameworks */,
+				818B9097BD2CEA216BA03C8E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7CB862981F470AA1008F23EC /* PBXTargetDependency */,
+			);
+			name = SwiftWeekViewTests;
+			productName = SwiftWeekViewTests;
+			productReference = 7CB862961F470AA1008F23EC /* SwiftWeekViewTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7CB862A01F470AA1008F23EC /* SwiftWeekViewUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CB862B01F470AA1008F23EC /* Build configuration list for PBXNativeTarget "SwiftWeekViewUITests" */;
+			buildPhases = (
+				C9C7043B6F5A67E2DF124E5F /* [CP] Check Pods Manifest.lock */,
+				7CB8629D1F470AA1008F23EC /* Sources */,
+				7CB8629E1F470AA1008F23EC /* Frameworks */,
+				7CB8629F1F470AA1008F23EC /* Resources */,
+				AB372D1256B8F93113F0AD19 /* [CP] Embed Pods Frameworks */,
+				2C2284FE59206C09880D78BA /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7CB862A31F470AA1008F23EC /* PBXTargetDependency */,
+			);
+			name = SwiftWeekViewUITests;
+			productName = SwiftWeekViewUITests;
+			productReference = 7CB862A11F470AA1008F23EC /* SwiftWeekViewUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7CB8627A1F470AA0008F23EC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Evan Cooper";
+				TargetAttributes = {
+					7CB862811F470AA0008F23EC = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+					};
+					7CB862951F470AA1008F23EC = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 7CB862811F470AA0008F23EC;
+					};
+					7CB862A01F470AA1008F23EC = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 7CB862811F470AA0008F23EC;
+					};
+				};
+			};
+			buildConfigurationList = 7CB8627D1F470AA0008F23EC /* Build configuration list for PBXProject "SwiftWeekView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7CB862791F470AA0008F23EC;
+			productRefGroup = 7CB862831F470AA0008F23EC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7CB862811F470AA0008F23EC /* SwiftWeekView */,
+				7CB862951F470AA1008F23EC /* SwiftWeekViewTests */,
+				7CB862A01F470AA1008F23EC /* SwiftWeekViewUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7CB862801F470AA0008F23EC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CB862901F470AA0008F23EC /* LaunchScreen.storyboard in Resources */,
+				7CB8628D1F470AA0008F23EC /* Assets.xcassets in Resources */,
+				7CB8628B1F470AA0008F23EC /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB862941F470AA1008F23EC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB8629F1F470AA1008F23EC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2C2284FE59206C09880D78BA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftWeekViewUITests/Pods-SwiftWeekViewUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3D845660B90B9AA9A66664CE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftWeekViewTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4758C957BB732BC859CD46F3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftWeekViewTests/Pods-SwiftWeekViewTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		818B9097BD2CEA216BA03C8E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftWeekViewTests/Pods-SwiftWeekViewTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		945DFC106E0E4E0E95A2D0BB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftWeekView/Pods-SwiftWeekView-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftWeekView/Pods-SwiftWeekView-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB372D1256B8F93113F0AD19 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftWeekViewUITests/Pods-SwiftWeekViewUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C9C7043B6F5A67E2DF124E5F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftWeekViewUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D3C3E0A94B993CA4364417A1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftWeekView-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE26D5BF054CC58234ADC910 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftWeekView/Pods-SwiftWeekView-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7CB8627E1F470AA0008F23EC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CB862BB1F470B05008F23EC /* Extensions.swift in Sources */,
+				7CB862BA1F470B05008F23EC /* Common.swift in Sources */,
+				7CB862BD1F470B05008F23EC /* WeekViewEvent.swift in Sources */,
+				7CB862B91F470B05008F23EC /* CalendarWeekView.swift in Sources */,
+				7CB862881F470AA0008F23EC /* ViewController.swift in Sources */,
+				7CB862861F470AA0008F23EC /* AppDelegate.swift in Sources */,
+				7CB862BC1F470B05008F23EC /* UIInfiniteScrollView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB862921F470AA1008F23EC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CB8629B1F470AA1008F23EC /* SwiftWeekViewTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB8629D1F470AA1008F23EC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CB862A61F470AA1008F23EC /* SwiftWeekViewUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7CB862981F470AA1008F23EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7CB862811F470AA0008F23EC /* SwiftWeekView */;
+			targetProxy = 7CB862971F470AA1008F23EC /* PBXContainerItemProxy */;
+		};
+		7CB862A31F470AA1008F23EC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7CB862811F470AA0008F23EC /* SwiftWeekView */;
+			targetProxy = 7CB862A21F470AA1008F23EC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7CB862891F470AA0008F23EC /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7CB8628A1F470AA0008F23EC /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7CB8628E1F470AA0008F23EC /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7CB8628F1F470AA0008F23EC /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7CB862A81F470AA1008F23EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7CB862A91F470AA1008F23EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7CB862AB1F470AA1008F23EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 698585844DFFAF7BBD1705EA /* Pods-SwiftWeekView.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SwiftWeekView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = evancooper.SwiftWeekView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		7CB862AC1F470AA1008F23EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB0B7DBE70538F3329D95A0F /* Pods-SwiftWeekView.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = SwiftWeekView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = evancooper.SwiftWeekView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		7CB862AE1F470AA1008F23EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13973A491FECE96760C066A4 /* Pods-SwiftWeekViewTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SwiftWeekViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = evancooper.SwiftWeekViewTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftWeekView.app/SwiftWeekView";
+			};
+			name = Debug;
+		};
+		7CB862AF1F470AA1008F23EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AF04E5E425237E267C336888 /* Pods-SwiftWeekViewTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = SwiftWeekViewTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = evancooper.SwiftWeekViewTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftWeekView.app/SwiftWeekView";
+			};
+			name = Release;
+		};
+		7CB862B11F470AA1008F23EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 270DF6917162F69C656CCA85 /* Pods-SwiftWeekViewUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = SwiftWeekViewUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = evancooper.SwiftWeekViewUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = SwiftWeekView;
+			};
+			name = Debug;
+		};
+		7CB862B21F470AA1008F23EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E15FF7D9F19FD62BDB7CA286 /* Pods-SwiftWeekViewUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				INFOPLIST_FILE = SwiftWeekViewUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = evancooper.SwiftWeekViewUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = SwiftWeekView;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7CB8627D1F470AA0008F23EC /* Build configuration list for PBXProject "SwiftWeekView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CB862A81F470AA1008F23EC /* Debug */,
+				7CB862A91F470AA1008F23EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CB862AA1F470AA1008F23EC /* Build configuration list for PBXNativeTarget "SwiftWeekView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CB862AB1F470AA1008F23EC /* Debug */,
+				7CB862AC1F470AA1008F23EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CB862AD1F470AA1008F23EC /* Build configuration list for PBXNativeTarget "SwiftWeekViewTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CB862AE1F470AA1008F23EC /* Debug */,
+				7CB862AF1F470AA1008F23EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CB862B01F470AA1008F23EC /* Build configuration list for PBXNativeTarget "SwiftWeekViewUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CB862B11F470AA1008F23EC /* Debug */,
+				7CB862B21F470AA1008F23EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7CB8627A1F470AA0008F23EC /* Project object */;
+}

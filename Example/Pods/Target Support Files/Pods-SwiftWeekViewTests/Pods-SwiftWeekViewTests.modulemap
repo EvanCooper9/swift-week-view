@@ -1,0 +1,6 @@
+framework module Pods_SwiftWeekViewTests {
+  umbrella header "Pods-SwiftWeekViewTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

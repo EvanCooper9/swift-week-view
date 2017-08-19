@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'SwiftWeekView' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for SwiftWeekView
+  pod 'SwiftDate', '~> 4.0'
+
+  target 'SwiftWeekViewTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'SwiftWeekViewUITests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
