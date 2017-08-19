@@ -13,14 +13,15 @@ An iOS calendar library for displaying calendar events in a week view.
 ## Usage
 1. Download source & install dependencies
 
-2. Create some subclass of `CalendarWeekView`'s delegate for creating events, `EventGenerator`. Override the `generateEvents(date: DateInRegion) -> [WeekViewEvent]` function. This function should return a list of `WeekViewEvent`s specific to the day of `date`. See [here](malcommac.github.io/SwiftDate/manipulate_dates.html#dateatunit) for [SwiftDate](https://github.com/malcommac/SwiftDate) documentation on creating date objects at specific times. Currently, events rely on a [24-hour_clock](https://en.wikipedia.org/wiki/24-hour_clock).
+2. Create some subclass of `CalendarWeekView`'s delegate for creating events, `EventGenerator`. Override the `generateEvents(date: DateInRegion) -> [WeekViewEvent]` function. This function should return a list of `WeekViewEvent`s specific to the day of `date`. See [here](malcommac.github.io/SwiftDate/manipulate_dates.html#dateatunit) for [SwiftDate](https://github.com/malcommac/SwiftDate) documentation on creating date objects at specific times. Currently, events rely on a [24-hour clock](https://en.wikipedia.org/wiki/24-hour_clock).
 
    ```Swift
    class EG: CalendarWeekView.EventGenerator {
        override func generateEvents(date: DateInRegion) -> [WeekViewEvent] {
+       	   // create a WeekViewEvent for the day of date
            let start = date.atTime(hour: 12, minute: 0, second: 0)!
            let end = date.atTime(hour: 13, minute: 0, second: 0)!
-           let eventA: WeekViewEvent = WeekViewEvent(title: "Lunch", startDate: start, endDate: end)
+           let event: WeekViewEvent = WeekViewEvent(title: "Lunch", startDate: start, endDate: end)
            return [event]
        }
    }

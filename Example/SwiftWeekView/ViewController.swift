@@ -11,20 +11,11 @@ import SwiftDate
 
 class EG: CalendarWeekView.EventGenerator {
     override func generateEvents(date: DateInRegion) -> [WeekViewEvent] {
-        let start = date.atTime(hour: (date.day % 5) + 9, minute: 15, second: 0)!
-        let end = date.atTime(hour: start.hour + (date.day % 3) + 1, minute: 30, second: 0)!
-
-        let eventA: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)A", startDate: start, endDate: end, color: UIColor.red)
-        let eventB: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)B", startDate: start + 30.minutes, endDate: end + 45.minutes, color: UIColor.purple)
-        let eventC: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)C", startDate: eventA.getEnd() + 30.minutes, endDate: eventA.getEnd() + 1.hour, color: UIColor.orange)
-        
-        if (date.day % 3 == 0) {
-            return [eventA, eventB]
-        } else if (date.day % 3 == 1) {
-            return [eventA, eventC]
-        }
-        
-        return [eventA]
+        // create a WeekViewEvent for the day of date
+        let start = date.atTime(hour: 12, minute: 0, second: 0)!
+        let end = date.atTime(hour: 13, minute: 0, second: 0)!
+        let event: WeekViewEvent = WeekViewEvent(title: "Lunch", startDate: start, endDate: end)
+        return [event]
     }
 }
 
