@@ -1,14 +1,15 @@
 # Swift-Week-View
-A calendar library for displaying calendar events in a week view.
+An iOS calendar library for displaying calendar events in a week view.
 
 <p align="center">
-	<img src="Media/screen1.png">
-	<img src="Media/screen2.mov">
+	<img src="Media/screen1.png" width="20%" height="auto">
+	<img src="Media/screen2.gif" width="20%" height="auto">
 </p> 
 
 ## Features
 - See calendar events in a week view
 - Infinite horizontal scrolling
+- Snaps to closest day after scrolling
 
 ## Usage
 1. Download source & install dependencies
