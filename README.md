@@ -2,8 +2,7 @@
 An iOS calendar library for displaying calendar events in a week view.
 
 <p align="center">
-	<img src="Media/screen1.png" width="20%" height="auto">
-	<img src="Media/screen2.gif" width="20%" height="auto">
+	<img src="Media/screen2.gif" width="30%" height="auto">
 </p> 
 
 ## Features
@@ -39,4 +38,4 @@ An iOS calendar library for displaying calendar events in a week view.
 - [UIInfiniteScrollView](https://github.com/EvanCooper9/swift-infinite-uiscrollview) - already included in source
 
 ## Example
-See the included example for basic implementation. Make sure to open `CalendarWeekView.xcworkspace` for it to properly woork with CocoaPods.
+See the included example for basic implementation. Make sure to open `CalendarWeekView.xcworkspace` for it to work properly with CocoaPods.
