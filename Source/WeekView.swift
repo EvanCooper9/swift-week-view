@@ -16,13 +16,15 @@ class WeekView: UIView {
     private var scrollView: UIInfiniteScrollView!
     private var viewCreator: UIInfiniteScrollView.ViewCreator!
     
-    var startHour: Int = 9
-    var endHour: Int = 17
+    private var startHour: Int!
+    private var endHour: Int!
     
-    var colorTheme: Theme!
+    private var colorTheme: Theme!
     var font: UIFont!
     
     var headerHeight: CGFloat!
+    
+    func getScrollView() -> UIInfiniteScrollView { return self.scrollView }
     
     // Interface class meant to be subclassed for the generateEvents funtion
     class EventGenerator {
@@ -155,7 +157,7 @@ class WeekView: UIView {
      - eventGenerator: an instance of an EventGenerator that overrides the generateEvents function
      - visibleDays: an instance of a ViewCreator subclass that overrides the createViewSet method
      */
-    func commonInit(frame: CGRect, eventGenerator: EventGenerator, visibleDays: Int) {
+    func commonInit(frame: CGRect, eventGenerator: EventGenerator, visibleDays: Int, startHour: Int = 9, endHour: Int = 17) {
         self.colorTheme = LightTheme()
         self.font = UIFont.init(descriptor: UIFontDescriptor(), size: 10)
         
@@ -163,6 +165,8 @@ class WeekView: UIView {
         self.initDate = DateInRegion()
         self.initDate = self.initDate - visibleDays.days
         self.visibleDays = visibleDays
+        self.startHour = startHour
+        self.endHour = endHour
         
         let monthAndYearText: UITextView = UITextView(frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: self.headerHeight))
         monthAndYearText.text = "\(self.initDate.monthName) \(self.initDate.year)"

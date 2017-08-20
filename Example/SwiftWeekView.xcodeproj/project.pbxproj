@@ -14,7 +14,7 @@
 		7CB862901F470AA0008F23EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CB8628E1F470AA0008F23EC /* LaunchScreen.storyboard */; };
 		7CB8629B1F470AA1008F23EC /* SwiftWeekViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB8629A1F470AA1008F23EC /* SwiftWeekViewTests.swift */; };
 		7CB862A61F470AA1008F23EC /* SwiftWeekViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862A51F470AA1008F23EC /* SwiftWeekViewUITests.swift */; };
-		7CB862B91F470B05008F23EC /* CalendarWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862B41F470B05008F23EC /* CalendarWeekView.swift */; };
+		7CB862B91F470B05008F23EC /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862B41F470B05008F23EC /* WeekView.swift */; };
 		7CB862BA1F470B05008F23EC /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862B51F470B05008F23EC /* Common.swift */; };
 		7CB862BB1F470B05008F23EC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862B61F470B05008F23EC /* Extensions.swift */; };
 		7CB862BC1F470B05008F23EC /* UIInfiniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862B71F470B05008F23EC /* UIInfiniteScrollView.swift */; };
@@ -60,7 +60,7 @@
 		7CB862A11F470AA1008F23EC /* SwiftWeekViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftWeekViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB862A51F470AA1008F23EC /* SwiftWeekViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftWeekViewUITests.swift; sourceTree = "<group>"; };
 		7CB862A71F470AA1008F23EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7CB862B41F470B05008F23EC /* CalendarWeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarWeekView.swift; sourceTree = "<group>"; };
+		7CB862B41F470B05008F23EC /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		7CB862B51F470B05008F23EC /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		7CB862B61F470B05008F23EC /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7CB862B71F470B05008F23EC /* UIInfiniteScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIInfiniteScrollView.swift; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 		7CB862B31F470ABE008F23EC /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				7CB862B41F470B05008F23EC /* CalendarWeekView.swift */,
+				7CB862B41F470B05008F23EC /* WeekView.swift */,
 				7CB862B51F470B05008F23EC /* Common.swift */,
 				7CB862B61F470B05008F23EC /* Extensions.swift */,
 				7CB862B71F470B05008F23EC /* UIInfiniteScrollView.swift */,
@@ -485,7 +485,7 @@
 				7CB862BB1F470B05008F23EC /* Extensions.swift in Sources */,
 				7CB862BA1F470B05008F23EC /* Common.swift in Sources */,
 				7CB862BD1F470B05008F23EC /* WeekViewEvent.swift in Sources */,
-				7CB862B91F470B05008F23EC /* CalendarWeekView.swift in Sources */,
+				7CB862B91F470B05008F23EC /* WeekView.swift in Sources */,
 				7CB862881F470AA0008F23EC /* ViewController.swift in Sources */,
 				7CB862861F470AA0008F23EC /* AppDelegate.swift in Sources */,
 				7CB862BC1F470B05008F23EC /* UIInfiniteScrollView.swift in Sources */,
