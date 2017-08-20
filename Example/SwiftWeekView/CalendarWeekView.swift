@@ -1,6 +1,6 @@
 //
-//  CalendarWeekView.swift
-//  CalendarWeekView
+//  WeekView.swift
+//  WeekView
 //
 //  Created by Evan Cooper on 2017-08-10.
 //  Copyright © 2017 Evan Cooper. All rights reserved.
@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 import SwiftDate
 
-class CalendarWeekView: UIView {
-    var initDate: DateInRegion!
-    var visibleDays : Int!
+class WeekView: UIView {
+    private var initDate: DateInRegion!
+    private var visibleDays : Int!
     private var scrollView: UIInfiniteScrollView!
     private var viewCreator: UIInfiniteScrollView.ViewCreator!
     
@@ -44,22 +44,22 @@ class CalendarWeekView: UIView {
     
     // Custom implementation of the UIInfiniteScrollView.ViewCreator interface class
     private class VC: UIInfiniteScrollView.ViewCreator {
-        var calendarWeekView: CalendarWeekView!
+        var weekView: WeekView!
         var eventGenerator: EventGenerator!
         
-        init(calendarWeekView: CalendarWeekView, eventGenerator: EventGenerator) {
-            self.calendarWeekView = calendarWeekView
+        init(weekView: WeekView, eventGenerator: EventGenerator) {
+            self.weekView = weekView
             self.eventGenerator = eventGenerator
         }
         
         override func createViewSet(viewCoordinate: CGPoint, viewPosition: Int, viewWidth: CGFloat, viewHeight: CGFloat) -> [UIView] {
             var result: [UIView] = []
             
-            let viewDate: DateInRegion = calendarWeekView.initDate + viewPosition.days
-            let header: UITextViewFixed = UITextViewFixed(frame: CGRect(x: viewCoordinate.x, y: 0, width: viewWidth, height: calendarWeekView.headerHeight))
+            let viewDate: DateInRegion = weekView.initDate + viewPosition.days
+            let header: UITextViewFixed = UITextViewFixed(frame: CGRect(x: viewCoordinate.x, y: 0, width: viewWidth, height: weekView.headerHeight))
             let view: UIView = UIView(frame: CGRect(x: viewCoordinate.x, y: header.frame.height, width: viewWidth, height: viewHeight - header.frame.height))
             if (viewDate.isInWeekend) {
-                let color : UIColor = calendarWeekView.colorTheme.weekendColor
+                let color : UIColor = weekView.colorTheme.weekendColor
                 view.backgroundColor = UIColor(red: color.components.red, green: color.components.green, blue: color.components.blue, alpha: 0.5)
             }
             
@@ -67,13 +67,12 @@ class CalendarWeekView: UIView {
             header.centerTextVertically()
             header.textAlignment = .center
             header.centerTextVertically()
-            header.font = calendarWeekView.font
+            header.font = weekView.font
             header.isEditable = false
             header.isSelectable = false
             header.backgroundColor = .clear
             
             var eventViews: [UIView] = []
-            
             let events = self.eventGenerator.generateEvents(date: viewDate)
             for event in events {
                 let eventStartHour = event.getStart().hour
@@ -81,11 +80,11 @@ class CalendarWeekView: UIView {
                 let eventEndHour = event.getEnd().hour
                 let eventEndMinute = event.getEnd().minute
                 
-                let hourHeight = (calendarWeekView.frame.height - (calendarWeekView.headerHeight * 2)) / CGFloat(calendarWeekView.endHour - calendarWeekView.startHour)
+                let hourHeight = (weekView.frame.height - (weekView.headerHeight * 2)) / CGFloat(weekView.endHour - weekView.startHour)
                 let minuteHeight = hourHeight / 60
                 
                 var eventX = viewCoordinate.x
-                let eventY = header.frame.height + (hourHeight * CGFloat(eventStartHour - self.calendarWeekView.startHour)) + (minuteHeight * CGFloat(eventStartMinute))
+                let eventY = header.frame.height + (hourHeight * CGFloat(eventStartHour - self.weekView.startHour)) + (minuteHeight * CGFloat(eventStartMinute))
                 var eventWidth = viewWidth
                 let eventHeight = (hourHeight * CGFloat(eventEndHour - eventStartHour)) + (minuteHeight * CGFloat(eventEndMinute - eventStartMinute))
                 
@@ -114,8 +113,8 @@ class CalendarWeekView: UIView {
                 let eventText: UITextView = UITextView(frame: eventView.frame)
                 eventText.text = "\(event.getTitle())\n\(event.getStart().string(format: .custom("HH:mm"))) - \(event.getEnd().string(format: .custom("HH:mm")))"
                 eventText.backgroundColor = .clear
-                eventText.font = calendarWeekView.font
-                eventText.textColor = calendarWeekView.colorTheme.eventTextColor
+                eventText.font = weekView.font
+                eventText.textColor = weekView.colorTheme.eventTextColor
                 eventText.isEditable = false
                 eventText.isSelectable = false
                 
@@ -192,7 +191,7 @@ class CalendarWeekView: UIView {
             timeView.addSubview(hourText)
         }
 
-        self.viewCreator = VC(calendarWeekView: self, eventGenerator: eventGenerator)
+        self.viewCreator = VC(weekView: self, eventGenerator: eventGenerator)
         self.scrollView = UIInfiniteScrollView(frame: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y, width: frame.width - timeView.frame.width, height: frame.height), viewsInPageCount: visibleDays, spacerSize: 2, viewCreator: self.viewCreator, direction: .horizontal)
         self.scrollView.backgroundColor = .clear
         

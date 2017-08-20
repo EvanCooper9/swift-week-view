@@ -265,6 +265,7 @@
 				TargetAttributes = {
 					7CB862811F470AA0008F23EC = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = HP22MNWU5C;
 						ProvisioningStyle = Automatic;
 					};
 					7CB862951F470AA1008F23EC = {
@@ -642,6 +643,7 @@
 			baseConfigurationReference = 698585844DFFAF7BBD1705EA /* Pods-SwiftWeekView.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = HP22MNWU5C;
 				INFOPLIST_FILE = SwiftWeekView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = evancooper.SwiftWeekView;
@@ -655,6 +657,7 @@
 			baseConfigurationReference = EB0B7DBE70538F3329D95A0F /* Pods-SwiftWeekView.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = HP22MNWU5C;
 				INFOPLIST_FILE = SwiftWeekView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = evancooper.SwiftWeekView;

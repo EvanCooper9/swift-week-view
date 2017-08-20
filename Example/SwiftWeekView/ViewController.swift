@@ -9,7 +9,7 @@
 import UIKit
 import SwiftDate
 
-class EG: CalendarWeekView.EventGenerator {
+class EG: WeekView.EventGenerator {
     override func generateEvents(date: DateInRegion) -> [WeekViewEvent] {
         // create a WeekViewEvent for the day of date
         let start = date.atTime(hour: 12, minute: 0, second: 0)!
@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         let bump: CGFloat = 10
         let frame: CGRect = CGRect(x: 0, y: bump, width: self.view.frame.width, height: self.view.frame.height - bump)
-        let weekView: CalendarWeekView = CalendarWeekView(frame: frame, eventGenerator: EG(), visibleDays: 5)
+        let weekView: WeekView = WeekView(frame: frame, eventGenerator: EG(), visibleDays: 5)
         self.view.addSubview(weekView)
     }
 

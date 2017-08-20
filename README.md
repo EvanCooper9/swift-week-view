@@ -13,12 +13,12 @@ An iOS calendar library for displaying calendar events in a week view.
 ## Usage
 1. Download source & install dependencies
 
-2. Create some subclass of `CalendarWeekView`'s delegate for creating events, `EventGenerator`. Override the `generateEvents(date: DateInRegion) -> [WeekViewEvent]` function. This function should return a list of `WeekViewEvent`s specific to the day of `date`. See [here](malcommac.github.io/SwiftDate/manipulate_dates.html#dateatunit) for [SwiftDate](https://github.com/malcommac/SwiftDate) documentation on creating date objects at specific times. Currently, events rely on a [24-hour clock](https://en.wikipedia.org/wiki/24-hour_clock).
+2. Create some subclass of `WeekView`'s delegate for creating events, `EventGenerator`. Override the `generateEvents(date: DateInRegion) -> [WeekViewEvent]` function. This function should return a list of `WeekViewEvent`s specific to the day of `date`. See [here](malcommac.github.io/SwiftDate/manipulate_dates.html#dateatunit) for [SwiftDate](https://github.com/malcommac/SwiftDate) documentation on creating date objects at specific times. Currently, events rely on a [24-hour clock](https://en.wikipedia.org/wiki/24-hour_clock).
 
    ```Swift
-   class EG: CalendarWeekView.EventGenerator {
+   class EG: WeekView.EventGenerator {
        override func generateEvents(date: DateInRegion) -> [WeekViewEvent] {
-       	   // create a WeekViewEvent for the day of date
+           // create a WeekViewEvent for the day of date
            let start = date.atTime(hour: 12, minute: 0, second: 0)!
            let end = date.atTime(hour: 13, minute: 0, second: 0)!
            let event: WeekViewEvent = WeekViewEvent(title: "Lunch", startDate: start, endDate: end)
@@ -27,10 +27,10 @@ An iOS calendar library for displaying calendar events in a week view.
    }
    ```
 
-3. Create an instance of `CalendarWeekView`, then add it as a subview.
+3. Create an instance of `WeekView`, then add it as a subview.
    
    ```Swift
-   let weekView: CalendarWeekView = CalendarWeekView(frame: frame, eventGenerator: EG(), visibleDays: 5)
+   let weekView: WeekView = WeekView(frame: frame, eventGenerator: EG(), visibleDays: 5)
    view.addSubview(weekView)
    ```
 
@@ -39,4 +39,7 @@ An iOS calendar library for displaying calendar events in a week view.
 - [UIInfiniteScrollView](https://github.com/EvanCooper9/swift-infinite-uiscrollview) - already included in source
 
 ## Example
-See the included example for basic implementation. Make sure to open `CalendarWeekView.xcworkspace` for it to work properly with CocoaPods.
+See the included example for basic implementation. Make sure to open the `.xcworkspace` for it to work properly with CocoaPods.
+
+## Acknowledgements
+Inspired by [Android-Week-View](https://github.com/alamkanak/Android-Week-View) after it became a large part of a school project.
