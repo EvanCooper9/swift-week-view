@@ -9,8 +9,6 @@
 import Foundation
 import UIKit
 
-
-
 class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
     internal var views: [[UIView]]!
     internal var viewRangeStart: Int!
@@ -282,8 +280,6 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      - viewPosition: the position of the views relative to the others
     */
     internal func addAsyncLoadedViews(views: [UIView], viewPosition: Int) {
-        print("async add \(viewPosition)")
-        
         let newViewPosition = (viewPosition <= 0) ? abs(self.viewRangeStart - viewPosition) : viewPosition
         
         var index: Int = 0

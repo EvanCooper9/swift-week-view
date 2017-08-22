@@ -54,7 +54,7 @@ pod 'SwiftDate', '~> 4.0'
 ```
 
 ## Example
-See the included example for basic implementation. Make sure to open the `.xcworkspace` for it to work properly with CocoaPods.
+See the included example for basic implementation. Make sure to download the *entire* repository, and then open the `.xcworkspace` for it to work properly with the Source files and CocoaPods.
 
 ## Up Next
 - Initialize a WeekView within the storyboard
