@@ -36,7 +36,7 @@ class EG: WeekView.EventGenerator {
 Create an instance of `WeekView`, then add it as a subview.
 
 ```Swift
-let weekView: WeekView = WeekView(frame: frame, eventGenerator: EG(), visibleDays: 5)
+let weekView: WeekView = WeekView(frame: frame, dataSource: EG(), visibleDays: 5)
 view.addSubview(weekView)
 ```
 > #### Available arguments
