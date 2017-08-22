@@ -9,7 +9,7 @@
 import UIKit
 import SwiftDate
 
-class EG: WeekView.WeekViewDataSource {
+class DS: WeekView.WeekViewDataSource {
     override func generateEvents(date: DateInRegion, completion: (([WeekViewEvent]) -> Void)?) -> [WeekViewEvent] {
         var events: [WeekViewEvent] = []
         
@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         let bump: CGFloat = 10
         let frame: CGRect = CGRect(x: 0, y: bump, width: self.view.frame.width, height: self.view.frame.height - bump)
-        let weekView: WeekView = WeekView(frame: frame, dataSource: EG(), visibleDays: 5)
+        let weekView: WeekView = WeekView(frame: frame, dataSource: DS(), visibleDays: 5)
         self.view.addSubview(weekView)
     }
 

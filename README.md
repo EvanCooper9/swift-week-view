@@ -13,11 +13,11 @@ An iOS calendar library for displaying calendar events in a week view.
 - Snaps to closest day after scrolling
 
 ## Usage
-### 1. WeekView Delegate
-Create some subclass of `WeekView`'s delegate for creating events, `EventGenerator`. Override the `generateEvents(date: DateInRegion) -> [WeekViewEvent]` function. This function should return a list of `WeekViewEvent`s specific to the day of `date`. See [here](malcommac.github.io/SwiftDate/manipulate_dates.html#dateatunit) for [SwiftDate](https://github.com/malcommac/SwiftDate) documentation on creating date objects at specific times. Currently, events rely on a [24-hour clock](https://en.wikipedia.org/wiki/24-hour_clock).
+### 1. WeekView Data Source
+Create some subclass of `WeekView`'s data source for creating events, `WeekViewDataSource`. Override the `generateEvents` function. This function should return a list of `WeekViewEvent`s specific to the day of `date`. See [here](malcommac.github.io/SwiftDate/manipulate_dates.html#dateatunit) for [SwiftDate](https://github.com/malcommac/SwiftDate) documentation on creating date objects at specific times. Currently, events rely on a [24-hour clock](https://en.wikipedia.org/wiki/24-hour_clock).
 
 ```Swift
-class EG: WeekView.EventGenerator {
+class DS: WeekView.WeekViewDataSource {
     override func generateEvents(date: DateInRegion, completion: (([WeekViewEvent]) -> Void)?) -> [WeekViewEvent] {
         // create a WeekViewEvent for the day of date
         let start = date.atTime(hour: 12, minute: 0, second: 0)!
@@ -36,7 +36,7 @@ class EG: WeekView.EventGenerator {
 Create an instance of `WeekView`, then add it as a subview.
 
 ```Swift
-let weekView: WeekView = WeekView(frame: frame, dataSource: EG(), visibleDays: 5)
+let weekView: WeekView = WeekView(frame: frame, dataSource: DS(), visibleDays: 5)
 view.addSubview(weekView)
 ```
 > #### Available arguments
