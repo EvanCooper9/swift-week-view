@@ -68,3 +68,13 @@ extension UITextView {
         textContainer.lineFragmentPadding = 0
     }
 }
+
+extension WeekView {
+    @IBInspectable var dataSource: WeekView.WeekViewDataSource? {
+        set (newVale) {
+            self.dataSource = newVale
+        } get {
+            return WeekView.WeekViewDataSource()
+        }
+    }
+}

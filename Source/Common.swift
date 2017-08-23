@@ -20,15 +20,15 @@ protocol Theme {
 class LightTheme: Theme {
     var baseColor: UIColor = UIColor(rgb: 0xfafafa)
     var hourLineColor: UIColor = UIColor(rgb: 0xe6e5e6)
-    var hourTextColor: UIColor = UIColor(rgb: 0xc0c0c0)
-    var eventTextColor: UIColor = UIColor(rgb: 0xffffff)
-    var weekendColor: UIColor = UIColor(rgb: 0xf5f5f5)
+    var hourTextColor: UIColor = UIColor(rgb: 0x373737)
+    var eventTextColor: UIColor = UIColor(rgb: 0xfafafa)
+    var weekendColor: UIColor = UIColor(rgb: 0xf4f4f4)
 }
 
 class DarkTheme: Theme {
-    var baseColor: UIColor = UIColor(rgb: 0x414141)
-    var hourLineColor: UIColor = UIColor(rgb: 0xffffff)
-    var hourTextColor: UIColor = UIColor(rgb: 0xffffff)
-    var eventTextColor: UIColor = UIColor(rgb: 0xffffff)
+    var baseColor: UIColor = UIColor(rgb: 0x373737)
+    var hourLineColor: UIColor = UIColor(rgb: 0x252525)
+    var hourTextColor: UIColor = UIColor(rgb: 0xc0c0c0)
+    var eventTextColor: UIColor = UIColor(rgb: 0xc0c0c0)
     var weekendColor: UIColor = UIColor(rgb: 0x414141)
 }

@@ -159,9 +159,9 @@
 		7CB862841F470AA0008F23EC /* SwiftWeekView */ = {
 			isa = PBXGroup;
 			children = (
-				7C0EFE041F4CD3F200153A3E /* Source */,
 				7CB862851F470AA0008F23EC /* AppDelegate.swift */,
 				7CB862871F470AA0008F23EC /* ViewController.swift */,
+				7C0EFE041F4CD3F200153A3E /* Source */,
 				7CB862891F470AA0008F23EC /* Main.storyboard */,
 				7CB8628C1F470AA0008F23EC /* Assets.xcassets */,
 				7CB8628E1F470AA0008F23EC /* LaunchScreen.storyboard */,
@@ -646,7 +646,7 @@
 				DEVELOPMENT_TEAM = HP22MNWU5C;
 				INFOPLIST_FILE = SwiftWeekView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = evancooper.SwiftWeekView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.evancooper.swiftweekview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -660,7 +660,7 @@
 				DEVELOPMENT_TEAM = HP22MNWU5C;
 				INFOPLIST_FILE = SwiftWeekView/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = evancooper.SwiftWeekView;
+				PRODUCT_BUNDLE_IDENTIFIER = com.evancooper.swiftweekview;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

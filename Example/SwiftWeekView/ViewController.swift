@@ -11,24 +11,16 @@ import SwiftDate
 
 class DS: WeekView.WeekViewDataSource {
     override func generateEvents(date: DateInRegion, completion: (([WeekViewEvent]) -> Void)?) -> [WeekViewEvent] {
-        var events: [WeekViewEvent] = []
-        
-        if (completion != nil) {
-            // perform asynchronous tasks
-            completion!(events)
-        }
-        
         // create a WeekViewEvent for the day of date
         let start = date.atTime(hour: 12, minute: 0, second: 0)!
         let end = date.atTime(hour: 13, minute: 30, second: 0)!
-        let event: WeekViewEvent = WeekViewEvent(title: "Lunch \(date.day)", startDate: start, endDate: end)
-        events.append(event)
-        return events
+        let event: WeekViewEvent = WeekViewEvent(title: "Lunch", startDate: start, endDate: end)
+        return [event]
     }
 }
 
 class ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

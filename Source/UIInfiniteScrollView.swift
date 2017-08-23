@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+/*
+ UIInfiniteScrollView
+ 
+ Usage:
+ 1. Subclass UIInfiniteScrollView.ViewCreator, and override the createViewSet function
+ 2. Initialize an instance of UIInfiniteScrollView, with the above subclass as it's viewCreator attribute
+ */
 class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
     internal var views: [[UIView]]!
     internal var viewRangeStart: Int!
@@ -17,7 +24,7 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
     internal var viewWidth: CGFloat!
     internal var viewHeight: CGFloat!
     internal var spacerSize: CGFloat!
-    internal var viewCreator: ViewCreator!
+    internal var viewCreator: UIInfiniteScrollView.ViewCreator!
     internal var scrollDirection: Direction!
     internal var isSnapEnabled: Bool = true
     
@@ -45,10 +52,6 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
         
         func createViewSet(viewCoordinate: CGPoint, viewPosition: Int, viewWidth: CGFloat, viewHeight: CGFloat, views: [[UIView]], completion: @escaping ([UIView], Int) -> Void) -> [UIView] {
             fatalError("Error, did not override funciton \(#function)\nPlease use init method that defines viewCreator\n")
-        }
-        
-        func addAsyncCreatedViewSets(events: [WeekViewEvent]) {
-            fatalError("Error, did not override funciton \(#function)")
         }
     }
     
@@ -79,7 +82,6 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      */
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.commonInit(viewsInPageCount: 5, spacerSize: 3, viewCreator: ViewCreator(scrollView: self), direction: Direction.horizontal)
     }
     
     /*
@@ -151,7 +153,7 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      */
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (self.scrollDirection == .horizontal) {
-            let loadThreshold: CGFloat = (self.viewWidth + self.spacerSize) * 2
+            let loadThreshold: CGFloat = self.viewWidth / 2 // (self.viewWidth + self.spacerSize) * 2
             let leftEdge = scrollView.contentOffset.x
             let rightEdge = scrollView.contentOffset.x + scrollView.frame.size.width
             
@@ -169,7 +171,7 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
                 self.setContentOffset(CGPoint(x: self.contentOffset.x + (self.viewWidth + self.spacerSize) * CGFloat(self.viewsInPageCount), y: 0), animated: false)
             }
         } else {
-            let loadThreshold: CGFloat = (self.viewHeight + self.spacerSize) * 2
+            let loadThreshold: CGFloat = self.viewHeight / 2 // (self.viewHeight + self.spacerSize) * 2
             let topEdge = scrollView.contentOffset.y
             let bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
             
@@ -221,7 +223,7 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      Description:
      Snap the content view edges to the closest edges
      */
-    private func snap() {
+    func snap() {
         var closestAnchor: CGFloat = (self.scrollDirection == .horizontal) ? self.contentSize.width : self.contentSize.height
         var closestViewSet: [UIView] = self.views[0]
         for viewSet in self.views {
@@ -233,6 +235,33 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
         }
         
         self.setContentOffset(CGPoint(x: closestViewSet[0].frame.origin.x, y: 0), animated: true)
+    }
+    
+    /*
+     createViews(fromPosition: Int, toPosition: Int)
+     
+     Description:
+     Create brand new views and add them to UIInfiniteScrollView's array of views
+     Keep UIInfiniteScrollView's views sorted by the x orgin of each index
+     
+     Params:
+     - fromPosition: start creating views from this position
+     - toPosition: stop creating views at this position (inclusive)
+     */
+    internal func createViews(fromPosition: Int, toPosition: Int) {
+        for i in fromPosition...toPosition {
+            let viewCoordinate: CGPoint = CGPoint(x: calculateXPosition(index: i), y: calculateYPosition(index: i))
+            
+            if (self.scrollDirection == .horizontal) {
+                let viewSet = self.viewCreator.createViewSet(viewCoordinate: viewCoordinate, viewPosition: i, viewWidth: self.viewWidth, viewHeight: self.frame.height, views: self.views, completion: self.addAsyncLoadedViews)
+                self.views.append(viewSet)
+                self.views.sort(by: {$0[0].frame.origin.x < $1[0].frame.origin.x})
+            } else {
+                let viewSet = self.viewCreator.createViewSet(viewCoordinate: viewCoordinate, viewPosition: i, viewWidth: self.frame.width, viewHeight: self.viewHeight, views: self.views, completion: self.addAsyncLoadedViews)
+                self.views.append(viewSet)
+                self.views.sort(by: {$0[0].frame.origin.y < $1[0].frame.origin.y})
+            }
+        }
     }
     
     /*
@@ -273,15 +302,13 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      addAsyncLoadedViews(views: [UIView], viewPosition: Int)
      
      Description:
-     To load in the views that were created asynchronously
+     To load in the views that were created asynchronously. Used as a completion handler when generating the views
      
      Params:
      - views: the views that were create asynchronously
      - viewPosition: the position of the views relative to the others
     */
     internal func addAsyncLoadedViews(views: [UIView], viewPosition: Int) {
-        let newViewPosition = (viewPosition <= 0) ? abs(self.viewRangeStart - viewPosition) : viewPosition
-        
         var index: Int = 0
         for viewSet in self.views {
             if (viewSet[0].frame.origin.x == views[0].frame.origin.x) {
@@ -289,12 +316,12 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
                 for view in views {
                     let placeholderView: UIView = view.copyView()
                     if (self.scrollDirection == .horizontal) {
-                        var viewCalculatedXPosition = self.calculateXPosition(index: newViewPosition)
-                        viewCalculatedXPosition += view.frame.origin.x - self.views[newViewPosition][0].frame.origin.x
+                        var viewCalculatedXPosition = self.calculateXPosition(index: index - self.viewRangeStart)
+                        viewCalculatedXPosition += view.frame.origin.x - self.views[index][0].frame.origin.x
                         placeholderView.frame.origin.x = viewCalculatedXPosition
                     } else {
-                        var viewCalculatedYPosition = self.calculateYPosition(index: newViewPosition)
-                        viewCalculatedYPosition += view.frame.origin.y - self.views[newViewPosition][0].frame.origin.y
+                        var viewCalculatedYPosition = self.calculateYPosition(index: index - self.viewRangeStart)
+                        viewCalculatedYPosition += view.frame.origin.y - self.views[index][0].frame.origin.y
                         placeholderView.frame.origin.y = viewCalculatedYPosition
                     }
                     self.addSubview(placeholderView)
@@ -302,33 +329,6 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
                 break
             }
             index += 1
-        }
-    }
-    
-    /*
-     createViews(fromPosition: Int, toPosition: Int)
-     
-     Description:
-     Create brand new views and add them to UIInfiniteScrollView's array of views
-     Keep UIInfiniteScrollView's views sorted by the x orgin of each index
-     
-     Params:
-     - fromPosition: start creating views from this position
-     - toPosition: stop creating views at this position (inclusive)
-     */
-    internal func createViews(fromPosition: Int, toPosition: Int) {
-        for i in fromPosition...toPosition {
-            let viewCoordinate: CGPoint = CGPoint(x: calculateXPosition(index: i), y: calculateYPosition(index: i))
-            
-            if (self.scrollDirection == .horizontal) {
-                let viewSet = self.viewCreator.createViewSet(viewCoordinate: viewCoordinate, viewPosition: i, viewWidth: self.viewWidth, viewHeight: self.frame.height, views: self.views, completion: self.addAsyncLoadedViews)
-                self.views.append(viewSet)
-                self.views.sort(by: {$0[0].frame.origin.x < $1[0].frame.origin.x})
-            } else {
-                let viewSet = self.viewCreator.createViewSet(viewCoordinate: viewCoordinate, viewPosition: i, viewWidth: self.frame.width, viewHeight: self.viewHeight, views: self.views, completion: self.addAsyncLoadedViews)
-                self.views.append(viewSet)
-                self.views.sort(by: {$0[0].frame.origin.y < $1[0].frame.origin.y})
-            }
         }
     }
     
@@ -343,7 +343,7 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      - viewPosition (optional): The position of the view relative to the other views that have been created (default use if both parameters are provided)
      - viewCoordinate (optional): The coordinate of the view's frame's origin
      */
-    public func jumpToView(viewPosition: Int?, viewCoordinate: CGPoint?) {
+     func jumpToView(viewPosition: Int?, viewCoordinate: CGPoint?) {
         if let viewPosition = viewPosition {
             self.loadActiveViews(startIndex: viewPosition - self.viewsInPageCount)
         } else if let viewCoordinate = viewCoordinate {

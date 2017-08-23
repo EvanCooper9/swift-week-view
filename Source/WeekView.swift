@@ -13,6 +13,7 @@ import SwiftDate
 class WeekView: UIView {
     internal var initDate: DateInRegion!
     internal var visibleDays : Int!
+    internal var timeView: UIView!
     internal var scrollView: UIInfiniteScrollView!
     internal var viewCreator: UIInfiniteScrollView.ViewCreator!
     internal var startHour: Int!
@@ -20,8 +21,11 @@ class WeekView: UIView {
     internal var colorTheme: Theme!
     internal var font: UIFont!
     internal var headerHeight: CGFloat!
-    
     internal var monthAndYearText: UITextView!
+    internal var nowLineEnabled: Bool!
+    internal var nowLine: CAShapeLayer!
+    internal var nowCircle: UIView!
+    internal var nowLineColor: UIColor!
     
     func getScrollView() -> UIInfiniteScrollView { return self.scrollView }
     
@@ -63,16 +67,17 @@ class WeekView: UIView {
             
             let header: UITextViewFixed = UITextViewFixed(frame: CGRect(x: viewCoordinate.x, y: 0, width: viewWidth, height: weekView.headerHeight))
             let view: UIView = UIView(frame: CGRect(x: viewCoordinate.x, y: header.frame.height, width: viewWidth, height: viewHeight - header.frame.height))
+            
             if (viewDate.isInWeekend) {
                 let color : UIColor = weekView.colorTheme.weekendColor
                 view.backgroundColor = UIColor(red: color.components.red, green: color.components.green, blue: color.components.blue, alpha: 0.5)
             }
             
             header.text = String("\(viewDate.weekdayShortName) \(viewDate.day)".uppercased())
-            header.centerTextVertically()
             header.textAlignment = .center
             header.centerTextVertically()
             header.font = weekView.font
+            header.textColor = weekView.colorTheme.hourTextColor
             header.isEditable = false
             header.isSelectable = false
             header.backgroundColor = .clear
@@ -134,13 +139,22 @@ class WeekView: UIView {
         }
     }
     
-    init(frame: CGRect, dataSource: WeekViewDataSource, visibleDays: Int) {
+    init(frame: CGRect, dataSource: WeekViewDataSource, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme? = LightTheme(), nowLineEnabled: Bool? = true) {
         super.init(frame: frame)
-        self.commonInit(frame: frame, delegate: dataSource, visibleDays: visibleDays)
+        self.commonInit(
+            frame: frame,
+            delegate: dataSource,
+            visibleDays: visibleDays,
+            date: date,
+            startHour: startHour,
+            endHour: endHour,
+            colorTheme: colorTheme,
+            nowLineEnabled: nowLineEnabled
+        )
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("Storyboard initialization not currently supported.")
+        fatalError("Storyboard initialization not suppoted.")
     }
     
     /*
@@ -157,22 +171,29 @@ class WeekView: UIView {
      - startHour: (Optional) the earliest hour that will be displayed. Defaults to 09:00.
      - endHour: (Optional) the latest hour that will be displayed. Defalts to 17:00.
      */
-    func commonInit(frame: CGRect, delegate: WeekViewDataSource, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme? = LightTheme()) {
+    internal func commonInit(frame: CGRect, delegate: WeekViewDataSource, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme? = LightTheme(), nowLineEnabled: Bool? = true, nowLineColor: UIColor? = .red) {
         self.colorTheme = colorTheme
         self.font = UIFont.init(descriptor: UIFontDescriptor(), size: 10)
         self.headerHeight = 30
-        self.initDate = date
-        self.initDate = self.initDate - visibleDays.days
+        self.initDate = date - visibleDays.days
         self.visibleDays = visibleDays
         self.startHour = startHour
         self.endHour = endHour
         
         self.monthAndYearText = UITextView(frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: self.headerHeight))
         monthAndYearText.text = "\(self.initDate.monthName) \(self.initDate.year)"
+        monthAndYearText.textColor = self.colorTheme.hourTextColor
+        monthAndYearText.backgroundColor = self.colorTheme.baseColor
         monthAndYearText.isEditable = false
         monthAndYearText.isSelectable = false
         
-        let timeView: UIView = UIView(frame: CGRect(x: frame.origin.x, y: frame.origin.y + monthAndYearText.frame.height, width: 40, height: frame.height - monthAndYearText.frame.height))
+        self.timeView = UIView(frame: CGRect(x: frame.origin.x, y: frame.origin.y + monthAndYearText.frame.height, width: 40, height: frame.height - monthAndYearText.frame.height))
+        self.timeView.backgroundColor = self.colorTheme.baseColor
+        
+        self.viewCreator = VC(weekView: self, weekViewDelegate: delegate)
+        self.scrollView = UIInfiniteScrollView(frame: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y, width: frame.width - timeView.frame.width, height: frame.height), viewsInPageCount: visibleDays, spacerSize: 2, viewCreator: self.viewCreator, direction: .horizontal)
+        self.scrollView.backgroundColor = self.colorTheme.baseColor
+        
         let hourHeight: CGFloat = (timeView.frame.height - self.headerHeight) / CGFloat(self.endHour - self.startHour)
         var hourLines: [CAShapeLayer] = []
         for hour in self.startHour...self.endHour {
@@ -186,26 +207,87 @@ class WeekView: UIView {
             hourText.isEditable = false
             hourText.isSelectable = false
             
-            let linePath = UIBezierPath(rect: CGRect(x: timeView.frame.width, y: hourHeight * CGFloat(hour - startHour) + self.headerHeight, width: frame.width, height: 0.1))
+            let linePath = UIBezierPath(rect: CGRect(x: 0, y: hourHeight * CGFloat(hour - startHour) + self.headerHeight, width: scrollView.contentSize.width, height: 0.1))
             let layer = CAShapeLayer()
             layer.path = linePath.cgPath
             layer.strokeColor = self.colorTheme.hourLineColor.cgColor
             layer.fillColor = self.colorTheme.hourLineColor.cgColor
             hourLines.append(layer)
             
-            timeView.addSubview(hourText)
+            self.timeView.addSubview(hourText)
         }
-
-        self.viewCreator = VC(weekView: self, weekViewDelegate: delegate)
-        self.scrollView = UIInfiniteScrollView(frame: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y, width: frame.width - timeView.frame.width, height: frame.height), viewsInPageCount: visibleDays, spacerSize: 2, viewCreator: self.viewCreator, direction: .horizontal)
-        self.scrollView.backgroundColor = .clear
         
         self.addSubview(monthAndYearText)
-        self.addSubview(timeView)
         self.addSubview(self.scrollView)
+        self.addSubview(timeView)
         
         for line in hourLines {
-            timeView.layer.addSublayer(line)
+            scrollView.layer.addSublayer(line)
         }
+        
+        self.nowLineEnabled = nowLineEnabled
+        self.nowLineColor = nowLineColor
+        self.nowLine = CAShapeLayer()
+        self.nowCircle = UIView()
+        
+        if (self.nowLineEnabled) {
+            DispatchQueue.global(qos: .background).async {
+                while true {
+                    if (self.nowLineEnabled) {
+                        DispatchQueue.main.async {
+                            self.refreshNowLine(xPos: self.timeView.frame.width, yPos: self.timeView.frame.origin.y + self.headerHeight, hourHeight: hourHeight)
+                        }
+                        sleep(60)
+                    } else {
+                        self.nowLine.removeFromSuperlayer()
+                        self.nowCircle.removeFromSuperview()
+                        break
+                    }
+                }
+            }
+        }
+        
+        self.scrollView.snap()
+    }
+    
+    /*
+     refreshNowLine(xPos: CGFloat, yPos: CGFloat, hourHeight: CGFloat)
+     
+     Description:
+     Will re-position the 'now' line, for internal use only.
+    */
+    private func refreshNowLine(xPos: CGFloat, yPos: CGFloat, hourHeight: CGFloat) {
+        self.nowLine.removeFromSuperlayer()
+        self.nowCircle.removeFromSuperview()
+        
+        let now: DateInRegion = DateInRegion()
+        let linePath = UIBezierPath(rect: CGRect(x: xPos, y: yPos + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)), width: scrollView.contentSize.width, height: 0.1))
+        self.nowLine.path = linePath.cgPath
+        self.nowLine.strokeColor = self.nowLineColor.cgColor
+        self.nowLine.fillColor = self.nowLineColor.cgColor
+        self.layer.addSublayer(self.nowLine)
+        
+        self.nowCircle = UIView(frame: CGRect(x: 0, y: 0, width: 6, height: 6))
+        self.nowCircle.center = CGPoint(x: xPos, y: yPos + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)))
+        self.nowCircle.layer.cornerRadius = 3
+        self.nowCircle.backgroundColor = self.nowLineColor
+        self.nowCircle.clipsToBounds = true
+        self.addSubview(self.nowCircle)
+    }
+    
+    /*
+     jumpToDay(date: DateInRegion)
+     
+     Description:
+     A hacky way of jumping the view to a specific day. Re-initializing the view is costly but it works for now
+     
+     Params:
+     - date: the date to jump the view to.
+    */
+    func jumpToDay(date: DateInRegion) {
+        self.initDate = date - self.visibleDays.days
+        self.scrollView.removeFromSuperview()
+        self.scrollView = UIInfiniteScrollView(frame: self.scrollView.frame, viewsInPageCount: self.visibleDays, spacerSize: 2, viewCreator: self.scrollView.viewCreator, direction: self.scrollView.scrollDirection)
+        self.addSubview(self.scrollView)
     }
 }

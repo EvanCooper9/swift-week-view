@@ -9,6 +9,7 @@ An iOS calendar library for displaying calendar events in a week view.
 ## Features
 - See calendar events in a week view
 - Asynchronously load calendar events
+- Show a line at the current time
 - Infinite horizontal scrolling
 - Snaps to closest day after scrolling
 
@@ -57,8 +58,8 @@ pod 'SwiftDate', '~> 4.0'
 See the included example for basic implementation. Make sure to download the *entire* repository, and then open the `.xcworkspace` for it to work properly with the Source files and CocoaPods.
 
 ## Up Next
-- Initialize a WeekView within the storyboard
 - Ability to scroll vertically through the full hours of the day. 
+- ~~Initialize a WeekView within the storyboard~~ Not possible, dependencies do not subclass `NSObject`
 
 ## Acknowledgements
 Inspired by [Android-Week-View](https://github.com/alamkanak/Android-Week-View) after it became a large part of a school project.

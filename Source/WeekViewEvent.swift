@@ -20,7 +20,7 @@ class WeekViewEvent: Comparable, Equatable {
     func getEnd() -> DateInRegion { return self.endDate }
     func getColor() -> UIColor { return self.color }
     
-    init(title: String, startDate: DateInRegion, endDate: DateInRegion, color: UIColor = UIColor.red) {
+    init(title: String, startDate: DateInRegion, endDate: DateInRegion, color: UIColor = UIColor.blue) {
         self.title = title
         self.startDate = startDate
         self.endDate = endDate
