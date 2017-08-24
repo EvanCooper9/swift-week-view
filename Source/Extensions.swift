@@ -57,6 +57,7 @@ extension UITextView {
     }
 }
 
+// Remove text insets from UITextVIew
 @IBDesignable class UITextViewFixed: UITextView {
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -66,15 +67,5 @@ extension UITextView {
     func setup() {
         textContainerInset = UIEdgeInsetsMake(0, 5, 0, 5)
         textContainer.lineFragmentPadding = 0
-    }
-}
-
-extension WeekView {
-    @IBInspectable var dataSource: WeekView.WeekViewDataSource? {
-        set (newVale) {
-            self.dataSource = newVale
-        } get {
-            return WeekView.WeekViewDataSource()
-        }
     }
 }

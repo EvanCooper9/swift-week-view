@@ -18,7 +18,7 @@ protocol Theme {
 }
 
 class LightTheme: Theme {
-    var baseColor: UIColor = UIColor(rgb: 0xfafafa)
+    var baseColor: UIColor = UIColor(rgb: 0xffffff)
     var hourLineColor: UIColor = UIColor(rgb: 0xe6e5e6)
     var hourTextColor: UIColor = UIColor(rgb: 0x373737)
     var eventTextColor: UIColor = UIColor(rgb: 0xfafafa)

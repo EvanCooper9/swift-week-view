@@ -15,17 +15,18 @@ class WeekView: UIView {
     internal var visibleDays : Int!
     internal var timeView: UIView!
     internal var scrollView: UIInfiniteScrollView!
-    internal var viewCreator: UIInfiniteScrollView.ViewCreator!
+    internal var scrollViewDataSource: UIInfiniteScrollView.UIInfiniteScrollViewDataSource!
     internal var startHour: Int!
     internal var endHour: Int!
     internal var colorTheme: Theme!
     internal var font: UIFont!
     internal var headerHeight: CGFloat!
     internal var monthAndYearText: UITextView!
+    
     internal var nowLineEnabled: Bool!
-    internal var nowLine: CAShapeLayer!
-    internal var nowCircle: UIView!
     internal var nowLineColor: UIColor!
+    private var nowLine: CAShapeLayer!
+    private var nowCircle: UIView!
     
     func getScrollView() -> UIInfiniteScrollView { return self.scrollView }
     
@@ -49,10 +50,10 @@ class WeekView: UIView {
     }
     
     // Custom implementation of the UIInfiniteScrollView.ViewCreator interface class
-    internal class VC: UIInfiniteScrollView.ViewCreator {
+    internal class DS: UIInfiniteScrollView.UIInfiniteScrollViewDataSource {
         private var weekView: WeekView!
         private var weekViewDelegate: WeekViewDataSource!
-        
+
         init(weekView: WeekView, weekViewDelegate: WeekViewDataSource) {
             self.weekView = weekView
             self.weekViewDelegate = weekViewDelegate
@@ -60,7 +61,6 @@ class WeekView: UIView {
         
         override func createViewSet(viewCoordinate: CGPoint, viewPosition: Int, viewWidth: CGFloat, viewHeight: CGFloat, views: [[UIView]], completion: @escaping ([UIView], Int) -> Void) -> [UIView] {
             let viewDate: DateInRegion = weekView.initDate + viewPosition.days
-            
             if (viewDate.day == 8 || viewDate.day == 23) {
                 self.weekView.monthAndYearText.text = "\(viewDate.monthName) \(viewDate.year)"
             }
@@ -171,7 +171,7 @@ class WeekView: UIView {
      - startHour: (Optional) the earliest hour that will be displayed. Defaults to 09:00.
      - endHour: (Optional) the latest hour that will be displayed. Defalts to 17:00.
      */
-    internal func commonInit(frame: CGRect, delegate: WeekViewDataSource, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme? = LightTheme(), nowLineEnabled: Bool? = true, nowLineColor: UIColor? = .red) {
+    private func commonInit(frame: CGRect, delegate: WeekViewDataSource, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme? = LightTheme(), nowLineEnabled: Bool? = true, nowLineColor: UIColor? = .red) {
         self.colorTheme = colorTheme
         self.font = UIFont.init(descriptor: UIFontDescriptor(), size: 10)
         self.headerHeight = 30
@@ -190,8 +190,8 @@ class WeekView: UIView {
         self.timeView = UIView(frame: CGRect(x: frame.origin.x, y: frame.origin.y + monthAndYearText.frame.height, width: 40, height: frame.height - monthAndYearText.frame.height))
         self.timeView.backgroundColor = self.colorTheme.baseColor
         
-        self.viewCreator = VC(weekView: self, weekViewDelegate: delegate)
-        self.scrollView = UIInfiniteScrollView(frame: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y, width: frame.width - timeView.frame.width, height: frame.height), viewsInPageCount: visibleDays, spacerSize: 2, viewCreator: self.viewCreator, direction: .horizontal)
+        self.scrollViewDataSource = DS(weekView: self, weekViewDelegate: delegate)
+        self.scrollView = UIInfiniteScrollView(frame: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y, width: frame.width - timeView.frame.width, height: frame.height), viewsInPageCount: visibleDays, spacerSize: 2, dataSource: scrollViewDataSource, direction: .horizontal)
         self.scrollView.backgroundColor = self.colorTheme.baseColor
         
         let hourHeight: CGFloat = (timeView.frame.height - self.headerHeight) / CGFloat(self.endHour - self.startHour)
@@ -230,19 +230,17 @@ class WeekView: UIView {
         self.nowLine = CAShapeLayer()
         self.nowCircle = UIView()
         
-        if (self.nowLineEnabled) {
-            DispatchQueue.global(qos: .background).async {
-                while true {
-                    if (self.nowLineEnabled) {
-                        DispatchQueue.main.async {
-                            self.refreshNowLine(xPos: self.timeView.frame.width, yPos: self.timeView.frame.origin.y + self.headerHeight, hourHeight: hourHeight)
-                        }
-                        sleep(60)
-                    } else {
-                        self.nowLine.removeFromSuperlayer()
-                        self.nowCircle.removeFromSuperview()
-                        break
+        DispatchQueue.global(qos: .background).async {
+            while true {
+                if (self.nowLineEnabled) {
+                    DispatchQueue.main.async {
+                        self.refreshNowLine(xPos: self.timeView.frame.width, yPos: self.timeView.frame.origin.y + self.headerHeight, hourHeight: hourHeight)
                     }
+                    sleep(60)
+                } else {
+                    self.nowLine.removeFromSuperlayer()
+                    self.nowCircle.removeFromSuperview()
+                    break
                 }
             }
         }
@@ -287,7 +285,7 @@ class WeekView: UIView {
     func jumpToDay(date: DateInRegion) {
         self.initDate = date - self.visibleDays.days
         self.scrollView.removeFromSuperview()
-        self.scrollView = UIInfiniteScrollView(frame: self.scrollView.frame, viewsInPageCount: self.visibleDays, spacerSize: 2, viewCreator: self.scrollView.viewCreator, direction: self.scrollView.scrollDirection)
+        self.scrollView = UIInfiniteScrollView(frame: self.scrollView.frame, viewsInPageCount: self.visibleDays, spacerSize: 2, dataSource: self.scrollView.dataSource, direction: self.scrollView.scrollDirection)
         self.addSubview(self.scrollView)
     }
 }

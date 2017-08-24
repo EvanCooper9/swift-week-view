@@ -13,8 +13,8 @@ import UIKit
  UIInfiniteScrollView
  
  Usage:
- 1. Subclass UIInfiniteScrollView.ViewCreator, and override the createViewSet function
- 2. Initialize an instance of UIInfiniteScrollView, with the above subclass as it's viewCreator attribute
+ 1. Subclass UIInfiniteScrollView.UIInfiniteScrollViewDataSource, and override the createViewSet function
+ 2. Initialize an instance of UIInfiniteScrollView, with the above subclass as it's dataSource attribute
  */
 class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
     internal var views: [[UIView]]!
@@ -24,12 +24,12 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
     internal var viewWidth: CGFloat!
     internal var viewHeight: CGFloat!
     internal var spacerSize: CGFloat!
-    internal var viewCreator: UIInfiniteScrollView.ViewCreator!
+    internal var dataSource: UIInfiniteScrollViewDataSource!
     internal var scrollDirection: Direction!
     internal var isSnapEnabled: Bool = true
     
     // Interface class meant to be subclassed for the use of the createViewSet function
-    class ViewCreator {
+    class UIInfiniteScrollViewDataSource {
         var scrollView: UIInfiniteScrollView!
         /*
          createViewSet(xPosition: CGFloat, viewPosition: Int, viewWidth: CGFloat, viewHeight: CGFloat, spacerSize: CGFloat) -> [UIView]
@@ -51,7 +51,7 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
         }
         
         func createViewSet(viewCoordinate: CGPoint, viewPosition: Int, viewWidth: CGFloat, viewHeight: CGFloat, views: [[UIView]], completion: @escaping ([UIView], Int) -> Void) -> [UIView] {
-            fatalError("Error, did not override funciton \(#function)\nPlease use init method that defines viewCreator\n")
+            fatalError("Error, did not override funciton \(#function)\nPlease use init method that defines dataSource\n")
         }
     }
     
@@ -62,30 +62,30 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
     }
     
     /*
-     init(frame: CGRect, viewsInPageCount: Int, spacerSize: CGFloat, viewCreator: ViewCreator)
+     init(frame: CGRect, viewsInPageCount: Int, spacerSize: CGFloat, dataSource: UIInfiniteScrollViewDataSource)
      
      Params:
      - frame: the frame that UIInfiniteScrollView sits in
      - viewsInPageCount: amount of views that are visible on screen at any given moment
      - spacerSize: width of the space between each view, in pixels
-     - viewCreator: an instance of a ViewCreator subclass that overrides the createViewSet method
+     - dataSource: an instance of a UIInfiniteScrollViewDataSource subclass that overrides the createViewSet method
      - direction: the direction that the scrollView will scroll, .horizontal or .vertical
      */
-    init(frame: CGRect, viewsInPageCount: Int, spacerSize: CGFloat, viewCreator: ViewCreator, direction: Direction) {
+    init(frame: CGRect, viewsInPageCount: Int, spacerSize: CGFloat, dataSource: UIInfiniteScrollViewDataSource, direction: Direction) {
         super.init(frame: frame)
-        self.commonInit(viewsInPageCount: viewsInPageCount, spacerSize: spacerSize, viewCreator: viewCreator, direction: direction)
+        self.commonInit(viewsInPageCount: viewsInPageCount, spacerSize: spacerSize, dataSource: dataSource, direction: direction)
     }
     
     /*
      Required init function, designed to fail, forcing the class-specific init function to be used
-     It will fail because the viewCreator passed to the commonInit method does not override the function within
+     It will fail because the dataSource passed to the commonInit method does not override the function within
      */
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("Storyboard initialization not suppoted.")
     }
     
     /*
-     commonInit(viewsInPageCount: Int, spacerSize: CGFloat, viewCreator: ViewCreator)
+     commonInit(viewsInPageCount: Int, spacerSize: CGFloat, dataSource: UIInfiniteScrollViewDataSource)
      
      Description:
      Function used by all the other init functions, to centrialized initialization
@@ -93,18 +93,18 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      Params:
      - viewsInPageCount: amount of views that are visible on screen at any given moment
      - spacerSize: width of the space between each view, in pixels
-     - viewCreator: an instance of a ViewCreator subclass that overrides the createViewSet method
+     - dataSource: an instance of a UIInfiniteScrollViewDataSource subclass that overrides the createViewSet method
      - direction: the direction that the scrollView will scroll, .horizontal or .vertical
      */
-    internal func commonInit(viewsInPageCount: Int, spacerSize: CGFloat, viewCreator: ViewCreator, direction: Direction) {
+    private func commonInit(viewsInPageCount: Int, spacerSize: CGFloat, dataSource: UIInfiniteScrollViewDataSource, direction: Direction) {
         self.delegate = self
         self.views = []
         self.viewRangeStart = 0
         self.viewsInPageCount = viewsInPageCount
         self.loadPageCount = self.viewsInPageCount * 3
         self.spacerSize = spacerSize
-        self.viewCreator = viewCreator
-        self.viewCreator.scrollView = self
+        self.dataSource = dataSource
+        self.dataSource.scrollView = self
         self.scrollDirection = direction
         
         if (self.scrollDirection == .horizontal) {
@@ -139,8 +139,8 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      When the scrollView scroll horizontally, calculateYPosition returns 0
      When the scrollView scroll vertically, calculateXPosition returns 0
      */
-    internal func calculateXPosition(index: Int) -> CGFloat { return (self.scrollDirection == .horizontal) ? CGFloat(index) * (self.viewWidth + self.spacerSize) : 0 }
-    internal func calculateYPosition(index: Int) -> CGFloat { return (self.scrollDirection == .vertical) ? CGFloat(index) * (self.viewHeight + self.spacerSize) : 0 }
+    private func calculateXPosition(index: Int) -> CGFloat { return (self.scrollDirection == .horizontal) ? CGFloat(index) * (self.viewWidth + self.spacerSize) : 0 }
+    private func calculateYPosition(index: Int) -> CGFloat { return (self.scrollDirection == .vertical) ? CGFloat(index) * (self.viewHeight + self.spacerSize) : 0 }
     
     /*
      scrollViewDidScroll(_ scrollView: UIScrollView)
@@ -248,16 +248,16 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      - fromPosition: start creating views from this position
      - toPosition: stop creating views at this position (inclusive)
      */
-    internal func createViews(fromPosition: Int, toPosition: Int) {
+    private func createViews(fromPosition: Int, toPosition: Int) {
         for i in fromPosition...toPosition {
             let viewCoordinate: CGPoint = CGPoint(x: calculateXPosition(index: i), y: calculateYPosition(index: i))
             
             if (self.scrollDirection == .horizontal) {
-                let viewSet = self.viewCreator.createViewSet(viewCoordinate: viewCoordinate, viewPosition: i, viewWidth: self.viewWidth, viewHeight: self.frame.height, views: self.views, completion: self.addAsyncLoadedViews)
+                let viewSet = self.dataSource.createViewSet(viewCoordinate: viewCoordinate, viewPosition: i, viewWidth: self.viewWidth, viewHeight: self.frame.height, views: self.views, completion: self.addAsyncLoadedViews)
                 self.views.append(viewSet)
                 self.views.sort(by: {$0[0].frame.origin.x < $1[0].frame.origin.x})
             } else {
-                let viewSet = self.viewCreator.createViewSet(viewCoordinate: viewCoordinate, viewPosition: i, viewWidth: self.frame.width, viewHeight: self.viewHeight, views: self.views, completion: self.addAsyncLoadedViews)
+                let viewSet = self.dataSource.createViewSet(viewCoordinate: viewCoordinate, viewPosition: i, viewWidth: self.frame.width, viewHeight: self.viewHeight, views: self.views, completion: self.addAsyncLoadedViews)
                 self.views.append(viewSet)
                 self.views.sort(by: {$0[0].frame.origin.y < $1[0].frame.origin.y})
             }
@@ -274,7 +274,7 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      Params:
      - startIndex: The index to start loading views from the class' views parameter
      */
-    internal func loadActiveViews(startIndex: Int) {
+    private func loadActiveViews(startIndex: Int) {
         for view in self.subviews {
             view.removeFromSuperview()
         }
@@ -308,7 +308,7 @@ class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate {
      - views: the views that were create asynchronously
      - viewPosition: the position of the views relative to the others
     */
-    internal func addAsyncLoadedViews(views: [UIView], viewPosition: Int) {
+    private func addAsyncLoadedViews(views: [UIView], viewPosition: Int) {
         var index: Int = 0
         for viewSet in self.views {
             if (viewSet[0].frame.origin.x == views[0].frame.origin.x) {

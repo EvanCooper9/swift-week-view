@@ -2,7 +2,7 @@
 An iOS calendar library for displaying calendar events in a week view.
 
 <p align="center">
-	<img src="Media/screen1.png" width="30%" height="auto">
+	<img src="Media/screen3.png" width="30%" height="auto">
 	<img src="Media/screen2.gif" width="30%" height="auto">
 </p> 
 
@@ -41,12 +41,13 @@ let weekView: WeekView = WeekView(frame: frame, dataSource: DS(), visibleDays: 5
 view.addSubview(weekView)
 ```
 > #### Available arguments
-> - frame: the frame of the calendar view
-> - eventGenerator: an instance of an EventGenerator that overrides the generateEvents function.
-> - visibleDays: an instance of a ViewCreator subclass that overrides the createViewSet method.
-> - date: (Optional) the day `WeekView` will initially load. Defaults to the current day.
-> - startHour: (Optional) the earliest hour that will be displayed. Defaults to 09:00.
-> - endHour: (Optional) the latest hour that will be displayed. Defalts to 17:00.
+> - `frame`: the frame of the calendar view
+> - `eventGenerator`: an instance of an EventGenerator that overrides the generateEvents function.
+> - `visibleDays`: an instance of a ViewCreator subclass that overrides the createViewSet method.
+> - `date`: (Optional) the day `WeekView` will initially load. Defaults to the current day.
+> - `startHour`: (Optional) the earliest hour that will be displayed. Defaults to 09:00.
+> - `endHour`: (Optional) the latest hour that will be displayed. Defalts to 17:00.
+> - `colorTheme`: (Optional) the colors used in the view. Defaults to `LightTheme`.
 
 ## Dependencies
 ### [SwiftDate](https://github.com/malcommac/SwiftDate), via [Cocoapods](https://cocoapods.org)
