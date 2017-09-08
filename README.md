@@ -15,7 +15,7 @@ An iOS calendar library for displaying calendar events in a week view.
 - Interface builder preview
 
 ## Usage
-### 1. Download [source](https://github.com/EvanCooper9/swift-week-view/tree/master/Source) files and [dependencies](https://github.com/EvanCooper9/swift-week-view#dependencies)
+### 1. Download [source](https://github.com/EvanCooper9/swift-week-view/tree/master/Source) files and install [dependencies](https://github.com/EvanCooper9/swift-week-view#dependencies)
 
 ### 2. Implement the WeekViewDataSource Protocol
 Implement the `generateEvents` protocol function. This function should return a list of `WeekViewEvent`s specific to the day of `date`. See [here](malcommac.github.io/SwiftDate/manipulate_dates.html#dateatunit) for SwiftDate documentation on creating date objects at specific times. Currently, events rely on a [24-hour clock](https://en.wikipedia.org/wiki/24-hour_clock).
