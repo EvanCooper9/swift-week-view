@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+enum ScrollDirection: Int {
+    case horizontal
+    case vertical
+}
+
 protocol Theme {
     var baseColor: UIColor {get}
     var hourLineColor: UIColor {get}

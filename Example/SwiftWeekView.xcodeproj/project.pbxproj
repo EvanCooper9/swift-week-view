@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C31AF7D1F632C9300EE09E1 /* UIInfiniteScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C31AF7C1F632C9300EE09E1 /* UIInfiniteScrollView.xib */; };
 		7C4A0D291F4CD69E00286CD6 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A0D281F4CD69E00286CD6 /* WeekView.swift */; };
 		7C4AEBA01F4CD7240058F579 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4AEB9C1F4CD7240058F579 /* Common.swift */; };
 		7C4AEBA11F4CD7240058F579 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4AEB9D1F4CD7240058F579 /* Extensions.swift */; };
 		7C4AEBA21F4CD7240058F579 /* UIInfiniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4AEB9E1F4CD7240058F579 /* UIInfiniteScrollView.swift */; };
 		7C4AEBA31F4CD7240058F579 /* WeekViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4AEB9F1F4CD7240058F579 /* WeekViewEvent.swift */; };
+		7C54A9EA1F632F58002F1F85 /* WeekView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C54A9E91F632F58002F1F85 /* WeekView.xib */; };
 		7CB862861F470AA0008F23EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862851F470AA0008F23EC /* AppDelegate.swift */; };
 		7CB862881F470AA0008F23EC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862871F470AA0008F23EC /* ViewController.swift */; };
 		7CB8628B1F470AA0008F23EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CB862891F470AA0008F23EC /* Main.storyboard */; };
@@ -47,11 +49,13 @@
 		270DF6917162F69C656CCA85 /* Pods-SwiftWeekViewUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekViewUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekViewUITests/Pods-SwiftWeekViewUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5D6AB2FD7EF9CA98C9AAD752 /* Pods_SwiftWeekViewUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftWeekViewUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		698585844DFFAF7BBD1705EA /* Pods-SwiftWeekView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekView/Pods-SwiftWeekView.debug.xcconfig"; sourceTree = "<group>"; };
+		7C31AF7C1F632C9300EE09E1 /* UIInfiniteScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIInfiniteScrollView.xib; sourceTree = "<group>"; };
 		7C4A0D281F4CD69E00286CD6 /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeekView.swift; path = ../../Source/WeekView.swift; sourceTree = "<group>"; };
 		7C4AEB9C1F4CD7240058F579 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Common.swift; path = ../../Source/Common.swift; sourceTree = "<group>"; };
 		7C4AEB9D1F4CD7240058F579 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../Source/Extensions.swift; sourceTree = "<group>"; };
 		7C4AEB9E1F4CD7240058F579 /* UIInfiniteScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIInfiniteScrollView.swift; path = ../../Source/UIInfiniteScrollView.swift; sourceTree = "<group>"; };
 		7C4AEB9F1F4CD7240058F579 /* WeekViewEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeekViewEvent.swift; path = ../../Source/WeekViewEvent.swift; sourceTree = "<group>"; };
+		7C54A9E91F632F58002F1F85 /* WeekView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeekView.xib; sourceTree = "<group>"; };
 		7CB862821F470AA0008F23EC /* SwiftWeekView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftWeekView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB862851F470AA0008F23EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CB862871F470AA0008F23EC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +167,8 @@
 				7CB862871F470AA0008F23EC /* ViewController.swift */,
 				7C0EFE041F4CD3F200153A3E /* Source */,
 				7CB862891F470AA0008F23EC /* Main.storyboard */,
+				7C31AF7C1F632C9300EE09E1 /* UIInfiniteScrollView.xib */,
+				7C54A9E91F632F58002F1F85 /* WeekView.xib */,
 				7CB8628C1F470AA0008F23EC /* Assets.xcassets */,
 				7CB8628E1F470AA0008F23EC /* LaunchScreen.storyboard */,
 				7CB862911F470AA0008F23EC /* Info.plist */,
@@ -305,9 +311,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C31AF7D1F632C9300EE09E1 /* UIInfiniteScrollView.xib in Resources */,
 				7CB862901F470AA0008F23EC /* LaunchScreen.storyboard in Resources */,
 				7CB8628D1F470AA0008F23EC /* Assets.xcassets in Resources */,
 				7CB8628B1F470AA0008F23EC /* Main.storyboard in Resources */,
+				7C54A9EA1F632F58002F1F85 /* WeekView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
