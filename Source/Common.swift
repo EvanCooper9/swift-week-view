@@ -37,3 +37,7 @@ class DarkTheme: Theme {
     var eventTextColor: UIColor = UIColor(rgb: 0xc0c0c0)
     var weekendColor: UIColor = UIColor(rgb: 0x414141)
 }
+
+enum DataSourceError: Error {
+    case DoesNotRespond(String)
+}

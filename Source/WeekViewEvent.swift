@@ -9,40 +9,44 @@
 import Foundation
 import SwiftDate
 
-class WeekViewEvent: Comparable, Equatable {
+class WeekViewEvent: NSObject, Comparable {
     private var title: String
-    private var startDate: DateInRegion
-    private var endDate: DateInRegion
+    private var start: DateInRegion
+    private var end: DateInRegion
     private var color: UIColor
     
+    override var description: String {
+        return "\(getTitle())\n\(getStart().string(format: .custom("HH:mm"))) - \(getEnd().string(format: .custom("HH:mm")))"
+    }
+    
     func getTitle() -> String { return self.title }
-    func getStart() -> DateInRegion { return self.startDate }
-    func getEnd() -> DateInRegion { return self.endDate }
+    func getStart() -> DateInRegion { return self.start }
+    func getEnd() -> DateInRegion { return self.end }
     func getColor() -> UIColor { return self.color }
     
-    init(title: String, startDate: DateInRegion, endDate: DateInRegion, color: UIColor = UIColor.blue) {
+    init(title: String, start: DateInRegion, end: DateInRegion, color: UIColor = UIColor.purple) {
         self.title = title
-        self.startDate = startDate
-        self.endDate = endDate
+        self.start = start
+        self.end = end
         self.color = color
     }
     
     static func < (lhs: WeekViewEvent, rhs: WeekViewEvent) -> Bool {
         // returns the event with the earliest start date
-        return lhs.startDate < rhs.startDate
+        return lhs.start < rhs.start
     }
     
     static func == (lhs: WeekViewEvent, rhs: WeekViewEvent) -> Bool {
         return lhs.title == rhs.title &&
-            lhs.startDate == rhs.startDate &&
-            lhs.endDate == rhs.endDate &&
+            lhs.start == rhs.start &&
+            lhs.end == rhs.end &&
             lhs.color == rhs.color
     }
     
     func overlaps(withEvent: WeekViewEvent) -> Bool {
-        return (self.startDate == withEvent.startDate && self.endDate == withEvent.endDate) ||
-            (self.startDate >= withEvent.startDate && self.startDate <= withEvent.endDate) ||
-            (self.endDate >= withEvent.startDate && self.endDate <= withEvent.endDate) ||
-            (self.startDate <= withEvent.endDate && self.endDate >= withEvent.endDate)
+        return (self.start == withEvent.start && self.end == withEvent.end) ||
+            (self.start >= withEvent.start && self.start <= withEvent.end) ||
+            (self.end >= withEvent.start && self.end <= withEvent.end) ||
+            (self.start <= withEvent.end && self.end >= withEvent.end)
     }
 }

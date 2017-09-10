@@ -10,11 +10,77 @@ import Foundation
 import UIKit
 import SwiftDate
 
+/*
+ Protocol: WeekViewDataSource
+ 
+ Description: Used to delegate the creation of events for the WeekView
+ */
 protocol WeekViewDataSource {
-    func generateEvents(date: DateInRegion, completion: (([WeekViewEvent]) -> Void)?) -> [WeekViewEvent]
+    /*
+     weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion, completion: (([WeekViewEvent]) -> Void)?) -> [WeekViewEvent]
+     
+     Description:
+     Generate and return a set of events for a specific day. Events can be returned synchronously or asynchronously
+     
+     Params:
+     - weekView: the WeekView that is calling this function
+     - date: the date for which to create events for
+     - completion: a completion handler that will add asynchronously generated events
+     */
+    func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent]
 }
 
-@IBDesignable class WeekView: UIView, WeekViewDataSource, UIInfiniteScrollViewDataSource {
+/*
+ Protocol: WeekViewUIDataSource
+ 
+ Description:
+ Used to delegate the creation of different view types within the WeekView.
+ */
+@objc protocol WeekViewUIDataSource {
+    /*
+     weekViewUIEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, eventDescription: String, color: UIColor) -> [UIView]
+     
+     Description:
+     Create the view for an event
+     
+     Params:
+     - weekView: the WeekView that the view will be added to
+     - eventCoordinate: the coordinate of the event view (top left)
+     - eventSize: the size, in width and height, of the event view
+     - event: the event it's self
+     */
+    @objc optional func weekViewUIEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> UIView
+    
+    /*
+     weekViewUIHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView
+     
+     Description:
+     Create the header view for the day in the calendar. This would normally contain information about the date
+     
+     Params:
+     - weekView: the WeekView that the header will be added to
+     - containerPosition: the left-to-right position of the container that the header will be added to, relative to the other containers that have been created
+     - containerCoordinate: the top-left coordinate of the header's container
+     - containerSize: the size, in width and height, of the header's container
+     */
+    @objc optional func weekViewUIHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView
+    
+    /*
+     weekViewUIDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView
+     
+     Description:
+     Create the main view that will contain the events. This normally appears directly under the header created in weekViewUIEventView (above)
+     
+     Params:
+     - weekView: the WeekView that the header will be added to
+     - containerPosition: the left-to-right position of the container that the view will be added to, relative to the other containers that have been created
+     - containerCoordinate: the top-left coordinate of the view's container
+     - containerSize: the size, in width and height, of the view's container
+     */
+    @objc optional func weekViewUIDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView
+}
+
+@IBDesignable class WeekView: UIView, WeekViewDataSource, WeekViewUIDataSource, UIInfiniteScrollViewDataSource {
     private var initDate: DateInRegion!
     private var visibleDays : Int! = 5
     private var timeView: UIView!
@@ -35,64 +101,28 @@ protocol WeekViewDataSource {
     public var dataSource: WeekViewDataSource! {
         didSet {
             if (oldValue != nil) {
-                self.scrollView.reloadView()
+                self.reloadScrollView()
+                self.reloadTimeView()
             }
         }
     }
     
-    init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme? = LightTheme(), nowLineEnabled: Bool? = true) {
-        super.init(frame: frame)
-        self.commonInit(
-            frame: frame,
-            visibleDays: visibleDays,
-            date: date,
-            startHour: startHour,
-            endHour: endHour,
-            colorTheme: colorTheme,
-            nowLineEnabled: nowLineEnabled
-        )
+    public var UIDataSource: WeekViewUIDataSource! {
+        didSet {
+            if (oldValue != nil) {
+                self.reloadScrollView()
+                self.reloadTimeView()
+            }
+        }
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.commonInit(
-            frame: frame,
-            visibleDays: 5,
-            date: DateInRegion(),
-            startHour: 9,
-            endHour: 17,
-            colorTheme: LightTheme(),
-            nowLineEnabled: true
-        )
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.commonInit(
-            frame: self.bounds,
-            visibleDays: 5,
-            date: DateInRegion(),
-            startHour: 9,
-            endHour: 17,
-            colorTheme: LightTheme(),
-            nowLineEnabled: true
-        )
-    }
-    
-    override func prepareForInterfaceBuilder() {
-        self.commonInit(
-            frame: self.bounds,
-            visibleDays: 5,
-            date: DateInRegion(),
-            startHour: 9,
-            endHour: 17,
-            colorTheme: LightTheme(),
-            nowLineEnabled: true
-        )
-    }
+    // getters
+    func getInitDate() -> DateInRegion { return self.initDate }
+    func getFont() -> UIFont { return self.font }
+    func getColorTheme() -> Theme { return self.colorTheme }
     
     /*
-     commonInit(frame: CGRect, eventGenerator: EventGenerator, visibleDays: Int)
+     init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = LightTheme(), nowLineEnabled: Bool = true, nowLineColor: UIColor = .red)
      
      Description:
      Function used by all the other init functions, to centrialized initialization
@@ -100,12 +130,62 @@ protocol WeekViewDataSource {
      Params:
      - frame: the frame of the calendar view
      - visibleDays: an instance of a ViewCreator subclass that overrides the createViewSet method
-     - date: (Optional) the day `WeekView` will initially load. Defaults to the current day.
-     - startHour: (Optional) the earliest hour that will be displayed. Defaults to 09:00.
-     - endHour: (Optional) the latest hour that will be displayed. Defalts to 17:00.
+     - date: (Optional) the day `WeekView` will initially load. Defaults to the current day
+     - startHour: (Optional) the earliest hour that will be displayed. Defaults to 09:00
+     - endHour: (Optional) the latest hour that will be displayed. Defalts to 17:00
+     - nowLineEnabled: (Optional) specify if the "now line" will be visible. Defaults to true
+     - nowLineColor: (Optional) the color of the "now line". Defaults to red
      */
-    private func commonInit(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme? = LightTheme(), nowLineEnabled: Bool? = true, nowLineColor: UIColor? = .red) {
+    init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = LightTheme(), nowLineEnabled: Bool = true, nowLineColor: UIColor = .red) {
+        super.init(frame: frame)
+        self.commonInit(frame: frame, visibleDays: visibleDays, date: date, startHour: startHour, endHour: endHour, colorTheme: colorTheme, nowLineEnabled: nowLineEnabled, nowLineColor: nowLineColor)
+    }
+    
+    /*
+     init(frame: CGRect)
+     
+     NOTE: Only to be used internally for storyboard initialization
+     */
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: LightTheme(), nowLineEnabled: true, nowLineColor: .red)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: LightTheme(), nowLineEnabled: true, nowLineColor: .red)
+    }
+    
+    /*
+     prepareForInterfaceBuilder()
+     
+     Description:
+     Called when a designable object is created in Interface Builder
+     
+     From: https://developer.apple.com/documentation/objectivec/nsobject/1402908-prepareforinterfacebuilder
+     */
+    override func prepareForInterfaceBuilder() {
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: LightTheme(), nowLineEnabled: true, nowLineColor: .red)
+    }
+    
+    /*
+     commonInit(frame: CGRect, eventGenerator: EventGenerator, visibleDays: Int)
+     
+     Description:
+     Function used by all the other init functions, to centrialize initialization
+     
+     Params:
+     - frame: the frame of the calendar view
+     - visibleDays: an instance of a ViewCreator subclass that overrides the createViewSet method
+     - date: the day `WeekView` will initially load
+     - startHour: the earliest hour that will be displayed
+     - endHour: the latest hour that will be displayed
+     - nowLineEnabled: specify if the "now line" will be visible
+     - nowLineColor: the color of the "now line"
+     */
+    private func commonInit(frame: CGRect, visibleDays: Int, date: DateInRegion, startHour: Int, endHour: Int, colorTheme: Theme, nowLineEnabled: Bool, nowLineColor: UIColor) {
         self.dataSource = self
+        self.UIDataSource = self
         self.colorTheme = colorTheme
         self.font = UIFont.init(descriptor: UIFontDescriptor(), size: 10)
         self.headerHeight = 30
@@ -129,7 +209,6 @@ protocol WeekViewDataSource {
         self.scrollView.backgroundColor = self.colorTheme.baseColor
         
         let hourHeight: CGFloat = (timeView.frame.height - self.headerHeight) / CGFloat(self.endHour - self.startHour)
-        var hourLines: [CAShapeLayer] = []
         for hour in self.startHour...self.endHour {
             let hourText: UITextViewFixed = UITextViewFixed(frame: CGRect(x: timeView.frame.origin.x, y: hourHeight * CGFloat(hour - startHour) + self.headerHeight - self.font.pointSize / 2, width: timeView.frame.width, height: hourHeight))
             hourText.text = "\(hour):00"
@@ -141,13 +220,6 @@ protocol WeekViewDataSource {
             hourText.isEditable = false
             hourText.isSelectable = false
             
-            let linePath = UIBezierPath(rect: CGRect(x: 0, y: hourHeight * CGFloat(hour - startHour) + self.headerHeight, width: scrollView.contentSize.width, height: 0.1))
-            let layer = CAShapeLayer()
-            layer.path = linePath.cgPath
-            layer.strokeColor = self.colorTheme.hourLineColor.cgColor
-            layer.fillColor = self.colorTheme.hourLineColor.cgColor
-            hourLines.append(layer)
-            
             self.timeView.addSubview(hourText)
         }
         
@@ -155,9 +227,7 @@ protocol WeekViewDataSource {
         self.addSubview(self.scrollView)
         self.addSubview(self.timeView)
         
-        for line in hourLines {
-            scrollView.layer.addSublayer(line)
-        }
+        self.addHourInfo()
         
         self.nowLineEnabled = nowLineEnabled
         self.nowLineColor = nowLineColor
@@ -182,84 +252,82 @@ protocol WeekViewDataSource {
         self.scrollView.snap()
     }
     
-    internal func createViewSet(viewCoordinate: CGPoint, viewPosition: Int, viewWidth: CGFloat, viewHeight: CGFloat, views: [[UIView]], completion: @escaping ([UIView]) -> Void) -> [UIView] {
-        let viewDate: DateInRegion = self.initDate + viewPosition.days
+    /*
+     createViewSet(viewCoordinate: CGPoint, viewPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView]
+     
+     Description:
+     Implementation of UIInfiniteScrollViewDataSource protocol.
+     */
+    internal func scrollViewFillContainer(containerCoordinate: CGPoint, containerPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView] {
+        let viewDate: DateInRegion = self.initDate + containerPosition.days
         if (viewDate.day == 8 || viewDate.day == 23) {
             self.monthAndYearText.text = "\(viewDate.monthName) \(viewDate.year)"
         }
         
-        let header: UITextViewFixed = UITextViewFixed(frame: CGRect(x: viewCoordinate.x, y: 0, width: viewWidth, height: self.headerHeight))
-        let view: UIView = UIView(frame: CGRect(x: viewCoordinate.x, y: header.frame.height, width: viewWidth, height: viewHeight - header.frame.height))
+        let UIDataSource = self.UIDataSource as AnyObject
+        let header: UIView = (UIDataSource.responds(to: #selector(weekViewUIHeaderView(_:containerPosition:containerCoordinate:containerSize:)))) ? self.UIDataSource.weekViewUIHeaderView!(self, containerPosition: containerPosition, containerCoordinate: containerCoordinate, containerSize: containerSize) : self.weekViewUIHeaderView(self, containerPosition: containerPosition, containerCoordinate: containerCoordinate, containerSize: containerSize)
+        self.headerHeight = header.frame.height
         
-        if (viewDate.isInWeekend) {
-            let color : UIColor = self.colorTheme.weekendColor
-            view.backgroundColor = UIColor(red: color.components.red, green: color.components.green, blue: color.components.blue, alpha: 0.5)
-        }
+        let view: UIView = (UIDataSource.responds(to: #selector(weekViewUIDayView(_:containerPosition:containerCoordinate:containerSize:header:)))) ? self.UIDataSource.weekViewUIDayView!(self, containerPosition: containerPosition, containerCoordinate: containerCoordinate, containerSize: containerSize, header: header) : self.weekViewUIDayView(self, containerPosition: containerPosition, containerCoordinate: containerCoordinate, containerSize: containerSize, header: header)
         
-        header.text = String("\(viewDate.weekdayShortName) \(viewDate.day)".uppercased())
-        header.textAlignment = .center
-        header.centerTextVertically()
-        header.font = self.font
-        header.textColor = self.colorTheme.hourTextColor
-        header.isEditable = false
-        header.isSelectable = false
-        header.backgroundColor = .clear
+        let linePath = UIBezierPath(rect: CGRect(x: containerCoordinate.x - (self.scrollView.getSpacerSize() / 2), y: containerCoordinate.y + self.headerHeight/2, width: 0.1, height: containerSize.height - self.headerHeight/2))
+        let layer: CAShapeLayer = CAShapeLayer()
+        layer.path = linePath.cgPath
+        layer.strokeColor = self.colorTheme.hourLineColor.cgColor
+        layer.fillColor = self.colorTheme.hourLineColor.cgColor
+        self.scrollView.layer.addSublayer(layer)
         
         DispatchQueue.global(qos: .background).async {
-            let events = self.dataSource.generateEvents(date: viewDate, completion: nil)
-            
-            if (events.count == 0) {
-                completion ([UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))])
-            } else {
-                DispatchQueue.main.async {
-                    var eventViews: [UIView] = []
-                    for event in events {
-                        let hourHeight = (self.frame.height - (self.headerHeight * 2)) / CGFloat(self.endHour - self.startHour)
-                        let minuteHeight = hourHeight / 60
-                        let eventStartHour = event.getStart().hour
-                        let eventStartMinute = event.getStart().minute
-                        let eventEndHour = event.getEnd().hour
-                        let eventEndMinute = event.getEnd().minute
-                        var eventX = viewCoordinate.x
-                        let eventY = header.frame.height + (hourHeight * CGFloat(eventStartHour - self.startHour)) + (minuteHeight * CGFloat(eventStartMinute))
-                        var eventWidth = viewWidth
-                        let eventHeight = (hourHeight * CGFloat(eventEndHour - eventStartHour)) + (minuteHeight * CGFloat(eventEndMinute - eventStartMinute))
-                        
-                        // For events that overlap
-                        if (events.count > 1) {
-                            var overlappingViews: [WeekViewEvent] = []
-                            for e in events {
-                                if (event != e && event.overlaps(withEvent: e)) {
-                                    overlappingViews.append(e)
-                                } else if (event == e) {
-                                    overlappingViews.append(event)
-                                }
-                            }
-                            
-                            if (overlappingViews.count >= 2) {
-                                eventWidth = viewWidth / CGFloat(overlappingViews.count)
-                                eventX = viewCoordinate.x + (CGFloat(overlappingViews.index(of: event)!) * eventWidth)
+            let events = self.dataSource.weekViewGenerateEvents(self, date: viewDate)
+            DispatchQueue.main.async {
+                var eventViews: [UIView] = []
+                for event in events {
+                    let hourHeight = (self.frame.height - self.monthAndYearText.frame.height - header.frame.height) / CGFloat(self.endHour - self.startHour)
+                    let minuteHeight = hourHeight / 60
+                    let eventStartHour = event.getStart().hour
+                    let eventStartMinute = event.getStart().minute
+                    let eventEndHour = event.getEnd().hour
+                    let eventEndMinute = event.getEnd().minute
+                    var eventX = containerCoordinate.x
+                    let eventY = self.headerHeight + (hourHeight * CGFloat(eventStartHour - self.startHour)) + (minuteHeight * CGFloat(eventStartMinute))
+                    var eventWidth = containerSize.width
+                    let eventHeight = (hourHeight * CGFloat(eventEndHour - eventStartHour)) + (minuteHeight * CGFloat(eventEndMinute - eventStartMinute))
+                    
+                    // For events that overlap
+                    if (events.count > 1) {
+                        var overlappingViews: [WeekViewEvent] = []
+                        for e in events {
+                            if (event != e && event.overlaps(withEvent: e)) {
+                                overlappingViews.append(e)
+                            } else if (event == e) {
+                                overlappingViews.append(event)
                             }
                         }
                         
-                        let eventView: UIView = UIView(frame: CGRect(x: eventX, y: eventY, width: eventWidth, height: eventHeight))
-                        eventView.backgroundColor = UIColor(red: event.getColor().components.red, green: event.getColor().components.green, blue: event.getColor().components.blue, alpha: 0.6)
-                        
-                        let eventLeftBorder: UIView = UIView(frame: CGRect(x: eventX, y: eventY, width: 5, height: eventHeight))
-                        eventLeftBorder.backgroundColor = event.getColor()
-                        
-                        let eventText: UITextView = UITextView(frame: CGRect(x: eventView.frame.origin.x + 3, y: eventView.frame.origin.y, width: eventView.frame.width, height: eventView.frame.height))
-                        eventText.text = "\(event.getTitle())\n\(event.getStart().string(format: .custom("HH:mm"))) - \(event.getEnd().string(format: .custom("HH:mm")))"
-                        eventText.backgroundColor = .clear
-                        eventText.font = self.font
-                        eventText.textColor = self.colorTheme.eventTextColor
-                        eventText.isEditable = false
-                        eventText.isSelectable = false
-                        
-                        eventViews.append(contentsOf: [eventView, eventLeftBorder, eventText])
+                        if (overlappingViews.count >= 2) {
+                            eventWidth = containerSize.height / CGFloat(overlappingViews.count)
+                            eventX = containerCoordinate.x + (CGFloat(overlappingViews.index(of: event)!) * eventWidth)
+                        }
                     }
-                    completion(eventViews)
+                    
+                    let eventCoordinate: CGPoint = CGPoint(x: eventX, y: eventY)
+                    let eventSize: CGSize = CGSize(width: eventWidth, height: eventHeight)
+                    guard let eventView = self.UIDataSource.weekViewUIEventView?(self, eventCoordinate: eventCoordinate, eventSize: eventSize, event: event) else {
+                        let eventView = self.weekViewUIEventView(self, eventCoordinate: eventCoordinate, eventSize: eventSize, event: event)
+                        eventViews.append(eventView)
+                        break
+                    }
+                    
+                    eventViews.append(eventView)
                 }
+                
+                if (eventViews.count == 0) {
+                    let ghostView: UIView = UIView(frame: CGRect(x: containerCoordinate.x, y: 0, width: containerSize.width, height: 1))
+                    ghostView.backgroundColor = .clear
+                    eventViews.append(ghostView)
+                }
+                
+                completion(eventViews)
             }
         }
         
@@ -271,7 +339,7 @@ protocol WeekViewDataSource {
      
      Description:
      Will re-position the 'now' line, for internal use only.
-    */
+     */
     private func refreshNowLine(xPos: CGFloat, yPos: CGFloat, hourHeight: CGFloat) {
         self.nowLine.removeFromSuperlayer()
         self.nowCircle.removeFromSuperview()
@@ -290,10 +358,90 @@ protocol WeekViewDataSource {
         self.nowCircle.clipsToBounds = true
         self.addSubview(self.nowCircle)
         
-        if (yPos + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)) < self.timeView.frame.origin.y + self.headerHeight) {
+        if (now.hour < self.startHour || now.hour > self.endHour) {
             self.nowLine.removeFromSuperlayer()
             self.nowCircle.removeFromSuperview()
         }
+//        if (yPos + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)) < self.timeView.frame.origin.y + self.headerHeight) {
+//            
+//        }
+    }
+    
+    /*
+     addHourInfo()
+     
+     Description:
+     Add the hour text and horizontal line for each hour that's visible in the scrollView
+     */
+    private func addHourInfo() {
+        let hourHeight: CGFloat = (timeView.frame.height - self.headerHeight) / CGFloat(self.endHour - self.startHour)
+        var hourLines: [CAShapeLayer] = []
+        for hour in self.startHour...self.endHour {
+            let hourText: UITextViewFixed = UITextViewFixed(frame: CGRect(x: timeView.frame.origin.x, y: hourHeight * CGFloat(hour - startHour) + self.headerHeight - self.font.pointSize / 2, width: timeView.frame.width, height: hourHeight))
+            hourText.text = "\(hour):00"
+            hourText.textAlignment = .right
+            hourText.backgroundColor = .clear
+            hourText.font = self.font
+            hourText.textColor = self.colorTheme.hourTextColor
+            hourText.pushTextToTop()
+            hourText.isEditable = false
+            hourText.isSelectable = false
+            
+            let linePath = UIBezierPath(rect: CGRect(x: 0, y: hourHeight * CGFloat(hour - startHour) + self.headerHeight, width: scrollView.contentSize.width, height: 0.1))
+            let layer = CAShapeLayer()
+            layer.path = linePath.cgPath
+            layer.strokeColor = self.colorTheme.hourLineColor.cgColor
+            layer.fillColor = self.colorTheme.hourLineColor.cgColor
+            hourLines.append(layer)
+            
+            self.timeView.addSubview(hourText)
+        }
+        
+        for line in hourLines {
+            self.scrollView.layer.addSublayer(line)
+        }
+    }
+    
+    /*
+     reloadScrollView()
+     
+     Description:
+     Internal utility function to refresh the contents of the scrollView
+     */
+    private func reloadScrollView() {
+        self.scrollView.removeFromSuperview()
+        self.scrollView = UIInfiniteScrollView(frame: self.scrollView.frame, viewsInPageCount: self.visibleDays, spacerSize: 2, scrollDirection: .horizontal)
+        self.scrollView.dataSource = self
+        self.scrollView.backgroundColor = self.colorTheme.baseColor
+        self.addSubview(self.scrollView)
+        self.addHourInfo()
+    }
+    
+    /*
+     reloadTimeView()
+     
+     Description:
+     Internal utility function to refresh the contents of the timeView
+     */
+    private func reloadTimeView() {
+        self.timeView.removeFromSuperview()
+        self.timeView = UIView(frame: CGRect(x: self.frame.origin.x, y: self.frame.origin.y + self.monthAndYearText.frame.height, width: 40, height: self.frame.height - self.monthAndYearText.frame.height))
+        self.timeView.backgroundColor = self.colorTheme.baseColor
+        let hourHeight: CGFloat = (timeView.frame.height - self.headerHeight) / CGFloat(self.endHour - self.startHour)
+        for hour in self.startHour...self.endHour {
+            let hourText: UITextViewFixed = UITextViewFixed(frame: CGRect(x: timeView.frame.origin.x, y: hourHeight * CGFloat(hour - startHour) + self.headerHeight - self.font.pointSize / 2, width: timeView.frame.width, height: hourHeight))
+            hourText.text = "\(hour):00"
+            hourText.textAlignment = .right
+            hourText.backgroundColor = .clear
+            hourText.font = self.font
+            hourText.textColor = self.colorTheme.hourTextColor
+            hourText.pushTextToTop()
+            hourText.isEditable = false
+            hourText.isSelectable = false
+            
+            self.timeView.addSubview(hourText)
+        }
+        self.addSubview(self.timeView)
     }
     
     /*
@@ -304,7 +452,7 @@ protocol WeekViewDataSource {
      
      Params:
      - date: the date to jump the view to.
-    */
+     */
     func jumpToDay(date: DateInRegion) {
         self.initDate = date - self.visibleDays.days
         self.scrollView.removeFromSuperview()
@@ -313,7 +461,80 @@ protocol WeekViewDataSource {
         self.addSubview(self.scrollView)
     }
     
-    internal func generateEvents(date: DateInRegion, completion: (([WeekViewEvent]) -> Void)?) -> [WeekViewEvent] {
-        return []
+    /*
+     weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion, completion: (([WeekViewEvent]) -> Void)?) -> [WeekViewEvent]
+     
+     Description:
+     Default implementation of the WeekViewDataSource protocol
+     */
+    internal func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent] {
+        let start: DateInRegion = date.atTime(hour: 12, minute: 0, second: 0)!
+        let end: DateInRegion = date.atTime(hour: 13, minute: 30, second: 0)!
+        let event: WeekViewEvent = WeekViewEvent(title: "Lunch", start: start, end: end)
+        return [event]
+    }
+    
+    /*
+     weekViewUIEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, eventDescription: String, color: UIColor) -> [UIView]
+     
+     Description:
+     Default implementation of the WeekViewUIDataSource protocol
+     */
+    internal func weekViewUIEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> UIView {
+        let eventView: UIView = UIView(frame: CGRect(x: eventCoordinate.x, y: eventCoordinate.y, width: eventSize.width, height: eventSize.height))
+        eventView.backgroundColor = UIColor(red: event.getColor().components.red, green: event.getColor().components.green, blue: event.getColor().components.blue, alpha: 0.6)
+        
+        let eventLeftBorder: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: eventSize.height))
+        eventLeftBorder.backgroundColor = event.getColor()
+        
+        let eventText: UITextView = UITextView(frame: CGRect(x: 3, y: 0, width: eventView.frame.width - 3, height: eventView.frame.height))
+        eventText.text = event.description
+        eventText.backgroundColor = .clear
+        eventText.font = weekView.font
+        eventText.textColor = weekView.colorTheme.eventTextColor
+        eventText.isEditable = false
+        eventText.isSelectable = false
+        
+        eventView.addSubview(eventLeftBorder)
+        eventView.addSubview(eventText)
+        return eventView
+    }
+    
+    /*
+     weekViewUIHeaderView(_ weekView: WeekView, viewPosition: Int, viewCoordinate: CGPoint, viewSize: CGSize) -> UIView
+     
+     Description:
+     Default implementation of the WeekViewUIDataSource Protocol
+     */
+    internal func weekViewUIHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView {
+        let viewDate: DateInRegion = self.initDate + containerPosition.days
+        let header: UITextViewFixed = UITextViewFixed(frame: CGRect(x: containerCoordinate.x, y: 0, width: containerSize.width, height: self.headerHeight))
+        
+        header.text = String("\(viewDate.weekdayShortName) \(viewDate.day)".uppercased())
+        header.textAlignment = .center
+        header.centerTextVertically()
+        header.font = self.font
+        header.textColor = self.colorTheme.hourTextColor
+        header.isEditable = false
+        header.isSelectable = false
+        header.backgroundColor = .clear
+        
+        return header
+    }
+    
+    /*
+     weekViewUIDayView(_ weekView: WeekView, viewPosition: Int, viewCoordinate: CGPoint, viewSize: CGSize, header: UIView) -> UIView
+     
+     Description:
+     Default implementation of the WeekViewUIDataSource Protocol
+     */
+    internal func weekViewUIDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView {
+        let viewDate: DateInRegion = self.initDate + containerPosition.days
+        let view: UIView = UIView(frame: CGRect(x: containerCoordinate.x, y: header.frame.height, width: containerSize.width, height: containerSize.height - header.frame.height))
+        if (viewDate.isInWeekend) {
+            view.backgroundColor = UIColor(red: self.colorTheme.weekendColor.components.red, green: self.colorTheme.weekendColor.components.green, blue: self.colorTheme.weekendColor.components.blue, alpha: 0.5)
+        }
+        
+        return view
     }
 }
