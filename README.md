@@ -35,7 +35,7 @@ func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekVi
 - `color`: (Optional) the color that the event will be displayed in. Defaults to red.
 
 > #### Note:
-> - Events are added to the view asynchronously by default. This means you can make blocking calls in the generateEvents function, and the events will still play nicely with everything else.
+> `weekViewGenerateEvents` is already being called asynchronously with a completion handler behind the scenes, so events are added aynchronously, event if they're fetched synchronously.
 
 ### 3. Initialize the instance
 #### A. Programmatically
@@ -62,20 +62,20 @@ weekView.dataSource = self
 ```
 
 ## Custom Styling
-To use custom styling, implement the `WeekViewUIDataSource` protocol, and any of the included functions. Set the `UIDataSource` attribute of the `WeekView` to the class that implements the protocol.
+To use custom styling, implement the `WeekViewStyler` protocol, and any of the included functions. Set the `styler` propery of the `WeekView` to the class that implements the protocol.
 Default implementations can be found in `WeekView.swift`. 
 
 ```Swift
 weekView.UIDataSource = self
 
 // Creates the view for an event
-func weekViewUIEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> UIView
+func weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> UIView
 
 // Creates the view for a day's header
-func weekViewUIHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView
+func weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView
 
 // Creates the day's main view where the events are seen
-func weekViewUIDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView
+func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView
 ```
 
 ## Dependencies

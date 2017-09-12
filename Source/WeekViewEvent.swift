@@ -15,6 +15,8 @@ class WeekViewEvent: NSObject, Comparable {
     private var end: DateInRegion
     private var color: UIColor
     
+    var view: UIView?
+    
     override var description: String {
         return "\(getTitle())\n\(getStart().string(format: .custom("HH:mm"))) - \(getEnd().string(format: .custom("HH:mm")))"
     }
