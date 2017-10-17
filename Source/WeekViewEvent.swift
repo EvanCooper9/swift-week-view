@@ -26,7 +26,7 @@ class WeekViewEvent: NSObject, Comparable {
     func getEnd() -> DateInRegion { return self.end }
     func getColor() -> UIColor { return self.color }
     
-    init(title: String, start: DateInRegion, end: DateInRegion, color: UIColor = UIColor.purple) {
+    init(title: String, start: DateInRegion, end: DateInRegion, color: UIColor = UIColor.red) {
         self.title = title
         self.start = start
         self.end = end

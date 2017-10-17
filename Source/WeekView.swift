@@ -327,7 +327,7 @@ protocol WeekViewDataSource {
                     
                     event.view = eventView
                     
-                    self.events.insert(event, at: containerPosition)
+//                    self.events.insert(event, at: containerPosition)
                     eventViews.append(eventView)
                 }
                 
