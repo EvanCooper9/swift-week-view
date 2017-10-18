@@ -34,17 +34,17 @@ func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekVi
 - `end`: the end of the event
 - `color`: (Optional) the color that the event will be displayed in. Defaults to red.
 
-> #### Note:
+> ### Note:
 > `weekViewGenerateEvents` is already being called asynchronously with a completion handler behind the scenes, so events are added aynchronously, event if they're fetched synchronously.
 
 ### 3. Initialize the instance
 #### A. Programmatically
-Create an instance of `WeekView`, specify it's delegate, and add it as a subview
+Create an instance of `WeekView`, specify it's data source, and add it as a subview.
 
 ```Swift
 let weekView: WeekView = WeekView(frame: frame, visibleDays: 5)
 weekView.dataSource = self
-self.view.addSubview(weekView)
+addSubview(weekView)
 ```
 ##### Available arguments for `WeekView`
 - `frame`: the frame of the calendar view
@@ -55,27 +55,26 @@ self.view.addSubview(weekView)
 - `colorTheme`: (Optional) the colors used in the view. Default = `LightTheme`
 
 #### B. Storyboard
-Add a view to the storyboard and make it's class `WeekView`. Then connect the view as an outlet to your view contoller and set the data source.
+Add a view to the storyboard and make it's class `WeekView`. Assign the view's data source programmatically. 
 ```Swift
 @IBOutlet weak var weekView: WeekView!
 weekView.dataSource = self
 ```
 
 ## Custom Styling
-To use custom styling, implement the `WeekViewStyler` protocol, and any of the included functions. Set the `styler` propery of the `WeekView` to the class that implements the protocol.
-Default implementations can be found in `WeekView.swift`. 
+To use custom styling, implement the `WeekViewStyler` protocol, and any of the included functions. Set the `styler` propery of the `WeekView` to the class that implements the protocol. `WeekView` by default is its own styler.
 
 ```Swift
-weekView.UIDataSource = self
+weekView.styler = self
 
 // Creates the view for an event
-func weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> UIView
+weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> UIView
 
 // Creates the view for a day's header
-func weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView
+weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView
 
 // Creates the day's main view where the events are seen
-func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView
+weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView
 ```
 
 ## Dependencies
@@ -90,4 +89,3 @@ See the included example for basic implementation. Make sure to download the *en
 ## Up Next
 - Add events with touch gestures
 - Ability to scroll vertically through the full hours of the day.
-- Add completion handler in `weekViewGenerateEvents` to allow non-blocking calls to fetch data for events, since some API calls by nature are non-blocking and don't have the ability to be synchronous. 
