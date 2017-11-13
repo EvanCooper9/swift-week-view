@@ -38,7 +38,7 @@ protocol WeekViewDataSource {
  */
 @objc protocol WeekViewStyler {
     /*
-     weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, eventDescription: String, color: UIColor) -> [UIView]
+     weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView
      
      Description:
      Create the view for an event
@@ -49,10 +49,10 @@ protocol WeekViewDataSource {
      - eventSize: the size, in width and height, of the event view
      - event: the event it's self
      */
-    @objc optional func weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> UIView
+    @objc optional func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView
     
     /*
-     weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView
+     weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, container: CGRect) -> UIView
      
      Description:
      Create the header view for the day in the calendar. This would normally contain information about the date
@@ -63,7 +63,7 @@ protocol WeekViewDataSource {
      - containerCoordinate: the top-left coordinate of the header's container
      - containerSize: the size, in width and height, of the header's container
      */
-    @objc optional func weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView
+    @objc optional func weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, container: CGRect) -> UIView
     
     /*
      weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView
@@ -77,7 +77,7 @@ protocol WeekViewDataSource {
      - containerCoordinate: the top-left coordinate of the view's container
      - containerSize: the size, in width and height, of the view's container
      */
-    @objc optional func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView
+    @objc optional func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, container: CGRect, header: UIView) -> UIView
 }
 
 @IBDesignable class WeekView: UIView, WeekViewDataSource, WeekViewStyler, UIInfiniteScrollViewDataSource {
@@ -128,7 +128,7 @@ protocol WeekViewDataSource {
     func getColorTheme() -> Theme { return self.colorTheme }
     
     /*
-     init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = LightTheme(), nowLineEnabled: Bool = true, nowLineColor: UIColor = .red)
+     init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = .light, nowLineEnabled: Bool = true, nowLineColor: UIColor = .red)
      
      Description:
      Function used by all the other init functions, to centrialized initialization
@@ -142,7 +142,7 @@ protocol WeekViewDataSource {
      - nowLineEnabled: (Optional) specify if the "now line" will be visible. Defaults to true
      - nowLineColor: (Optional) the color of the "now line". Defaults to red
      */
-    init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = LightTheme(), nowLineEnabled: Bool = true, nowLineColor: UIColor = .red) {
+    init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = .light, nowLineEnabled: Bool = true, nowLineColor: UIColor = .red) {
         super.init(frame: frame)
         self.commonInit(frame: frame, visibleDays: visibleDays, date: date, startHour: startHour, endHour: endHour, colorTheme: colorTheme, nowLineEnabled: nowLineEnabled, nowLineColor: nowLineColor)
     }
@@ -154,12 +154,17 @@ protocol WeekViewDataSource {
      */
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: LightTheme(), nowLineEnabled: true, nowLineColor: .red)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red)
     }
     
+    /*
+     init?(coder aDecoder: NSCoder)
+     
+     For storyboard initialization
+     */
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: LightTheme(), nowLineEnabled: true, nowLineColor: .red)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red)
     }
     
     /*
@@ -171,11 +176,15 @@ protocol WeekViewDataSource {
      From: https://developer.apple.com/documentation/objectivec/nsobject/1402908-prepareforinterfacebuilder
      */
     override func prepareForInterfaceBuilder() {
-        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: LightTheme(), nowLineEnabled: true, nowLineColor: .red)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red)
+    }
+    
+    private func framesMatch(frame1: CGRect, frame2: CGRect) -> Bool {
+        return frame1.origin.x.isEqual(to: frame2.origin.x) && frame1.origin.y.isEqual(to: frame2.origin.y) && frame1.size.width.isEqual(to: frame2.size.width) && frame1.size.height.isEqual(to: frame2.size.height)
     }
     
     /*
-     commonInit(frame: CGRect, eventGenerator: EventGenerator, visibleDays: Int)
+     commonInit(frame: CGRect, visibleDays: Int, date: DateInRegion, startHour: Int, endHour: Int, colorTheme: Theme, nowLineEnabled: Bool, nowLineColor: UIColor)
      
      Description:
      Function used by all the other init functions, to centrialize initialization
@@ -260,7 +269,7 @@ protocol WeekViewDataSource {
     }
     
     /*
-     createViewSet(viewCoordinate: CGPoint, viewPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView]
+     scrollViewFillContainer(containerCoordinate: CGPoint, containerPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView]
      
      Description:
      Implementation of UIInfiniteScrollViewDataSource protocol.
@@ -271,11 +280,13 @@ protocol WeekViewDataSource {
             self.monthAndYearText.text = "\(viewDate.monthName) \(viewDate.year)"
         }
         
+        let container: CGRect = CGRect(origin: containerCoordinate, size: containerSize)
+        
         let styler = self.styler as AnyObject
-        let header: UIView = (styler.responds(to: #selector(weekViewStylerHeaderView(_:containerPosition:containerCoordinate:containerSize:)))) ? self.styler.weekViewStylerHeaderView!(self, containerPosition: containerPosition, containerCoordinate: containerCoordinate, containerSize: containerSize) : self.weekViewStylerHeaderView(self, containerPosition: containerPosition, containerCoordinate: containerCoordinate, containerSize: containerSize)
+        let header: UIView = (styler.responds(to: #selector(weekViewStylerHeaderView(_:containerPosition:container:)))) ? self.styler.weekViewStylerHeaderView!(self, containerPosition: containerPosition, container: container) : self.weekViewStylerHeaderView(self, containerPosition: containerPosition, container: container)
         self.headerHeight = header.frame.height
         
-        let view: UIView = (styler.responds(to: #selector(weekViewStylerDayView(_:containerPosition:containerCoordinate:containerSize:header:)))) ? self.styler.weekViewStylerDayView!(self, containerPosition: containerPosition, containerCoordinate: containerCoordinate, containerSize: containerSize, header: header) : self.weekViewStylerDayView(self, containerPosition: containerPosition, containerCoordinate: containerCoordinate, containerSize: containerSize, header: header)
+        let view: UIView = (styler.responds(to: #selector(weekViewStylerDayView(_:containerPosition:container:header:)))) ? self.styler.weekViewStylerDayView!(self, containerPosition: containerPosition, container: container, header: header) : self.weekViewStylerDayView(self, containerPosition: containerPosition, container: container, header: header)
         
         let linePath = UIBezierPath(rect: CGRect(x: containerCoordinate.x - (self.scrollView.getSpacerSize() / 2), y: containerCoordinate.y + self.headerHeight/2, width: 0.1, height: containerSize.height - self.headerHeight/2))
         let layer: CAShapeLayer = CAShapeLayer()
@@ -312,22 +323,20 @@ protocol WeekViewDataSource {
                         }
                         
                         if (overlappingViews.count >= 2) {
-                            eventWidth = containerSize.height / CGFloat(overlappingViews.count)
+                            eventWidth = containerSize.width / CGFloat(overlappingViews.count)
                             eventX = containerCoordinate.x + (CGFloat(overlappingViews.index(of: event)!) * eventWidth)
                         }
                     }
                     
-                    let eventCoordinate: CGPoint = CGPoint(x: eventX, y: eventY)
-                    let eventSize: CGSize = CGSize(width: eventWidth, height: eventHeight)
-                    guard let eventView = self.styler.weekViewStylerEventView?(self, eventCoordinate: eventCoordinate, eventSize: eventSize, event: event) else {
-                        let eventView = self.weekViewStylerEventView(self, eventCoordinate: eventCoordinate, eventSize: eventSize, event: event)
+                    let eventContainer: CGRect = CGRect(x: eventX, y: eventY, width: eventWidth, height: eventHeight)
+                    guard let eventView = self.styler.weekViewStylerEventView?(self, eventContainer: eventContainer, event: event) else {
+                        let eventView = self.weekViewStylerEventView(self, eventContainer: eventContainer, event: event)
                         eventViews.append(eventView)
                         break
                     }
                     
                     event.view = eventView
                     
-//                    self.events.insert(event, at: containerPosition)
                     eventViews.append(eventView)
                 }
                 
@@ -469,7 +478,7 @@ protocol WeekViewDataSource {
     }
     
     /*
-     weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion, completion: (([WeekViewEvent]) -> Void)?) -> [WeekViewEvent]
+     weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent]
      
      Description:
      Default implementation of the WeekViewDataSource protocol
@@ -482,16 +491,16 @@ protocol WeekViewDataSource {
     }
     
     /*
-     weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, eventDescription: String, color: UIColor) -> [UIView]
+     weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView
      
      Description:
      Default implementation of the WeekViewStyler protocol
      */
-    internal func weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> UIView {
-        let eventView: UIView = UIView(frame: CGRect(x: eventCoordinate.x, y: eventCoordinate.y, width: eventSize.width, height: eventSize.height))
+    internal func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView {
+        let eventView: UIView = UIView(frame: eventContainer)
         eventView.backgroundColor = UIColor(red: event.getColor().components.red, green: event.getColor().components.green, blue: event.getColor().components.blue, alpha: 0.6)
         
-        let eventLeftBorder: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: eventSize.height))
+        let eventLeftBorder: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: eventView.frame.height))
         eventLeftBorder.backgroundColor = event.getColor()
         
         let eventText: UITextView = UITextView(frame: CGRect(x: 3, y: 0, width: eventView.frame.width - 3, height: eventView.frame.height))
@@ -508,14 +517,14 @@ protocol WeekViewDataSource {
     }
     
     /*
-     weekViewStylerHeaderView(_ weekView: WeekView, viewPosition: Int, viewCoordinate: CGPoint, viewSize: CGSize) -> UIView
+     weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, container: CGRect) -> UIView
      
      Description:
      Default implementation of the WeekViewStyler Protocol
      */
-    internal func weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView {
+    internal func weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, container: CGRect) -> UIView {
         let viewDate: DateInRegion = self.initDate + containerPosition.days
-        let header: UITextViewFixed = UITextViewFixed(frame: CGRect(x: containerCoordinate.x, y: 0, width: containerSize.width, height: self.headerHeight))
+        let header: UITextViewFixed = UITextViewFixed(frame: CGRect(x: container.origin.x, y: 0, width: container.size.width, height: self.headerHeight))
         
         header.text = String("\(viewDate.weekdayShortName) \(viewDate.day)".uppercased())
         header.textAlignment = .center
@@ -530,14 +539,14 @@ protocol WeekViewDataSource {
     }
     
     /*
-     weekViewStylerDayView(_ weekView: WeekView, viewPosition: Int, viewCoordinate: CGPoint, viewSize: CGSize, header: UIView) -> UIView
+     weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, container: CGRect, header: UIView) -> UIView
      
      Description:
      Default implementation of the WeekViewStyler Protocol
      */
-    internal func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView {
+    internal func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, container: CGRect, header: UIView) -> UIView {
         let viewDate: DateInRegion = self.initDate + containerPosition.days
-        let view: UIView = UIView(frame: CGRect(x: containerCoordinate.x, y: header.frame.height, width: containerSize.width, height: containerSize.height - header.frame.height))
+        let view: UIView = UIView(frame: CGRect(x: container.origin.x, y: header.frame.height, width: container.size.width, height: container.size.height - header.frame.height))
         if (viewDate.isInWeekend) {
             view.backgroundColor = UIColor(red: self.colorTheme.weekendColor.components.red, green: self.colorTheme.weekendColor.components.green, blue: self.colorTheme.weekendColor.components.blue, alpha: 0.5)
         }

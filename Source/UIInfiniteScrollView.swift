@@ -32,7 +32,7 @@ protocol UIInfiniteScrollViewDataSource {
 }
 
 @IBDesignable class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate, UIInfiniteScrollViewDataSource {
-    private var views: [[UIView]]!
+    private var views: [[UIView]] = [[UIView]]()
     private var viewRangeStart: Int! = 0
     private var loadPageCount: Int!
     private var viewSize: CGSize!
@@ -42,7 +42,7 @@ protocol UIInfiniteScrollViewDataSource {
     
     private var isSnapEnabled: Bool = true
     
-    internal var dataSource: UIInfiniteScrollViewDataSource! {
+    var dataSource: UIInfiniteScrollViewDataSource! {
         didSet {
             if (oldValue != nil) {
                 for subView in self.subviews {
@@ -114,27 +114,25 @@ protocol UIInfiniteScrollViewDataSource {
      - scrollDirection: the direction that the scrollView will scroll, .horizontal or .vertical
      */
     private func commonInit(viewsInPageCount: Int, spacerSize: CGFloat, scrollDirection: ScrollDirection) {
-        self.delegate = self
-        self.dataSource = self
-        self.views = []
-        self.viewRangeStart = 0
+        delegate = self
+        dataSource = self
         self.viewsInPageCount = viewsInPageCount
-        self.loadPageCount = self.viewsInPageCount * 3
+        loadPageCount = self.viewsInPageCount * 3
         self.spacerSize = spacerSize
         self.scrollDirection = scrollDirection
         
-        if (self.scrollDirection == .horizontal) {
-            self.viewSize = CGSize(width: (self.frame.width - (CGFloat(self.spacerSize) * CGFloat(self.viewsInPageCount - 1))) / CGFloat(self.viewsInPageCount), height: self.frame.height)
-            self.contentSize = CGSize(width: (self.viewSize.width + self.spacerSize) * CGFloat(self.viewsInPageCount * 3) - self.spacerSize, height: self.frame.height)
-            self.contentOffset = CGPoint(x: Int(self.viewSize.width + self.spacerSize) * self.viewsInPageCount, y: 0)
+        if (scrollDirection == .horizontal) {
+            viewSize = CGSize(width: (self.frame.width - (CGFloat(self.spacerSize) * CGFloat(self.viewsInPageCount - 1))) / CGFloat(self.viewsInPageCount), height: self.frame.height)
+            contentSize = CGSize(width: (self.viewSize.width + self.spacerSize) * CGFloat(self.viewsInPageCount * 3) - self.spacerSize, height: self.frame.height)
+            contentOffset = CGPoint(x: Int(self.viewSize.width + self.spacerSize) * self.viewsInPageCount, y: 0)
         } else {
-            self.viewSize = CGSize(width: self.frame.width, height: (self.frame.height - (CGFloat(self.spacerSize) * CGFloat(self.viewsInPageCount - 1))) / CGFloat(self.viewsInPageCount))
-            self.contentSize = CGSize(width: self.frame.width, height: (self.viewSize.height + self.spacerSize) * CGFloat(self.viewsInPageCount * 3))
-            self.contentOffset = CGPoint(x: 0, y: Int(self.viewSize.height + self.spacerSize) * self.viewsInPageCount)
+            viewSize = CGSize(width: self.frame.width, height: (self.frame.height - (CGFloat(self.spacerSize) * CGFloat(self.viewsInPageCount - 1))) / CGFloat(self.viewsInPageCount))
+            contentSize = CGSize(width: self.frame.width, height: (self.viewSize.height + self.spacerSize) * CGFloat(self.viewsInPageCount * 3))
+            contentOffset = CGPoint(x: 0, y: Int(self.viewSize.height + self.spacerSize) * self.viewsInPageCount)
         }
         
-        self.createViews(fromPosition: 0, toPosition: (self.viewsInPageCount * 3) - 1)
-        self.loadActiveViews(startIndex: 0)
+        createViews(fromPosition: 0, toPosition: (self.viewsInPageCount * 3) - 1)
+        loadActiveViews(startIndex: 0)
     }
     
     /*
@@ -152,8 +150,24 @@ protocol UIInfiniteScrollViewDataSource {
      When the scrollView scroll horizontally, calculateYPosition returns 0
      When the scrollView scroll vertically, calculateXPosition returns 0
      */
-    private func calculateXPosition(index: Int) -> CGFloat { return (self.scrollDirection == .horizontal) ? CGFloat(index) * (self.viewSize.width + self.spacerSize) : 0 }
-    private func calculateYPosition(index: Int) -> CGFloat { return (self.scrollDirection == .vertical) ? CGFloat(index) * (self.viewSize.height + self.spacerSize) : 0 }
+    private func calculateXPosition(index: Int) -> CGFloat { return (scrollDirection == .horizontal) ? CGFloat(index) * (viewSize.width + spacerSize) : 0 }
+    private func calculateYPosition(index: Int) -> CGFloat { return (scrollDirection == .vertical) ? CGFloat(index) * (viewSize.height + spacerSize) : 0 }
+    
+    /*
+     calculatePosition(index: Int) -> CGPoint
+     
+     Description:
+     Calculate the realtive position of a view within UIInfiniteScrollView's content based on the view's index.based
+     
+     Params:
+     - index: the index of the view that's being added to the content view of UIInfinteScrollView
+     */
+    private func calculatePosition(index: Int) -> CGPoint {
+        var point = CGPoint()
+        point.x = (scrollDirection == .horizontal) ? CGFloat(index) * (viewSize.width + spacerSize) : 0
+        point.y = (scrollDirection == .vertical) ? CGFloat(index) * (viewSize.height + spacerSize) : 0
+        return point
+    }
     
     /*
      scrollViewDidScroll(_ scrollView: UIScrollView)
@@ -265,7 +279,7 @@ protocol UIInfiniteScrollViewDataSource {
      */
     private func createViews(fromPosition: Int, toPosition: Int) {
         for i in fromPosition...toPosition {
-            let viewCoordinate: CGPoint = CGPoint(x: calculateXPosition(index: i), y: calculateYPosition(index: i))
+            let viewCoordinate: CGPoint = calculatePosition(index: i) //CGPoint(x: calculateXPosition(index: i), y: calculateYPosition(index: i))
             let viewSet = self.dataSource.scrollViewFillContainer(containerCoordinate: viewCoordinate, containerPosition: i, containerSize: self.viewSize, completion: self.addAsyncLoadedViews)
             self.views.append(viewSet)
             

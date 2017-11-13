@@ -1,4 +1,4 @@
-//
+///
 //  ViewController.swift
 //  SwiftWeekView
 //
@@ -13,12 +13,11 @@ class ViewController: UIViewController, WeekViewDataSource, WeekViewStyler {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         let bump: CGFloat = 10
         let frame: CGRect = CGRect(x: 0, y: bump, width: self.view.frame.width, height: self.view.frame.height - bump)
-        let weekView: WeekView = WeekView(frame: frame, visibleDays: 5, startHour: 9, endHour: 17)
+        let weekView: WeekView = WeekView(frame: frame, visibleDays: 3, startHour: 9, endHour: 17)
         weekView.dataSource = self
-//        weekView.styler = self
+        weekView.styler = self
         self.view.addSubview(weekView)
     }
 
@@ -28,20 +27,25 @@ class ViewController: UIViewController, WeekViewDataSource, WeekViewStyler {
     }
     
     func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent] {
-        let start = date.atTime(hour: (date.day % 5) + 9, minute: 0, second: 0)!
-        let end = date.atTime(hour: start.hour + (date.day % 3) + 1, minute: 30 * (date.day % 2), second: 0)!
-        let event: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)", start: start, end: end)
-        return [event]
+        let start1 = date.atTime(hour: (date.day % 5) + 9, minute: 0, second: 0)!
+        let end1 = date.atTime(hour: start1.hour + (date.day % 3) + 1, minute: 30 * (date.day % 2), second: 0)!
+        let event1: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)", start: start1, end: end1)
+        
+        let start2 = date.atTime(hour: (date.day % 5) + 9, minute: 0, second: 0)!
+        let end2 = date.atTime(hour: start1.hour + (date.day % 3) + 1, minute: 30 * (date.day % 2), second: 0)!
+        let event2: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)", start: start2, end: end2, color: UIColor.red)
+        
+        return [event1, event2]
     }
     
-    func weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> UIView {
-        let eventView: UIView = UIView(frame: CGRect(x: eventCoordinate.x, y: eventCoordinate.y, width: eventSize.width, height: eventSize.height))
-        eventView.backgroundColor = UIColor(red: event.getColor().components.red, green: event.getColor().components.green, blue: event.getColor().components.blue, alpha: 0.6)
+    func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView {
+        let eventView: UIView = UIView(frame: eventContainer)
+        eventView.backgroundColor = UIColor(red: 0, green: 0, blue: 1, alpha: 0.6)
         
-        let eventLeftBorder: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: eventSize.height))
-        eventLeftBorder.backgroundColor = event.getColor()
+        let eventLeftBorder: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: eventContainer.size.height))
+        eventLeftBorder.backgroundColor = UIColor.blue
         
-        let eventText: UITextView = UITextView(frame: CGRect(x: 3, y: 0, width: eventView.frame.width - 3, height: eventView.frame.height))
+        let eventText: UITextView = UITextView(frame: CGRect(x: 3, y: 0, width: eventContainer.size.width - 3, height: eventContainer.size.height))
         eventText.text = event.description
         eventText.backgroundColor = .clear
         eventText.font = weekView.getFont()
@@ -51,16 +55,7 @@ class ViewController: UIViewController, WeekViewDataSource, WeekViewStyler {
         
         eventView.addSubview(eventLeftBorder)
         eventView.addSubview(eventText)
+        
         return eventView
-    }
-    
-    func weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView {
-        return UIView(frame: CGRect(x: containerCoordinate.x, y: containerCoordinate.y, width: containerSize.width, height: 0))
-    }
-    
-    func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView {
-        let view: UIView = UIView(frame: CGRect(x: containerCoordinate.x, y: containerCoordinate.y + header.frame.height, width: containerSize.width, height: containerSize.height - header.frame.height))
-        view.backgroundColor = UIColor.cyan
-        return view
     }
 }

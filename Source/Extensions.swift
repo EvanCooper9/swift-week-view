@@ -37,10 +37,22 @@ extension UIColor {
     }
 }
 
-// Self implementation of the NSCopying protocol
 extension UIView {
+    // Self implementation of the NSCopying protocol
     func copyView() -> UIView {
         return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self))! as! UIView
+    }
+    
+    // Adding constraints the easy way
+    func addConstraintsWithFormat(format: String, views: UIView...) {
+        var viewsDictionary = [String:UIView]()
+        for (index, view) in views.enumerated() {
+            let key = "v\(index)"
+            view.translatesAutoresizingMaskIntoConstraints = false
+            viewsDictionary[key] = view
+        }
+        
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDictionary))
     }
 }
 

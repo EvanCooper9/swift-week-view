@@ -34,11 +34,12 @@ class WeekViewEvent: NSObject, Comparable {
     }
     
     static func < (lhs: WeekViewEvent, rhs: WeekViewEvent) -> Bool {
-        // returns the event with the earliest start date
+        print(#function)
         return lhs.start < rhs.start
     }
     
     static func == (lhs: WeekViewEvent, rhs: WeekViewEvent) -> Bool {
+        print(#function)
         return lhs.title == rhs.title &&
             lhs.start == rhs.start &&
             lhs.end == rhs.end &&
@@ -47,8 +48,8 @@ class WeekViewEvent: NSObject, Comparable {
     
     func overlaps(withEvent: WeekViewEvent) -> Bool {
         return (self.start == withEvent.start && self.end == withEvent.end) ||
-            (self.start >= withEvent.start && self.start <= withEvent.end) ||
-            (self.end >= withEvent.start && self.end <= withEvent.end) ||
-            (self.start <= withEvent.end && self.end >= withEvent.end)
+            (start >= withEvent.start && start <= withEvent.end) ||
+            (end >= withEvent.start && end <= withEvent.end) ||
+            (start <= withEvent.end && end >= withEvent.end)
     }
 }

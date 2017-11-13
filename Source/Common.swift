@@ -14,30 +14,51 @@ enum ScrollDirection: Int {
     case vertical
 }
 
-protocol Theme {
-    var baseColor: UIColor {get}
-    var hourLineColor: UIColor {get}
-    var hourTextColor: UIColor {get}
-    var eventTextColor: UIColor {get}
-    var weekendColor: UIColor {get}
-}
-
-class LightTheme: Theme {
-    var baseColor: UIColor = UIColor(rgb: 0xffffff)
-    var hourLineColor: UIColor = UIColor(rgb: 0xe6e5e6)
-    var hourTextColor: UIColor = UIColor(rgb: 0x373737)
-    var eventTextColor: UIColor = UIColor(rgb: 0xfafafa)
-    var weekendColor: UIColor = UIColor(rgb: 0xf4f4f4)
-}
-
-class DarkTheme: Theme {
-    var baseColor: UIColor = UIColor(rgb: 0x373737)
-    var hourLineColor: UIColor = UIColor(rgb: 0x252525)
-    var hourTextColor: UIColor = UIColor(rgb: 0xc0c0c0)
-    var eventTextColor: UIColor = UIColor(rgb: 0xc0c0c0)
-    var weekendColor: UIColor = UIColor(rgb: 0x414141)
-}
-
-enum DataSourceError: Error {
-    case DoesNotRespond(String)
+enum Theme {
+    case light, dark
+    
+    var baseColor: UIColor {
+        switch self {
+        case .light:
+            return UIColor(rgb: 0xffffff)
+        case .dark:
+            return UIColor(rgb: 0x373737)
+        }
+    }
+    
+    var hourLineColor: UIColor {
+        switch self {
+        case .light:
+            return UIColor(rgb: 0xe6e5e6)
+        case .dark:
+            return UIColor(rgb: 0x252525)
+        }
+    }
+    
+    var hourTextColor: UIColor {
+        switch self {
+        case .light:
+            return UIColor(rgb: 0x373737)
+        case .dark:
+            return UIColor(rgb: 0xc0c0c0)
+        }
+    }
+    
+    var eventTextColor: UIColor {
+        switch self {
+        case .light:
+            return UIColor(rgb: 0xfafafa)
+        case .dark:
+            return UIColor(rgb: 0xc0c0c0)
+        }
+    }
+    
+    var weekendColor: UIColor {
+        switch self {
+        case .light:
+            return UIColor(rgb: 0xf4f4f4)
+        case .dark:
+            return UIColor(rgb: 0x414141)
+        }
+    }
 }
