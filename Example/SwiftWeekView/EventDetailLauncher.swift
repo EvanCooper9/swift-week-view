@@ -34,19 +34,25 @@ class EventDetailLauncher {
             return
         }
         
-        let height: CGFloat = 300
+        let height: CGFloat = 100
+        let buffer: CGFloat = 64
         
         blackView.frame = window.frame
         blackView.alpha = 0
         window.addSubview(blackView)
         
         
-        eventView.frame = CGRect(x: 15, y: window.frame.height, width: window.frame.width - 32, height: 300)
-        let eventLabel = UILabel(frame: CGRect(x: 0, y: 0, width: eventView.frame.width, height: eventView.frame.height))
-        eventLabel.text = event!.description
+        eventView.frame = CGRect(x: buffer, y: window.frame.height, width: window.frame.width - (buffer * 2), height: height)
+        let eventLabel = UILabel(frame: CGRect(x: 16, y: 16, width: eventView.frame.width - 32, height: (eventView.frame.height / 2) - 16))
+        eventLabel.text = event!.getTitle()
         eventLabel.font = UIFont.systemFont(ofSize: 20)
         eventLabel.textAlignment = .center
+        let idLabel = UILabel(frame: CGRect(x: 16, y: eventView.frame.height / 2, width: eventView.frame.width - 32, height: eventView.frame.height / 2))
+        idLabel.text = event!.getID()
+        idLabel.font = UIFont.systemFont(ofSize: 10)
+        idLabel.textAlignment = .center
         eventView.addSubview(eventLabel)
+        eventView.addSubview(idLabel)
         window.addSubview(eventView)
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
