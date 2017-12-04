@@ -2,8 +2,9 @@
 An iOS calendar library for displaying calendar events in a week view.
 
 <p align="center">
-	<img src="Media/screen3.png" width="30%" height="auto">
-	<img src="Media/screen2.gif" width="30%" height="auto">
+    <img src="Media/screen4.png" width="30%" height="auto">
+    <img src="Media/screen5.gif" width="30%" height="auto">
+    <img src="Media/screen2.gif" width="30%" height="auto">
 </p> 
 
 ## Features
