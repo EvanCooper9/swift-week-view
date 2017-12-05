@@ -22,6 +22,7 @@
 		7CB862901F470AA0008F23EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CB8628E1F470AA0008F23EC /* LaunchScreen.storyboard */; };
 		7CB8629B1F470AA1008F23EC /* SwiftWeekViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB8629A1F470AA1008F23EC /* SwiftWeekViewTests.swift */; };
 		7CB862A61F470AA1008F23EC /* SwiftWeekViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862A51F470AA1008F23EC /* SwiftWeekViewUITests.swift */; };
+		7CE561631FD6428300FB44D7 /* EventDetailLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE561621FD6428300FB44D7 /* EventDetailLauncher.swift */; };
 		903C522D0590048A76F3C6E4 /* Pods_SwiftWeekView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027101263AED3E1CD1535FDA /* Pods_SwiftWeekView.framework */; };
 		CFEA98EE18493FBC798431B1 /* Pods_SwiftWeekViewTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EABEDAF34C0404BCCB8FC935 /* Pods_SwiftWeekViewTests.framework */; };
 		FBA547C06F91A2ACC2D8A6BF /* Pods_SwiftWeekViewUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D6AB2FD7EF9CA98C9AAD752 /* Pods_SwiftWeekViewUITests.framework */; };
@@ -71,6 +72,7 @@
 		7CB862A11F470AA1008F23EC /* SwiftWeekViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftWeekViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB862A51F470AA1008F23EC /* SwiftWeekViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftWeekViewUITests.swift; sourceTree = "<group>"; };
 		7CB862A71F470AA1008F23EC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CE561621FD6428300FB44D7 /* EventDetailLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailLauncher.swift; sourceTree = "<group>"; };
 		AF04E5E425237E267C336888 /* Pods-SwiftWeekViewTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekViewTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekViewTests/Pods-SwiftWeekViewTests.release.xcconfig"; sourceTree = "<group>"; };
 		E15FF7D9F19FD62BDB7CA286 /* Pods-SwiftWeekViewUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekViewUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekViewUITests/Pods-SwiftWeekViewUITests.release.xcconfig"; sourceTree = "<group>"; };
 		EABEDAF34C0404BCCB8FC935 /* Pods_SwiftWeekViewTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftWeekViewTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +170,7 @@
 			children = (
 				7CB862851F470AA0008F23EC /* AppDelegate.swift */,
 				7CB862871F470AA0008F23EC /* ViewController.swift */,
+				7CE561621FD6428300FB44D7 /* EventDetailLauncher.swift */,
 				7C0EFE041F4CD3F200153A3E /* Source */,
 				7CB862891F470AA0008F23EC /* Main.storyboard */,
 				7C3DF19B1F63476500DDF3B2 /* UIInfiniteScrollView.xib */,
@@ -504,6 +507,7 @@
 				7CB862861F470AA0008F23EC /* AppDelegate.swift in Sources */,
 				7C91BDC31FD5AC540001A594 /* WeekViewEventView.swift in Sources */,
 				7C4AEBA21F4CD7240058F579 /* UIInfiniteScrollView.swift in Sources */,
+				7CE561631FD6428300FB44D7 /* EventDetailLauncher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

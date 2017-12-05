@@ -330,8 +330,8 @@ protocol UIInfiniteScrollViewDataSource {
                     }
                 }
                 
-                if (type(of: view) == WeekViewEventView.self) {
-                    let gestureRecognizer = UITapGestureRecognizer(target: self.weekView!, action: #selector(self.weekView!.click(_:)))
+                if (type(of: view) == WeekViewEventView.self && self.weekView != nil) {
+                    let gestureRecognizer = UITapGestureRecognizer(target: self.weekView!, action: #selector(self.weekView!.didClickOnEvent(_:)))
                     placeholderView.addGestureRecognizer(gestureRecognizer)
                 }
                 

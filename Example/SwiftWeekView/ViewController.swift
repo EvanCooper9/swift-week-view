@@ -11,6 +11,8 @@ import SwiftDate
 
 class ViewController: UIViewController, WeekViewDataSource, WeekViewDelegate, WeekViewStyler {
     
+    let eventDetailLauncher = EventDetailLauncher()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let bump: CGFloat = 10
@@ -40,8 +42,13 @@ class ViewController: UIViewController, WeekViewDataSource, WeekViewDelegate, We
         return [event1]
     }
     
+    @objc func closeEView() {
+        eventDetailLauncher.dismiss()
+    }
+    
     func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent) {
-        print("Clicked on event\n", event)
+        eventDetailLauncher.event = event
+        eventDetailLauncher.present()
     }
     
     func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> WeekViewEventView {

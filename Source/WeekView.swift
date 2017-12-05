@@ -17,7 +17,7 @@ import SwiftDate
  */
 protocol WeekViewDataSource {
     /*
-     weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion, completion: (([WeekViewEvent]) -> Void)?) -> [WeekViewEvent]
+     weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent]
      
      Description:
      Generate and return a set of events for a specific day. Events can be returned synchronously or asynchronously
@@ -25,7 +25,6 @@ protocol WeekViewDataSource {
      Params:
      - weekView: the WeekView that is calling this function
      - date: the date for which to create events for
-     - completion: a completion handler that will add asynchronously generated events
      */
     func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent]
 }
@@ -36,7 +35,7 @@ protocol WeekViewDataSource {
  Description:
  Used to delegate events and actions that occur.
  */
-protocol WeekViewDelegate {
+@objc protocol WeekViewDelegate {
     /*
      weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent)
      
@@ -47,7 +46,7 @@ protocol WeekViewDelegate {
      - weekView: the WeekView that is calling this function
      - event: the event that was clicked
      */
-    func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent)
+    @objc func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent)
 }
 
 /*
@@ -58,15 +57,14 @@ protocol WeekViewDelegate {
  */
 @objc protocol WeekViewStyler {
     /*
-     weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView
+     weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> WeekViewEventView
      
      Description:
      Create the view for an event
      
      Params:
      - weekView: the WeekView that the view will be added to
-     - eventCoordinate: the coordinate of the event view (top left)
-     - eventSize: the size, in width and height, of the event view
+     - eventContainer: the container of which the eventView needs to conform to
      - event: the event it's self
      */
     @objc optional func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> WeekViewEventView
@@ -80,8 +78,7 @@ protocol WeekViewDelegate {
      Params:
      - weekView: the WeekView that the header will be added to
      - containerPosition: the left-to-right position of the container that the header will be added to, relative to the other containers that have been created
-     - containerCoordinate: the top-left coordinate of the header's container
-     - containerSize: the size, in width and height, of the header's container
+     - container: the container of which the header needs to conform to
      */
     @objc optional func weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, container: CGRect) -> UIView
     
@@ -94,8 +91,8 @@ protocol WeekViewDelegate {
      Params:
      - weekView: the WeekView that the header will be added to
      - containerPosition: the left-to-right position of the container that the view will be added to, relative to the other containers that have been created
-     - containerCoordinate: the top-left coordinate of the view's container
-     - containerSize: the size, in width and height, of the view's container
+     - container: the container of which the timeView needs to conform to
+     - header: the header of the weekView. The time view should start under the header
      */
     @objc optional func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, container: CGRect, header: UIView) -> UIView
 }
@@ -362,8 +359,7 @@ protocol WeekViewDelegate {
                         break
                     }
                     
-                    eventView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.click(_:))))
-//                    eventView.eventIndex = self.events.index(of: event)!
+                    eventView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didClickOnEvent(_:))))
                     eventViews.append(eventView)
                     self.events.append(event)
                 }
@@ -378,7 +374,6 @@ protocol WeekViewDelegate {
             }
         }
         
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(click)))
         return [header, view]
     }
     
@@ -590,7 +585,7 @@ protocol WeekViewDelegate {
         return view
     }
     
-    @objc func click(_ touch: UITapGestureRecognizer) {
+    @objc func didClickOnEvent(_ touch: UITapGestureRecognizer) {
         if (self.respondsToInteraction) {
             guard let weekViewEventView = touch.view as? WeekViewEventView else {
                 return
