@@ -9,7 +9,7 @@ An iOS calendar library for displaying calendar events in a week view.
 ## Features
 - See calendar events in a week view
 - Asynchronously load calendar events
-- Click and interact with events
+- Interaction with specific events by clicking
 - Custom styling
 - Infinite horizontal scrolling
 - Interface builder preview
@@ -36,7 +36,7 @@ func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekVi
 - `color`: (Optional) the color that the event will be displayed in. Defaults to red.
 
 > ### Note:
-> `weekViewGenerateEvents` is already being called asynchronously with a completion handler behind the scenes, so events are added aynchronously, event if they're fetched synchronously.
+> `weekViewGenerateEvents` is already being called asynchronously with a completion handler behind the scenes, so events are added aynchronously, even if they're fetched synchronously.
 
 ### 3. Initialize the instance
 #### A. Programmatically
@@ -54,6 +54,7 @@ addSubview(weekView)
 - `startHour`: (Optional) the earliest hour that will be displayed. Default = 09:00
 - `endHour`: (Optional) the latest hour that will be displayed. Defalt = 17:00
 - `colorTheme`: (Optional) the colors used in the view. Default = `LightTheme`
+- `respondsToInteraction` (Optional) Boolean indicates if to respond to events other than scrolling. Default = `false`
 
 #### B. Storyboard
 Add a view to the storyboard and make it's class `WeekView`. Assign the view's data source programmatically. 
@@ -62,11 +63,18 @@ Add a view to the storyboard and make it's class `WeekView`. Assign the view's d
 weekView.dataSource = self
 ```
 
-## WeekViewDelegate
-To allow for interaction with calendar events, implement the   `WeekViewDelegate` protocol and it's only method: `weekViewDidClickOnEvent`.
+## User Interaction
+For more complex interaction with `WeekView`, implement the `WeekViewDelegate` protocol, and it's function. Set the `delegate` property of the `WeekView` instance to the class that implements the protocol. `WeekView` by default is its own delegate.
+
+```Swift
+weekView.delegate = self
+
+// Fires when a calendar event is clicked and tells the delegate which event.
+weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent)
+```
 
 ## Custom Styling
-To use custom styling, implement the `WeekViewStyler` protocol, and any of the included functions. Set the `styler` propery of the `WeekView` to the class that implements the protocol. `WeekView` by default is its own styler.
+To use custom styling, implement the `WeekViewStyler` protocol, and any of the included functions. Set the `styler` propery of the `WeekView` instance to the class that implements the protocol. `WeekView` by default is its own styler.
 
 ```Swift
 weekView.styler = self
