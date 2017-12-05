@@ -31,6 +31,26 @@ protocol WeekViewDataSource {
 }
 
 /*
+ Protocol WeekViewDelegate
+ 
+ Description:
+ Used to delegate events and actions that occur.
+ */
+protocol WeekViewDelegate {
+    /*
+     weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent)
+     
+     Description:
+     Fires when a calendar event is touched on
+     
+     Params:
+     - weekView: the WeekView that is calling this function
+     - event: the event that was clicked
+     */
+    func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent)
+}
+
+/*
  Protocol: WeekViewStyler
  
  Description:
@@ -49,7 +69,7 @@ protocol WeekViewDataSource {
      - eventSize: the size, in width and height, of the event view
      - event: the event it's self
      */
-    @objc optional func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView
+    @objc optional func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> WeekViewEventView
     
     /*
      weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, container: CGRect) -> UIView
@@ -80,7 +100,7 @@ protocol WeekViewDataSource {
     @objc optional func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, container: CGRect, header: UIView) -> UIView
 }
 
-@IBDesignable class WeekView: UIView, WeekViewDataSource, WeekViewStyler, UIInfiniteScrollViewDataSource {
+@IBDesignable class WeekView: UIView, WeekViewDataSource, WeekViewDelegate, WeekViewStyler, UIInfiniteScrollViewDataSource {
     // Main UI elements
     private var monthAndYearText: UITextView!
     private var timeView: UIView!
@@ -93,6 +113,7 @@ protocol WeekViewDataSource {
     private var startHour: Int!
     private var endHour: Int!
     private var headerHeight: CGFloat!
+    private var respondsToInteraction: Bool!
     
     // Secondary properties
     private var nowLineEnabled: Bool!
@@ -107,11 +128,14 @@ protocol WeekViewDataSource {
     public var dataSource: WeekViewDataSource! {
         didSet {
             if (oldValue != nil) {
+                self.events = []
                 self.reloadScrollView()
                 self.reloadTimeView()
             }
         }
     }
+    
+    public var delegate: WeekViewDelegate!
     
     public var styler: WeekViewStyler! {
         didSet {
@@ -142,9 +166,9 @@ protocol WeekViewDataSource {
      - nowLineEnabled: (Optional) specify if the "now line" will be visible. Defaults to true
      - nowLineColor: (Optional) the color of the "now line". Defaults to red
      */
-    init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = .light, nowLineEnabled: Bool = true, nowLineColor: UIColor = .red) {
+    init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = .light, nowLineEnabled: Bool = true, nowLineColor: UIColor = .red, respondsToInteraction: Bool = false) {
         super.init(frame: frame)
-        self.commonInit(frame: frame, visibleDays: visibleDays, date: date, startHour: startHour, endHour: endHour, colorTheme: colorTheme, nowLineEnabled: nowLineEnabled, nowLineColor: nowLineColor)
+        self.commonInit(frame: frame, visibleDays: visibleDays, date: date, startHour: startHour, endHour: endHour, colorTheme: colorTheme, nowLineEnabled: nowLineEnabled, nowLineColor: nowLineColor, respondsToInteraction: respondsToInteraction)
     }
     
     /*
@@ -154,7 +178,7 @@ protocol WeekViewDataSource {
      */
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red, respondsToInteraction: false)
     }
     
     /*
@@ -164,7 +188,7 @@ protocol WeekViewDataSource {
      */
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red, respondsToInteraction: false)
     }
     
     /*
@@ -176,7 +200,7 @@ protocol WeekViewDataSource {
      From: https://developer.apple.com/documentation/objectivec/nsobject/1402908-prepareforinterfacebuilder
      */
     override func prepareForInterfaceBuilder() {
-        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red, respondsToInteraction: false)
     }
     
     private func framesMatch(frame1: CGRect, frame2: CGRect) -> Bool {
@@ -198,8 +222,9 @@ protocol WeekViewDataSource {
      - nowLineEnabled: specify if the "now line" will be visible
      - nowLineColor: the color of the "now line"
      */
-    private func commonInit(frame: CGRect, visibleDays: Int, date: DateInRegion, startHour: Int, endHour: Int, colorTheme: Theme, nowLineEnabled: Bool, nowLineColor: UIColor) {
+    private func commonInit(frame: CGRect, visibleDays: Int, date: DateInRegion, startHour: Int, endHour: Int, colorTheme: Theme, nowLineEnabled: Bool, nowLineColor: UIColor, respondsToInteraction: Bool) {
         self.dataSource = self
+        self.delegate = self
         self.styler = self
         self.events = []
         self.colorTheme = colorTheme
@@ -209,6 +234,7 @@ protocol WeekViewDataSource {
         self.visibleDays = visibleDays
         self.startHour = startHour
         self.endHour = endHour
+        self.respondsToInteraction = respondsToInteraction
         
         self.monthAndYearText = UITextView(frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: self.headerHeight))
         monthAndYearText.text = "\(self.initDate.monthName) \(self.initDate.year)"
@@ -223,6 +249,7 @@ protocol WeekViewDataSource {
         self.scrollView = UIInfiniteScrollView(frame: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y, width: frame.width - timeView.frame.width, height: self.timeView.frame.height), viewsInPageCount: visibleDays, spacerSize: 2, scrollDirection: .horizontal)
         self.scrollView.dataSource = self
         self.scrollView.backgroundColor = self.colorTheme.baseColor
+        self.scrollView.weekView = self
         
         let hourHeight: CGFloat = (timeView.frame.height - self.headerHeight) / CGFloat(self.endHour - self.startHour)
         for hour in self.startHour...self.endHour {
@@ -335,9 +362,10 @@ protocol WeekViewDataSource {
                         break
                     }
                     
-                    event.view = eventView
-                    
+                    eventView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.click(_:))))
+//                    eventView.eventIndex = self.events.index(of: event)!
                     eventViews.append(eventView)
+                    self.events.append(event)
                 }
                 
                 if (eventViews.count == 0) {
@@ -350,6 +378,7 @@ protocol WeekViewDataSource {
             }
         }
         
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(click)))
         return [header, view]
     }
     
@@ -428,6 +457,7 @@ protocol WeekViewDataSource {
         self.scrollView.removeFromSuperview()
         self.scrollView = UIInfiniteScrollView(frame: self.scrollView.frame, viewsInPageCount: self.visibleDays, spacerSize: 2, scrollDirection: .horizontal)
         self.scrollView.dataSource = self
+        self.scrollView.weekView = self
         self.scrollView.backgroundColor = self.colorTheme.baseColor
         self.addSubview(self.scrollView)
         self.addHourInfo()
@@ -486,8 +516,13 @@ protocol WeekViewDataSource {
     internal func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent] {
         let start: DateInRegion = date.atTime(hour: 12, minute: 0, second: 0)!
         let end: DateInRegion = date.atTime(hour: 13, minute: 30, second: 0)!
-        let event: WeekViewEvent = WeekViewEvent(title: "Lunch", start: start, end: end)
+        let event: WeekViewEvent = WeekViewEvent(title: "Lunch " + String(date.day), start: start, end: end)
         return [event]
+    }
+    
+    func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent) {
+        print(#function)
+        print(event)
     }
     
     /*
@@ -496,8 +531,8 @@ protocol WeekViewDataSource {
      Description:
      Default implementation of the WeekViewStyler protocol
      */
-    internal func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView {
-        let eventView: UIView = UIView(frame: eventContainer)
+    internal func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> WeekViewEventView {
+        let eventView: WeekViewEventView = WeekViewEventView(frame: eventContainer)
         eventView.backgroundColor = UIColor(red: event.getColor().components.red, green: event.getColor().components.green, blue: event.getColor().components.blue, alpha: 0.6)
         
         let eventLeftBorder: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: eventView.frame.height))
@@ -513,6 +548,7 @@ protocol WeekViewDataSource {
         
         eventView.addSubview(eventLeftBorder)
         eventView.addSubview(eventText)
+        eventView.eventID = event.getID()
         return eventView
     }
     
@@ -552,5 +588,20 @@ protocol WeekViewDataSource {
         }
         
         return view
+    }
+    
+    @objc func click(_ touch: UITapGestureRecognizer) {
+        if (self.respondsToInteraction) {
+            guard let weekViewEventView = touch.view as? WeekViewEventView else {
+                return
+            }
+            
+            for event in self.events {
+                if (event.getID() == weekViewEventView.eventID!) {
+                    self.delegate.weekViewDidClickOnEvent(self, event: event)
+                    return
+                }
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ protocol UIInfiniteScrollViewDataSource {
 }
 
 @IBDesignable class UIInfiniteScrollView: UIScrollView, UIScrollViewDelegate, UIInfiniteScrollViewDataSource {
-    private var views: [[UIView]] = [[UIView]]()
+    private var views = [[UIView]]()
     private var viewRangeStart: Int! = 0
     private var loadPageCount: Int!
     private var viewSize: CGSize!
@@ -41,6 +41,8 @@ protocol UIInfiniteScrollViewDataSource {
     private var scrollDirection: ScrollDirection! = .horizontal
     
     private var isSnapEnabled: Bool = true
+    
+    var weekView: WeekView?
     
     var dataSource: UIInfiniteScrollViewDataSource! {
         didSet {
@@ -60,6 +62,8 @@ protocol UIInfiniteScrollViewDataSource {
     
     // getter(s)
     func getSpacerSize() -> CGFloat { return self.spacerSize }
+    func getViews() -> [[UIView]] { return self.views }
+    func getViewSize() -> CGSize { return self.viewSize }
     
     /*
      init(frame: CGRect, viewsInPageCount: Int, spacerSize: CGFloat, ScrollDirection: ScrollDirection) {
@@ -310,7 +314,7 @@ protocol UIInfiniteScrollViewDataSource {
             var index = i
             if (index >= self.views.count) { index -= startIndex }
             for view in self.views[index] {
-                let placeholderView: UIView = view.copyView()
+                let placeholderView = view.copyView()
                 if (self.scrollDirection == .horizontal) {
                     var viewCalculatedXPosition = self.calculateXPosition(index: index - startIndex)
                     viewCalculatedXPosition += view.frame.origin.x - self.views[index][0].frame.origin.x
@@ -320,6 +324,17 @@ protocol UIInfiniteScrollViewDataSource {
                     viewCalculatedYPosition += view.frame.origin.y - self.views[index][0].frame.origin.y
                     placeholderView.frame.origin.y = viewCalculatedYPosition
                 }
+                if (view.gestureRecognizers != nil) {
+                    for gestureRecognizer in view.gestureRecognizers! {
+                        placeholderView.addGestureRecognizer(gestureRecognizer)
+                    }
+                }
+                
+                if (type(of: view) == WeekViewEventView.self) {
+                    let gestureRecognizer = UITapGestureRecognizer(target: self.weekView!, action: #selector(self.weekView!.click(_:)))
+                    placeholderView.addGestureRecognizer(gestureRecognizer)
+                }
+                
                 self.addSubview(placeholderView)
             }
         }
@@ -340,7 +355,7 @@ protocol UIInfiniteScrollViewDataSource {
             if (viewSet[0].frame.origin.x == views[0].frame.origin.x) {
                 self.views[index].append(contentsOf: views)
                 for view in views {
-                    let placeholderView: UIView = view.copyView()
+                    let placeholderView = view.copyView()
                     if (self.scrollDirection == .horizontal) {
                         var viewCalculatedXPosition = self.calculateXPosition(index: index - self.viewRangeStart)
                         viewCalculatedXPosition += view.frame.origin.x - self.views[index][0].frame.origin.x
@@ -349,6 +364,11 @@ protocol UIInfiniteScrollViewDataSource {
                         var viewCalculatedYPosition = self.calculateYPosition(index: index - self.viewRangeStart)
                         viewCalculatedYPosition += view.frame.origin.y - self.views[index][0].frame.origin.y
                         placeholderView.frame.origin.y = viewCalculatedYPosition
+                    }
+                    if (view.gestureRecognizers != nil) {
+                        for gestureRecognizer in view.gestureRecognizers! {
+                            placeholderView.addGestureRecognizer(gestureRecognizer)
+                        }
                     }
                     self.addSubview(placeholderView)
                 }

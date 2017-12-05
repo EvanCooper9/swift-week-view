@@ -9,6 +9,7 @@ An iOS calendar library for displaying calendar events in a week view.
 ## Features
 - See calendar events in a week view
 - Asynchronously load calendar events
+- Click and interact with events
 - Custom styling
 - Infinite horizontal scrolling
 - Interface builder preview
@@ -61,6 +62,9 @@ Add a view to the storyboard and make it's class `WeekView`. Assign the view's d
 weekView.dataSource = self
 ```
 
+## WeekViewDelegate
+To allow for interaction with calendar events, implement the   `WeekViewDelegate` protocol and it's only method: `weekViewDidClickOnEvent`.
+
 ## Custom Styling
 To use custom styling, implement the `WeekViewStyler` protocol, and any of the included functions. Set the `styler` propery of the `WeekView` to the class that implements the protocol. `WeekView` by default is its own styler.
 
@@ -68,7 +72,7 @@ To use custom styling, implement the `WeekViewStyler` protocol, and any of the i
 weekView.styler = self
 
 // Creates the view for an event
-weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> UIView
+weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> WeekViewEventView
 
 // Creates the view for a day's header
 weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView
@@ -87,5 +91,4 @@ pod 'SwiftDate', '~> 4.0'
 See the included example for basic implementation. Make sure to download the *entire* repository, and then open the `.xcworkspace` for it to work properly with the Source files and CocoaPods.
 
 ## Up Next
-- Add events with touch gestures
 - Ability to scroll vertically through the full hours of the day.

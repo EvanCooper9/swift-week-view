@@ -14,6 +14,7 @@
 		7C4AEBA11F4CD7240058F579 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4AEB9D1F4CD7240058F579 /* Extensions.swift */; };
 		7C4AEBA21F4CD7240058F579 /* UIInfiniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4AEB9E1F4CD7240058F579 /* UIInfiniteScrollView.swift */; };
 		7C4AEBA31F4CD7240058F579 /* WeekViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4AEB9F1F4CD7240058F579 /* WeekViewEvent.swift */; };
+		7C91BDC31FD5AC540001A594 /* WeekViewEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C91BDC21FD5AC540001A594 /* WeekViewEventView.swift */; };
 		7CB862861F470AA0008F23EC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862851F470AA0008F23EC /* AppDelegate.swift */; };
 		7CB862881F470AA0008F23EC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB862871F470AA0008F23EC /* ViewController.swift */; };
 		7CB8628B1F470AA0008F23EC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CB862891F470AA0008F23EC /* Main.storyboard */; };
@@ -56,6 +57,7 @@
 		7C4AEB9D1F4CD7240058F579 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../Source/Extensions.swift; sourceTree = "<group>"; };
 		7C4AEB9E1F4CD7240058F579 /* UIInfiniteScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIInfiniteScrollView.swift; path = ../../Source/UIInfiniteScrollView.swift; sourceTree = "<group>"; };
 		7C4AEB9F1F4CD7240058F579 /* WeekViewEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeekViewEvent.swift; path = ../../Source/WeekViewEvent.swift; sourceTree = "<group>"; };
+		7C91BDC21FD5AC540001A594 /* WeekViewEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeekViewEventView.swift; path = ../../Source/WeekViewEventView.swift; sourceTree = "<group>"; };
 		7CB862821F470AA0008F23EC /* SwiftWeekView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftWeekView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CB862851F470AA0008F23EC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CB862871F470AA0008F23EC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			children = (
 				7C4A0D281F4CD69E00286CD6 /* WeekView.swift */,
 				7C4AEB9F1F4CD7240058F579 /* WeekViewEvent.swift */,
+				7C91BDC21FD5AC540001A594 /* WeekViewEventView.swift */,
 				7C4AEB9E1F4CD7240058F579 /* UIInfiniteScrollView.swift */,
 				7C4AEB9C1F4CD7240058F579 /* Common.swift */,
 				7C4AEB9D1F4CD7240058F579 /* Extensions.swift */,
@@ -499,6 +502,7 @@
 				7CB862881F470AA0008F23EC /* ViewController.swift in Sources */,
 				7C4A0D291F4CD69E00286CD6 /* WeekView.swift in Sources */,
 				7CB862861F470AA0008F23EC /* AppDelegate.swift in Sources */,
+				7C91BDC31FD5AC540001A594 /* WeekViewEventView.swift in Sources */,
 				7C4AEBA21F4CD7240058F579 /* UIInfiniteScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

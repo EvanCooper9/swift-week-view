@@ -10,6 +10,7 @@ import Foundation
 import SwiftDate
 
 class WeekViewEvent: NSObject, Comparable {
+    private var id: String
     private var title: String
     private var start: DateInRegion
     private var end: DateInRegion
@@ -21,12 +22,14 @@ class WeekViewEvent: NSObject, Comparable {
         return "\(getTitle())\n\(getStart().string(format: .custom("HH:mm"))) - \(getEnd().string(format: .custom("HH:mm")))"
     }
     
+    func getID() -> String { return self.id }
     func getTitle() -> String { return self.title }
     func getStart() -> DateInRegion { return self.start }
     func getEnd() -> DateInRegion { return self.end }
     func getColor() -> UIColor { return self.color }
     
     init(title: String, start: DateInRegion, end: DateInRegion, color: UIColor = UIColor.red) {
+        self.id = UUID().uuidString
         self.title = title
         self.start = start
         self.end = end
@@ -39,7 +42,6 @@ class WeekViewEvent: NSObject, Comparable {
     }
     
     static func == (lhs: WeekViewEvent, rhs: WeekViewEvent) -> Bool {
-        print(#function)
         return lhs.title == rhs.title &&
             lhs.start == rhs.start &&
             lhs.end == rhs.end &&
