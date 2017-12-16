@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C1A1EC51FE4AC730036FE01 /* UIInfiniteScrollViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C1A1EC41FE4AC730036FE01 /* UIInfiniteScrollViewDataSource.swift */; };
+		7C28E3561FD6ED90007B3BA5 /* WeekViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C28E3551FD6ED90007B3BA5 /* WeekViewDataSource.swift */; };
+		7C28E3581FD6EDB9007B3BA5 /* WeekViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C28E3571FD6EDB9007B3BA5 /* WeekViewDelegate.swift */; };
+		7C28E35A1FD6EDFB007B3BA5 /* WeekViewStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C28E3591FD6EDFB007B3BA5 /* WeekViewStyler.swift */; };
 		7C3DF19D1F63476500DDF3B2 /* UIInfiniteScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3DF19B1F63476500DDF3B2 /* UIInfiniteScrollView.xib */; };
 		7C3DF19E1F63476500DDF3B2 /* WeekView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3DF19C1F63476500DDF3B2 /* WeekView.xib */; };
 		7C4A0D291F4CD69E00286CD6 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A0D281F4CD69E00286CD6 /* WeekView.swift */; };
@@ -51,6 +55,10 @@
 		270DF6917162F69C656CCA85 /* Pods-SwiftWeekViewUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekViewUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekViewUITests/Pods-SwiftWeekViewUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		5D6AB2FD7EF9CA98C9AAD752 /* Pods_SwiftWeekViewUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftWeekViewUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		698585844DFFAF7BBD1705EA /* Pods-SwiftWeekView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftWeekView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftWeekView/Pods-SwiftWeekView.debug.xcconfig"; sourceTree = "<group>"; };
+		7C1A1EC41FE4AC730036FE01 /* UIInfiniteScrollViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIInfiniteScrollViewDataSource.swift; sourceTree = "<group>"; };
+		7C28E3551FD6ED90007B3BA5 /* WeekViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeekViewDataSource.swift; path = ../../Source/WeekViewDataSource.swift; sourceTree = "<group>"; };
+		7C28E3571FD6EDB9007B3BA5 /* WeekViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeekViewDelegate.swift; path = ../../Source/WeekViewDelegate.swift; sourceTree = "<group>"; };
+		7C28E3591FD6EDFB007B3BA5 /* WeekViewStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeekViewStyler.swift; path = ../../Source/WeekViewStyler.swift; sourceTree = "<group>"; };
 		7C3DF19B1F63476500DDF3B2 /* UIInfiniteScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIInfiniteScrollView.xib; sourceTree = "<group>"; };
 		7C3DF19C1F63476500DDF3B2 /* WeekView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeekView.xib; sourceTree = "<group>"; };
 		7C4A0D281F4CD69E00286CD6 /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeekView.swift; path = ../../Source/WeekView.swift; sourceTree = "<group>"; };
@@ -134,9 +142,13 @@
 			isa = PBXGroup;
 			children = (
 				7C4A0D281F4CD69E00286CD6 /* WeekView.swift */,
+				7C28E3551FD6ED90007B3BA5 /* WeekViewDataSource.swift */,
+				7C28E3571FD6EDB9007B3BA5 /* WeekViewDelegate.swift */,
+				7C28E3591FD6EDFB007B3BA5 /* WeekViewStyler.swift */,
 				7C4AEB9F1F4CD7240058F579 /* WeekViewEvent.swift */,
 				7C91BDC21FD5AC540001A594 /* WeekViewEventView.swift */,
 				7C4AEB9E1F4CD7240058F579 /* UIInfiniteScrollView.swift */,
+				7C1A1EC41FE4AC730036FE01 /* UIInfiniteScrollViewDataSource.swift */,
 				7C4AEB9C1F4CD7240058F579 /* Common.swift */,
 				7C4AEB9D1F4CD7240058F579 /* Extensions.swift */,
 			);
@@ -499,9 +511,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C28E3581FD6EDB9007B3BA5 /* WeekViewDelegate.swift in Sources */,
 				7C4AEBA11F4CD7240058F579 /* Extensions.swift in Sources */,
 				7C4AEBA01F4CD7240058F579 /* Common.swift in Sources */,
+				7C1A1EC51FE4AC730036FE01 /* UIInfiniteScrollViewDataSource.swift in Sources */,
 				7C4AEBA31F4CD7240058F579 /* WeekViewEvent.swift in Sources */,
+				7C28E3561FD6ED90007B3BA5 /* WeekViewDataSource.swift in Sources */,
+				7C28E35A1FD6EDFB007B3BA5 /* WeekViewStyler.swift in Sources */,
 				7CB862881F470AA0008F23EC /* ViewController.swift in Sources */,
 				7C4A0D291F4CD69E00286CD6 /* WeekView.swift in Sources */,
 				7CB862861F470AA0008F23EC /* AppDelegate.swift in Sources */,

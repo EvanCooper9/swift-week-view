@@ -10,93 +10,6 @@ import Foundation
 import UIKit
 import SwiftDate
 
-/*
- Protocol: WeekViewDataSource
- 
- Description: Used to delegate the creation of events for the WeekView
- */
-protocol WeekViewDataSource {
-    /*
-     weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent]
-     
-     Description:
-     Generate and return a set of events for a specific day. Events can be returned synchronously or asynchronously
-     
-     Params:
-     - weekView: the WeekView that is calling this function
-     - date: the date for which to create events for
-     */
-    func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent]
-}
-
-/*
- Protocol WeekViewDelegate
- 
- Description:
- Used to delegate events and actions that occur.
- */
-@objc protocol WeekViewDelegate {
-    /*
-     weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent)
-     
-     Description:
-     Fires when a calendar event is touched on
-     
-     Params:
-     - weekView: the WeekView that is calling this function
-     - event: the event that was clicked
-     */
-    @objc func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent)
-}
-
-/*
- Protocol: WeekViewStyler
- 
- Description:
- Used to delegate the creation of different view types within the WeekView.
- */
-@objc protocol WeekViewStyler {
-    /*
-     weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> WeekViewEventView
-     
-     Description:
-     Create the view for an event
-     
-     Params:
-     - weekView: the WeekView that the view will be added to
-     - eventContainer: the container of which the eventView needs to conform to
-     - event: the event it's self
-     */
-    @objc optional func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> WeekViewEventView
-    
-    /*
-     weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, container: CGRect) -> UIView
-     
-     Description:
-     Create the header view for the day in the calendar. This would normally contain information about the date
-     
-     Params:
-     - weekView: the WeekView that the header will be added to
-     - containerPosition: the left-to-right position of the container that the header will be added to, relative to the other containers that have been created
-     - container: the container of which the header needs to conform to
-     */
-    @objc optional func weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, container: CGRect) -> UIView
-    
-    /*
-     weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView
-     
-     Description:
-     Create the main view that will contain the events. This normally appears directly under the header created in weekViewUIEventView (above)
-     
-     Params:
-     - weekView: the WeekView that the header will be added to
-     - containerPosition: the left-to-right position of the container that the view will be added to, relative to the other containers that have been created
-     - container: the container of which the timeView needs to conform to
-     - header: the header of the weekView. The time view should start under the header
-     */
-    @objc optional func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, container: CGRect, header: UIView) -> UIView
-}
-
 @IBDesignable class WeekView: UIView, WeekViewDataSource, WeekViewDelegate, WeekViewStyler, UIInfiniteScrollViewDataSource {
     // Main UI elements
     private var monthAndYearText: UITextView!
@@ -111,6 +24,7 @@ protocol WeekViewDataSource {
     private var endHour: Int!
     private var headerHeight: CGFloat!
     private var respondsToInteraction: Bool!
+    private var gesture: UIGestureRecognizer?
     
     // Secondary properties
     private var nowLineEnabled: Bool!
@@ -147,6 +61,11 @@ protocol WeekViewDataSource {
     func getInitDate() -> DateInRegion { return self.initDate }
     func getFont() -> UIFont { return self.font }
     func getColorTheme() -> Theme { return self.colorTheme }
+    
+    // setter
+    func setGesture(gesture: UIGestureRecognizer) {
+        self.gesture = gesture
+    }
     
     /*
      init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = .light, nowLineEnabled: Bool = true, nowLineColor: UIColor = .red)
@@ -360,6 +279,7 @@ protocol WeekViewDataSource {
                     }
                     
                     eventView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didClickOnEvent(_:))))
+                    eventView.eventID = event.getID()
                     eventViews.append(eventView)
                     self.events.append(event)
                 }
@@ -515,9 +435,8 @@ protocol WeekViewDataSource {
         return [event]
     }
     
-    func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent) {
-        print(#function)
-        print(event)
+    func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent, view: WeekViewEventView) {
+        print(#function, "event:", event.getID())
     }
     
     /*
@@ -543,7 +462,6 @@ protocol WeekViewDataSource {
         
         eventView.addSubview(eventLeftBorder)
         eventView.addSubview(eventText)
-        eventView.eventID = event.getID()
         return eventView
     }
     
@@ -593,7 +511,7 @@ protocol WeekViewDataSource {
             
             for event in self.events {
                 if (event.getID() == weekViewEventView.eventID!) {
-                    self.delegate.weekViewDidClickOnEvent(self, event: event)
+                    self.delegate.weekViewDidClickOnEvent(self, event: event, view: weekViewEventView)
                     return
                 }
             }
