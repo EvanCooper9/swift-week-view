@@ -10,21 +10,19 @@ import Foundation
 import UIKit
 import SwiftDate
 
-/*
- Protocol: WeekViewDataSource
- 
- Description: Used to delegate the creation of events for the WeekView
+/**
+ Used to delegate the creation of events for the WeekView
  */
 protocol WeekViewDataSource {
-    /*
-     weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent]
-     
-     Description:
+    /**
      Generate and return a set of events for a specific day. Events can be returned synchronously or asynchronously
      
-     Params:
-     - weekView: the WeekView that is calling this function
-     - date: the date for which to create events for
+     - Returns:
+     A collection of WeekViewEvents specific to the day of the provided date
+     
+     - Parameters:
+        - weekView: the WeekView that is calling this function
+        - date: the date for which to create events for
      */
     func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent]
 }

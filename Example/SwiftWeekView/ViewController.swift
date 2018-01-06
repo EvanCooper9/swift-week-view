@@ -12,34 +12,43 @@ import SwiftDate
 class ViewController: UIViewController, WeekViewDataSource, WeekViewDelegate, WeekViewStyler {
     
     let eventDetailLauncher = EventDetailLauncher()
-    var weekView: WeekView?
+    lazy var weekView: WeekView = {
+        let bump: CGFloat = 10
+        let frame: CGRect = CGRect(x: 0, y: bump, width: self.view.frame.width, height: self.view.frame.height - bump)
+        let weekView = WeekView(frame: frame, visibleDays: 5)
+        weekView.dataSource = self
+        weekView.delegate = self
+        weekView.styler = self
+        return weekView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let bump: CGFloat = 10
-        let frame: CGRect = CGRect(x: 0, y: bump, width: self.view.frame.width, height: self.view.frame.height - bump)
-        weekView = WeekView(frame: frame, visibleDays: 5, respondsToInteraction: true)
-        weekView!.dataSource = self
-        weekView!.delegate = self
-        weekView!.styler = self
-        self.view.addSubview(weekView!)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.view.addSubview(weekView)
+//        weekView.setGestureRecognizer(gestureRecognizerType: UITapGestureRecognizer())
     }
     
     func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent] {
-        let start1 = date.atTime(hour: (date.day % 5) + 9, minute: 0, second: 0)!
-        let end1 = date.atTime(hour: start1.hour + (date.day % 3) + 1, minute: 30 * (date.day % 2), second: 0)!
-        let event1: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)", start: start1, end: end1)
-        return [event1]
+        if (date.day == 19) {
+            let start1 = date.atTime(hour: (date.day % 5) + 9, minute: 0, second: 0)!
+            let end1 = date.atTime(hour: start1.hour + (date.day % 3) + 1, minute: 30 * (date.day % 2), second: 0)!
+            let event1: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)", start: start1, end: end1)
+            return [event1]
+        }
+        return []
+    }
+    
+    func weekViewGestureForInteraction(_ weekView: WeekView) -> UIGestureRecognizer {
+        return UITapGestureRecognizer(target: self, action: #selector(clickedWeekView))
     }
     
     func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent, view: WeekViewEventView) {
         eventDetailLauncher.event = event
         eventDetailLauncher.present()
+    }
+    
+    @objc func clickedWeekView() {
+        print("Custom target for clicking on event")
     }
     
     func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> WeekViewEventView {

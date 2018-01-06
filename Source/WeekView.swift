@@ -23,8 +23,6 @@ import SwiftDate
     private var startHour: Int!
     private var endHour: Int!
     private var headerHeight: CGFloat!
-    private var respondsToInteraction: Bool!
-    private var gesture: UIGestureRecognizer?
     
     // Secondary properties
     private var nowLineEnabled: Bool!
@@ -46,6 +44,7 @@ import SwiftDate
         }
     }
     
+    private lazy var gestureRecognizer: UIGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didClickOnEvent(_:)))
     public var delegate: WeekViewDelegate!
     
     public var styler: WeekViewStyler! {
@@ -63,28 +62,37 @@ import SwiftDate
     func getColorTheme() -> Theme { return self.colorTheme }
     
     // setter
-    func setGesture(gesture: UIGestureRecognizer) {
-        self.gesture = gesture
+    func setGesture(gestureRecognizer: UIGestureRecognizer) {
+        gestureRecognizer.addTarget(self, action: #selector(didClickOnEvent(_:)))
+        self.gestureRecognizer = gestureRecognizer
+        self.events = []
+        self.reloadScrollView()
+        self.reloadTimeView()
     }
     
-    /*
-     init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = .light, nowLineEnabled: Bool = true, nowLineColor: UIColor = .red)
+    func setGestureRecognizer<T: UIGestureRecognizer>(gestureRecognizerType: T) {
+        self.gestureRecognizer = T(target: self, action: #selector(didClickOnEvent(_:)))
+        print(T.self)
+        self.events = []
+        self.reloadScrollView()
+        self.reloadTimeView()
+    }
+    
+    /**
+     Initialization function
      
-     Description:
-     Function used by all the other init functions, to centrialized initialization
-     
-     Params:
-     - frame: the frame of the calendar view
-     - visibleDays: an instance of a ViewCreator subclass that overrides the createViewSet method
-     - date: (Optional) the day `WeekView` will initially load. Defaults to the current day
-     - startHour: (Optional) the earliest hour that will be displayed. Defaults to 09:00
-     - endHour: (Optional) the latest hour that will be displayed. Defalts to 17:00
-     - nowLineEnabled: (Optional) specify if the "now line" will be visible. Defaults to true
-     - nowLineColor: (Optional) the color of the "now line". Defaults to red
+     - Parameters:
+        - frame: the frame of the calendar view
+        - visibleDays: an instance of a ViewCreator subclass that overrides the createViewSet method
+        - date: (Optional) the day `WeekView` will initially load. Defaults to the current day
+        - startHour: (Optional) the earliest hour that will be displayed. Defaults to 09:00
+        - endHour: (Optional) the latest hour that will be displayed. Defalts to 17:00
+        - nowLineEnabled: (Optional) specify if the "now line" will be visible. Defaults to true
+        - nowLineColor: (Optional) the color of the "now line". Defaults to red
      */
-    init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = .light, nowLineEnabled: Bool = true, nowLineColor: UIColor = .red, respondsToInteraction: Bool = false) {
+    init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion(), startHour: Int = 9, endHour: Int = 17, colorTheme: Theme = .light, nowLineEnabled: Bool = true, nowLineColor: UIColor = .red) {
         super.init(frame: frame)
-        self.commonInit(frame: frame, visibleDays: visibleDays, date: date, startHour: startHour, endHour: endHour, colorTheme: colorTheme, nowLineEnabled: nowLineEnabled, nowLineColor: nowLineColor, respondsToInteraction: respondsToInteraction)
+        self.commonInit(frame: frame, visibleDays: visibleDays, date: date, startHour: startHour, endHour: endHour, colorTheme: colorTheme, nowLineEnabled: nowLineEnabled, nowLineColor: nowLineColor)
     }
     
     /*
@@ -94,17 +102,15 @@ import SwiftDate
      */
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red, respondsToInteraction: false)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red)
     }
     
-    /*
-     init?(coder aDecoder: NSCoder)
-     
+    /**
      For storyboard initialization
      */
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red, respondsToInteraction: false)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red)
     }
     
     /*
@@ -116,7 +122,7 @@ import SwiftDate
      From: https://developer.apple.com/documentation/objectivec/nsobject/1402908-prepareforinterfacebuilder
      */
     override func prepareForInterfaceBuilder() {
-        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red, respondsToInteraction: false)
+        self.commonInit(frame: frame, visibleDays: 5, date: DateInRegion(), startHour: 9, endHour: 17, colorTheme: .light, nowLineEnabled: true, nowLineColor: .red)
     }
     
     private func framesMatch(frame1: CGRect, frame2: CGRect) -> Bool {
@@ -124,21 +130,18 @@ import SwiftDate
     }
     
     /*
-     commonInit(frame: CGRect, visibleDays: Int, date: DateInRegion, startHour: Int, endHour: Int, colorTheme: Theme, nowLineEnabled: Bool, nowLineColor: UIColor)
+     Initialization function used by all the other init functions, to centrialize initialization
      
-     Description:
-     Function used by all the other init functions, to centrialize initialization
-     
-     Params:
-     - frame: the frame of the calendar view
-     - visibleDays: an instance of a ViewCreator subclass that overrides the createViewSet method
-     - date: the day `WeekView` will initially load
-     - startHour: the earliest hour that will be displayed
-     - endHour: the latest hour that will be displayed
-     - nowLineEnabled: specify if the "now line" will be visible
-     - nowLineColor: the color of the "now line"
+     - Parameters:
+        - frame: the frame of the calendar view
+        - visibleDays: an instance of a ViewCreator subclass that overrides the createViewSet method
+        - date: the day `WeekView` will initially load
+        - startHour: the earliest hour that will be displayed
+        - endHour: the latest hour that will be displayed
+        - nowLineEnabled: specify if the "now line" will be visible
+        - nowLineColor: the color of the "now line"
      */
-    private func commonInit(frame: CGRect, visibleDays: Int, date: DateInRegion, startHour: Int, endHour: Int, colorTheme: Theme, nowLineEnabled: Bool, nowLineColor: UIColor, respondsToInteraction: Bool) {
+    private func commonInit(frame: CGRect, visibleDays: Int, date: DateInRegion, startHour: Int, endHour: Int, colorTheme: Theme, nowLineEnabled: Bool, nowLineColor: UIColor) {
         self.dataSource = self
         self.delegate = self
         self.styler = self
@@ -150,7 +153,6 @@ import SwiftDate
         self.visibleDays = visibleDays
         self.startHour = startHour
         self.endHour = endHour
-        self.respondsToInteraction = respondsToInteraction
         
         self.monthAndYearText = UITextView(frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: frame.width, height: self.headerHeight))
         monthAndYearText.text = "\(self.initDate.monthName) \(self.initDate.year)"
@@ -211,10 +213,7 @@ import SwiftDate
         self.scrollView.snap()
     }
     
-    /*
-     scrollViewFillContainer(containerCoordinate: CGPoint, containerPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView]
-     
-     Description:
+    /**
      Implementation of UIInfiniteScrollViewDataSource protocol.
      */
     internal func scrollViewFillContainer(containerCoordinate: CGPoint, containerPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView] {
@@ -230,7 +229,10 @@ import SwiftDate
         self.headerHeight = header.frame.height
         
         let view: UIView = (styler.responds(to: #selector(weekViewStylerDayView(_:containerPosition:container:header:)))) ? self.styler.weekViewStylerDayView!(self, containerPosition: containerPosition, container: container, header: header) : self.weekViewStylerDayView(self, containerPosition: containerPosition, container: container, header: header)
+        let viewGestureRecognizer = UIGestureRecognizer(target: self, action: #selector(didClickOnEvent(_:)))
+        view.addGestureRecognizer(viewGestureRecognizer)
         
+        // adding the vertical line spacing between each day
         let linePath = UIBezierPath(rect: CGRect(x: containerCoordinate.x - (self.scrollView.getSpacerSize() / 2), y: containerCoordinate.y + self.headerHeight/2, width: 0.1, height: containerSize.height - self.headerHeight/2))
         let layer: CAShapeLayer = CAShapeLayer()
         layer.path = linePath.cgPath
@@ -278,7 +280,14 @@ import SwiftDate
                         break
                     }
                     
-                    eventView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.didClickOnEvent(_:))))
+                    var eventViewGuesture = self.weekViewGestureForInteraction(self)
+                    let delegate = self.delegate as AnyObject
+                    if (delegate.responds(to: #selector(delegate.weekViewGestureForInteraction(_:)))) {
+                        eventViewGuesture = delegate.weekViewGestureForInteraction!(self)
+                        eventViewGuesture.addTarget(self, action: #selector(self.didClickOnEvent(_:)))
+                    }
+                    
+                    eventView.addGestureRecognizer(eventViewGuesture)
                     eventView.eventID = event.getID()
                     eventViews.append(eventView)
                     self.events.append(event)
@@ -289,7 +298,6 @@ import SwiftDate
                     ghostView.backgroundColor = .clear
                     eventViews.append(ghostView)
                 }
-                
                 completion(eventViews)
             }
         }
@@ -297,11 +305,16 @@ import SwiftDate
         return [header, view]
     }
     
-    /*
-     refreshNowLine(xPos: CGFloat, yPos: CGFloat, hourHeight: CGFloat)
+    /**
+     Will re-position the 'now' line.
      
-     Description:
-     Will re-position the 'now' line, for internal use only.
+     - Parameters:
+        - xPos: the new x-coordinate of the line
+        - yPos: the new y-coordinate of the line
+        - hourHeight: the height of each hour in the timeView
+     
+     - Important:
+     For internal use only.
      */
     private func refreshNowLine(xPos: CGFloat, yPos: CGFloat, hourHeight: CGFloat) {
         self.nowLine.removeFromSuperlayer()
@@ -327,10 +340,7 @@ import SwiftDate
         }
     }
     
-    /*
-     addHourInfo()
-     
-     Description:
+    /**
      Add the hour text and horizontal line for each hour that's visible in the scrollView
      */
     private func addHourInfo() {
@@ -363,10 +373,10 @@ import SwiftDate
     }
     
     /*
-     reloadScrollView()
+     Utility function to refresh the contents of the scrollView
      
-     Description:
-     Internal utility function to refresh the contents of the scrollView
+     - Important:
+     For internal use only.
      */
     private func reloadScrollView() {
         self.scrollView.removeFromSuperview()
@@ -378,11 +388,11 @@ import SwiftDate
         self.addHourInfo()
     }
     
-    /*
-     reloadTimeView()
+    /**
+     Utility function to refresh the contents of the timeView
      
-     Description:
-     Internal utility function to refresh the contents of the timeView
+     - Important:
+     For internal use only.
      */
     private func reloadTimeView() {
         self.timeView.removeFromSuperview()
@@ -405,14 +415,14 @@ import SwiftDate
         self.addSubview(self.timeView)
     }
     
-    /*
-     jumpToDay(date: DateInRegion)
+    /**
+     Jump the view to a specific day
      
-     Description:
-     A hacky way of jumping the view to a specific day. Re-initializing the view is costly but it works for now
+     - Parameters:
+        - date: the date to jump the view to.
      
-     Params:
-     - date: the date to jump the view to.
+     - Important:
+     This will re-initialize the entire scrollView within. Not an optimal solution.
      */
     func jumpToDay(date: DateInRegion) {
         self.initDate = date - self.visibleDays.days
@@ -423,10 +433,7 @@ import SwiftDate
     }
     
     /*
-     weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent]
-     
-     Description:
-     Default implementation of the WeekViewDataSource protocol
+     Default implementation of the WeekViewDataSource protocol method.
      */
     internal func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent] {
         let start: DateInRegion = date.atTime(hour: 12, minute: 0, second: 0)!
@@ -435,15 +442,29 @@ import SwiftDate
         return [event]
     }
     
+    /*
+     Default implemenation of the WeekViewDelegate protocol method.
+     */
     func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent, view: WeekViewEventView) {
         print(#function, "event:", event.getID())
     }
     
     /*
-     weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView
-     
-     Description:
-     Default implementation of the WeekViewStyler protocol
+ 
+     */
+    func weekViewDidClickOnFreeTime(_ weekView: WeekViewEvent, date: DateInRegion) {
+        print(#function, "date:", date)
+    }
+    
+    /*
+     Default implementation of the WeekViewDelegate protocol method.
+     */
+    @objc func weekViewGestureForInteraction(_ weekView: WeekView) -> UIGestureRecognizer {
+        return UIGestureRecognizer(target: self, action: #selector(didClickOnEvent(_:)))
+    }
+    
+    /*
+     Default implementation of the WeekViewStyler protocol method.
      */
     internal func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> WeekViewEventView {
         let eventView: WeekViewEventView = WeekViewEventView(frame: eventContainer)
@@ -466,10 +487,7 @@ import SwiftDate
     }
     
     /*
-     weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, container: CGRect) -> UIView
-     
-     Description:
-     Default implementation of the WeekViewStyler Protocol
+     Default implementation of the WeekViewStyler protocol method.
      */
     internal func weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, container: CGRect) -> UIView {
         let viewDate: DateInRegion = self.initDate + containerPosition.days
@@ -488,10 +506,7 @@ import SwiftDate
     }
     
     /*
-     weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, container: CGRect, header: UIView) -> UIView
-     
-     Description:
-     Default implementation of the WeekViewStyler Protocol
+     Default implementation of the WeekViewStyler protocol method.
      */
     internal func weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, container: CGRect, header: UIView) -> UIView {
         let viewDate: DateInRegion = self.initDate + containerPosition.days
@@ -503,17 +518,23 @@ import SwiftDate
         return view
     }
     
-    @objc func didClickOnEvent(_ touch: UITapGestureRecognizer) {
-        if (self.respondsToInteraction) {
-            guard let weekViewEventView = touch.view as? WeekViewEventView else {
+    /**
+     Fires when a view is interacted with within the WeekView. Fires the WeekViewDelegate protocol method if an event was interacted with.
+     
+     - Parameters:
+        - gesture: the gesture that performed the interaction.
+     */
+    @objc func didClickOnEvent(_ gesture: UIGestureRecognizer) {
+        print("some sort of click")
+        guard let weekViewEventView = gesture.view as? WeekViewEventView else {
+            print("empty click")
+            return
+        }
+        
+        for event in self.events {
+            if (event.getID() == weekViewEventView.eventID!) {
+                self.delegate.weekViewDidClickOnEvent(self, event: event, view: weekViewEventView)
                 return
-            }
-            
-            for event in self.events {
-                if (event.getID() == weekViewEventView.eventID!) {
-                    self.delegate.weekViewDidClickOnEvent(self, event: event, view: weekViewEventView)
-                    return
-                }
             }
         }
     }

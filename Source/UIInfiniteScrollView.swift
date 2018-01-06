@@ -39,6 +39,7 @@ import UIKit
     }
     
     // getter(s)
+    func getViewRangeStart() -> Int { return self.viewRangeStart }
     func getSpacerSize() -> CGFloat { return self.spacerSize }
     func getViews() -> [[UIView]] { return self.views }
     func getViewSize() -> CGSize { return self.viewSize }
@@ -120,7 +121,7 @@ import UIKit
     /*
      calculateXPosition(index: Int) -> CGFloat ... calculateYPosition(index: Int) -> CGFloat
      
-     Description:
+     
      Commonly used calculation put into function for ease
      
      Params:
@@ -135,14 +136,11 @@ import UIKit
     private func calculateXPosition(index: Int) -> CGFloat { return (scrollDirection == .horizontal) ? CGFloat(index) * (viewSize.width + spacerSize) : 0 }
     private func calculateYPosition(index: Int) -> CGFloat { return (scrollDirection == .vertical) ? CGFloat(index) * (viewSize.height + spacerSize) : 0 }
     
-    /*
-     calculatePosition(index: Int) -> CGPoint
-     
-     Description:
+    /**
      Calculate the realtive position of a view within UIInfiniteScrollView's content based on the view's index.based
      
-     Params:
-     - index: the index of the view that's being added to the content view of UIInfinteScrollView
+     - Parameters:
+        - index: the index of the view that's being added to the content view of UIInfinteScrollView
      */
     private func calculatePosition(index: Int) -> CGPoint {
         var point = CGPoint()
@@ -152,13 +150,7 @@ import UIKit
     }
     
     /*
-     scrollViewDidScroll(_ scrollView: UIScrollView)
-     
-     Description:
-     Tells the delegate when the user scrolls the content view within the receiver
-     In this case, it's used to notify the delegate when the visible part of the scrollView is reaching the bounds of the scrollView's content
-     
-     From: https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619392-scrollviewdidscroll
+     Implementation of the UIScrollViewDelegate protocol method.
      */
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (self.views.count > 0) {
@@ -203,38 +195,23 @@ import UIKit
     }
     
     /*
-     scrollViewWillBeginDecelerating(_ scrollView: UIScrollView)
-     
-     Description:
-     Tells the delegate that the scroll view is starting to decelerate the scrolling movement
-     In this case, it's used to call the snap() functoin to keep the UI clean
-     
-     From: https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619386-scrollviewwillbegindecelerating
+     Implementation of the UIScrollViewDelegate protocol method.
      */
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
         if (self.isSnapEnabled) { self.snap() }
     }
     
     /*
-     scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool)
-     
-     Description:
-     Tells the delegate when dragging ended in the scroll view
-     In this case, it's used to call the snap() functoin to keep the UI clean
-     
-     From: https://developer.apple.com/documentation/uikit/uiscrollviewdelegate/1619436-scrollviewdidenddragging
+     Implementation of the UIScrollViewDelegate protocol method.
      */
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if (self.isSnapEnabled) { self.snap() }
     }
     
-    /*
-     snap()
-     
-     Description:
+    /**
      Snap the content view edges to the closest edges
      */
-    func snap() {
+    public func snap() {
         var closestAnchor: CGFloat = (self.scrollDirection == .horizontal) ? self.contentSize.width : self.contentSize.height
         var closestViewSet: [UIView] = self.views[0]
         for viewSet in self.views {
@@ -248,22 +225,23 @@ import UIKit
         self.setContentOffset(CGPoint(x: closestViewSet[0].frame.origin.x, y: 0), animated: true)
     }
     
-    /*
-     createViews(fromPosition: Int, toPosition: Int)
-     
-     Description:
+    /**
      Create brand new views and add them to UIInfiniteScrollView's array of views
      Keep UIInfiniteScrollView's views sorted by the x orgin of each index
      
-     Params:
-     - fromPosition: start creating views from this position
-     - toPosition: stop creating views at this position (inclusive)
+     - Parameters:
+        - fromPosition: start creating views from this position
+        - toPosition: stop creating views at this position (inclusive)
      */
     private func createViews(fromPosition: Int, toPosition: Int) {
         for i in fromPosition...toPosition {
             let viewCoordinate: CGPoint = calculatePosition(index: i) //CGPoint(x: calculateXPosition(index: i), y: calculateYPosition(index: i))
             let viewSet = self.dataSource.scrollViewFillContainer(containerCoordinate: viewCoordinate, containerPosition: i, containerSize: self.viewSize, completion: self.addAsyncLoadedViews)
             self.views.append(viewSet)
+            
+            if (viewSet.count >= 2) {
+                print(viewSet[1].gestureRecognizers)
+            }
             
             if (self.scrollDirection == .horizontal) {
                 self.views.sort(by: {$0[0].frame.origin.x < $1[0].frame.origin.x})
@@ -273,15 +251,12 @@ import UIKit
         }
     }
     
-    /*
-     loadActiveViews(startIndex: Int)
-     
-     Description:
+    /**
      To load the necessary views into the content box of UIInfiniteScrollView
      These views are the ones that are visible to the user and represent the current horizontal position of UIInfiniteScrollView
      
-     Params:
-     - startIndex: The index to start loading views from the class' views parameter
+     - Parameters:
+        - startIndex: The index to start loading views from the class' views parameter
      */
     private func loadActiveViews(startIndex: Int) {
         for view in self.subviews {
@@ -293,15 +268,15 @@ import UIKit
             if (index >= self.views.count) { index -= startIndex }
             for view in self.views[index] {
                 let placeholderView = view.copyView()
-                if (self.scrollDirection == .horizontal) {
-                    var viewCalculatedXPosition = self.calculateXPosition(index: index - startIndex)
-                    viewCalculatedXPosition += view.frame.origin.x - self.views[index][0].frame.origin.x
-                    placeholderView.frame.origin.x = viewCalculatedXPosition
+                var placeholderViewPosition = calculatePosition(index: index - startIndex)
+                if (scrollDirection == .horizontal) {
+                    placeholderViewPosition.x += view.frame.origin.x - self.views[index][0].frame.origin.x
+                    placeholderView.frame.origin.x = placeholderViewPosition.x
                 } else {
-                    var viewCalculatedYPosition = self.calculateYPosition(index: index - startIndex)
-                    viewCalculatedYPosition += view.frame.origin.y - self.views[index][0].frame.origin.y
-                    placeholderView.frame.origin.y = viewCalculatedYPosition
+                    placeholderViewPosition.y += view.frame.origin.y - self.views[index][0].frame.origin.y
+                    placeholderView.frame.origin.y = placeholderViewPosition.y
                 }
+                
                 if (view.gestureRecognizers != nil) {
                     for gestureRecognizer in view.gestureRecognizers! {
                         placeholderView.addGestureRecognizer(gestureRecognizer)
@@ -309,23 +284,20 @@ import UIKit
                 }
                 
                 if (type(of: view) == WeekViewEventView.self && self.weekView != nil) {
-                    let gestureRecognizer = UITapGestureRecognizer(target: self.weekView!, action: #selector(self.weekView!.didClickOnEvent(_:)))
+                    let gestureRecognizer = UITapGestureRecognizer(target: self.weekView!, action: #selector(self.weekView?.didClickOnEvent(_:)))
                     placeholderView.addGestureRecognizer(gestureRecognizer)
                 }
                 
-                self.addSubview(placeholderView)
+                addSubview(placeholderView)
             }
         }
     }
     
-    /*
-     addAsyncLoadedViews(views: [UIView])
-     
-     Description:
+    /**
      To load in the views that were created asynchronously. Used as a completion handler when generating the views
      
-     Params:
-     - views: the views that were create asynchronously
+     - Parameters:
+        - views: the views that were create asynchronously
     */
     private func addAsyncLoadedViews(views: [UIView]) {
         var index: Int = 0
@@ -334,21 +306,28 @@ import UIKit
                 self.views[index].append(contentsOf: views)
                 for view in views {
                     let placeholderView = view.copyView()
-                    if (self.scrollDirection == .horizontal) {
-                        var viewCalculatedXPosition = self.calculateXPosition(index: index - self.viewRangeStart)
-                        viewCalculatedXPosition += view.frame.origin.x - self.views[index][0].frame.origin.x
-                        placeholderView.frame.origin.x = viewCalculatedXPosition
+                    var placeholderViewPosition = calculatePosition(index: index - self.viewRangeStart)
+                    if (scrollDirection == .horizontal) {
+                        placeholderViewPosition.x += view.frame.origin.x - self.views[index][0].frame.origin.x
+                        placeholderView.frame.origin.x = placeholderViewPosition.x
                     } else {
-                        var viewCalculatedYPosition = self.calculateYPosition(index: index - self.viewRangeStart)
-                        viewCalculatedYPosition += view.frame.origin.y - self.views[index][0].frame.origin.y
-                        placeholderView.frame.origin.y = viewCalculatedYPosition
+                        placeholderViewPosition.y += view.frame.origin.y - self.views[index][0].frame.origin.y
+                        placeholderView.frame.origin.y = placeholderViewPosition.y
                     }
+                    
                     if (view.gestureRecognizers != nil) {
                         for gestureRecognizer in view.gestureRecognizers! {
                             placeholderView.addGestureRecognizer(gestureRecognizer)
                         }
                     }
-                    self.addSubview(placeholderView)
+                    
+                    if (type(of: view) == WeekViewEventView.self && self.weekView != nil) {
+//                        print(view)
+                        let gestureRecognizer = UITapGestureRecognizer(target: self.weekView!, action: #selector(self.weekView?.didClickOnEvent(_:)))
+                        placeholderView.addGestureRecognizer(gestureRecognizer)
+                    }
+                
+                    addSubview(placeholderView)
                 }
                 break
             }
@@ -356,16 +335,16 @@ import UIKit
         }
     }
     
-    /*
-     jumpToView(viewPosition: Int?, viewXPosition: CGFloat?)
-     
-     Description:
+    /**
      Jump to the visible area to the specified view position
      The defined view position will the the first view from the left in the visible area
      
-     Params (one is required):
-     - viewPosition (optional): The position of the view relative to the other views that have been created (default use if both parameters are provided)
-     - viewCoordinate (optional): The coordinate of the view's frame's origin
+     - Important:
+     At least one of the parameters is required.
+     
+     - Parameters:
+        - viewPosition: (optional) The position of the view relative to the other views that have been created (default use if both parameters are provided)
+        - viewCoordinate: (optional) The coordinate of the view's frame's origin
      */
      func jumpToView(viewPosition: Int?, viewCoordinate: CGPoint?) {
         if let viewPosition = viewPosition {
@@ -382,10 +361,7 @@ import UIKit
     }
     
     /*
-     createViewSet(viewCoordinate: CGPoint, viewPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView]
-     
-     Description:
-     Default implementation of the UIInfiniteScrollViewDataSource protocol
+     Default implementation of the UIInfiniteScrollViewDataSource protocol method.
     */
     internal func scrollViewFillContainer(containerCoordinate: CGPoint, containerPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView] {
         let view: UIView = UIView(frame: CGRect(x: containerCoordinate.x, y: containerCoordinate.y, width: containerSize.width, height: containerSize.height))

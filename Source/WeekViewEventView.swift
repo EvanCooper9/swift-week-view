@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class WeekViewEventView: UIView {
+class WeekViewEventView: UIView, NSCopying {
     
     var eventID: String?
     
@@ -20,12 +20,18 @@ class WeekViewEventView: UIView {
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
         aCoder.encode(eventID, forKey: "eventID")
-        aCoder.encode(gestureRecognizers, forKey: "gestureRecognizers")
+//        aCoder.encode(gestureRecognizers, forKey: "gestureRecognizers")
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         eventID = aDecoder.decodeObject(forKey: "eventID") as? String
-        gestureRecognizers = aDecoder.decodeObject(forKey: "gestureRecognizers") as? [UIGestureRecognizer]
+//        gestureRecognizers = aDecoder.decodeObject(forKey: "gestureRecognizers") as? [UIGestureRecognizer]
+    }
+    
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = WeekViewEventView(frame: frame)
+        copy.gestureRecognizers = gestureRecognizers
+        return copy
     }
 }

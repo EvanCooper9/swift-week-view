@@ -9,25 +9,28 @@
 import Foundation
 import UIKit
 
-/*
- Protocol: UIInfiniteScrollViewDataSource
- 
- Description:
+/**
  Used to delegate the creation of views for the scrollView
  */
-protocol UIInfiniteScrollViewDataSource {
-    /*
-     scrollViewFillContainer(containerCoordinate: CGPoint, containerPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView]
-     
-     Description:
+@objc protocol UIInfiniteScrollViewDataSource {
+    
+    /**
      Creates a set of views for the cell in the scroll view. The cell will add the contents of the returned array as sub-views.
      
-     Params:
-     - containerCoordinate: the coordinate of the container to be filled (top left)
-     - containerPosition: the left-to-right position of the container, relative to the other containers that have been created
-     - containerSize: the size, in width and height, of the container to be filled
-     - completion: a completion handler that will add asynchronous container contents once they are ready
+     - Returns
+     A collection of views to be added to the provided container
+     
+     - Parameters:
+        - containerCoordinate: the coordinate of the container to be filled (top left)
+        - containerPosition: the left-to-right position of the container, relative to the other containers that have been created
+        - containerSize: the size, in width and height, of the container to be filled
+        - completion: a completion handler that will add asynchronous container contents once they are ready
      */
     func scrollViewFillContainer(containerCoordinate: CGPoint, containerPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView]
+    
+    /**
+     Curates a list 
+     */
+    @objc optional func scrollViewInteractionForViewType(_ scrollView: UIInfiniteScrollView) -> [UIView : UIGestureRecognizer]
 }
 
