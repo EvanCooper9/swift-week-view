@@ -29,13 +29,10 @@ class ViewController: UIViewController, WeekViewDataSource, WeekViewDelegate, We
     }
     
     func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent] {
-        if (date.day == 19) {
-            let start1 = date.atTime(hour: (date.day % 5) + 9, minute: 0, second: 0)!
-            let end1 = date.atTime(hour: start1.hour + (date.day % 3) + 1, minute: 30 * (date.day % 2), second: 0)!
-            let event1: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)", start: start1, end: end1)
-            return [event1]
-        }
-        return []
+        let start1 = date.atTime(hour: (date.day % 5) + 9, minute: 0, second: 0)!
+        let end1 = date.atTime(hour: start1.hour + (date.day % 3) + 1, minute: 30 * (date.day % 2), second: 0)!
+        let event1: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)", start: start1, end: end1)
+        return [event1]
     }
     
     func weekViewGestureForInteraction(_ weekView: WeekView) -> UIGestureRecognizer {

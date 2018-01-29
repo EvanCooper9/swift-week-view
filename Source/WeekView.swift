@@ -129,7 +129,7 @@ import SwiftDate
         return frame1.origin.x.isEqual(to: frame2.origin.x) && frame1.origin.y.isEqual(to: frame2.origin.y) && frame1.size.width.isEqual(to: frame2.size.width) && frame1.size.height.isEqual(to: frame2.size.height)
     }
     
-    /*
+    /**
      Initialization function used by all the other init functions, to centrialize initialization
      
      - Parameters:
@@ -229,7 +229,7 @@ import SwiftDate
         self.headerHeight = header.frame.height
         
         let view: UIView = (styler.responds(to: #selector(weekViewStylerDayView(_:containerPosition:container:header:)))) ? self.styler.weekViewStylerDayView!(self, containerPosition: containerPosition, container: container, header: header) : self.weekViewStylerDayView(self, containerPosition: containerPosition, container: container, header: header)
-        let viewGestureRecognizer = UIGestureRecognizer(target: self, action: #selector(didClickOnEvent(_:)))
+        let viewGestureRecognizer = UIGestureRecognizer(target: self, action: #selector(didClickTesting(_:)))
         view.addGestureRecognizer(viewGestureRecognizer)
         
         // adding the vertical line spacing between each day
@@ -260,9 +260,9 @@ import SwiftDate
                     if (events.count > 1) {
                         var overlappingViews: [WeekViewEvent] = []
                         for e in events {
-                            if (event != e && event.overlaps(withEvent: e)) {
+                            if (event.getID() != e.getID() && event.overlaps(withEvent: e)) {
                                 overlappingViews.append(e)
-                            } else if (event == e) {
+                            } else if (event.getID() == e.getID()) {
                                 overlappingViews.append(event)
                             }
                         }
@@ -518,6 +518,10 @@ import SwiftDate
         return view
     }
     
+    @objc func didClickTesting(_ gesture: UIGestureRecognizer) {
+        print("something happened yay")
+    }
+    
     /**
      Fires when a view is interacted with within the WeekView. Fires the WeekViewDelegate protocol method if an event was interacted with.
      
@@ -539,3 +543,4 @@ import SwiftDate
         }
     }
 }
+
