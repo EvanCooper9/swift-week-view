@@ -239,10 +239,6 @@ import UIKit
             let viewSet = self.dataSource.scrollViewFillContainer(containerCoordinate: viewCoordinate, containerPosition: i, containerSize: self.viewSize, completion: self.addAsyncLoadedViews)
             self.views.append(viewSet)
             
-            if (viewSet.count >= 2) {
-                print(viewSet[1].gestureRecognizers)
-            }
-            
             if (self.scrollDirection == .horizontal) {
                 self.views.sort(by: {$0[0].frame.origin.x < $1[0].frame.origin.x})
             } else {

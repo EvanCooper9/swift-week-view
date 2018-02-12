@@ -14,6 +14,7 @@ class WeekViewEvent: NSObject, Comparable {
     private var title: String
     private var start: DateInRegion
     private var end: DateInRegion
+    
     private var color: UIColor
     
     override var description: String {
