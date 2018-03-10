@@ -28,11 +28,20 @@ class ViewController: UIViewController, WeekViewDataSource, WeekViewDelegate, We
 //        weekView.setGestureRecognizer(gestureRecognizerType: UITapGestureRecognizer())
     }
     
-    func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent] {
+    func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion, eventCompletion: @escaping ([WeekViewEvent]) -> Void) -> [WeekViewEvent] {
         let start1 = date.atTime(hour: (date.day % 5) + 9, minute: 0, second: 0)!
         let end1 = date.atTime(hour: start1.hour + (date.day % 3) + 1, minute: 30 * (date.day % 2), second: 0)!
-        let event1: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)", start: start1, end: end1)
-        return [event1]
+        let event: WeekViewEvent = WeekViewEvent(title: "Event \(date.day)", start: start1, end: end1)
+        
+        let start: DateInRegion = date.atTime(hour: 12, minute: 0, second: 0)!
+        let end: DateInRegion = date.atTime(hour: 13, minute: 30, second: 0)!
+        let lunch: WeekViewEvent = WeekViewEvent(title: "Lunch A " + String(date.day), start: start, end: end)
+        
+        DispatchQueue.global(qos: .background).async {
+            eventCompletion([event])
+        }
+    
+        return []
     }
     
     func weekViewGestureForInteraction(_ weekView: WeekView) -> UIGestureRecognizer {

@@ -13,7 +13,6 @@
 		7C28E35A1FD6EDFB007B3BA5 /* WeekViewStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C28E3591FD6EDFB007B3BA5 /* WeekViewStyler.swift */; };
 		7C3DF19D1F63476500DDF3B2 /* UIInfiniteScrollView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3DF19B1F63476500DDF3B2 /* UIInfiniteScrollView.xib */; };
 		7C3DF19E1F63476500DDF3B2 /* WeekView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3DF19C1F63476500DDF3B2 /* WeekView.xib */; };
-		7C40227820222DD400EBF229 /* UIInfiniteCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C40227720222DD400EBF229 /* UIInfiniteCollectionView.swift */; };
 		7C4A0D291F4CD69E00286CD6 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4A0D281F4CD69E00286CD6 /* WeekView.swift */; };
 		7C4AEBA01F4CD7240058F579 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4AEB9C1F4CD7240058F579 /* Common.swift */; };
 		7C4AEBA11F4CD7240058F579 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4AEB9D1F4CD7240058F579 /* Extensions.swift */; };
@@ -62,7 +61,6 @@
 		7C28E3591FD6EDFB007B3BA5 /* WeekViewStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeekViewStyler.swift; path = ../../Source/WeekViewStyler.swift; sourceTree = "<group>"; };
 		7C3DF19B1F63476500DDF3B2 /* UIInfiniteScrollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UIInfiniteScrollView.xib; sourceTree = "<group>"; };
 		7C3DF19C1F63476500DDF3B2 /* WeekView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeekView.xib; sourceTree = "<group>"; };
-		7C40227720222DD400EBF229 /* UIInfiniteCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIInfiniteCollectionView.swift; path = ../../Source/UIInfiniteCollectionView.swift; sourceTree = "<group>"; };
 		7C4A0D281F4CD69E00286CD6 /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeekView.swift; path = ../../Source/WeekView.swift; sourceTree = "<group>"; };
 		7C4AEB9C1F4CD7240058F579 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Common.swift; path = ../../Source/Common.swift; sourceTree = "<group>"; };
 		7C4AEB9D1F4CD7240058F579 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../Source/Extensions.swift; sourceTree = "<group>"; };
@@ -151,7 +149,6 @@
 				7C91BDC21FD5AC540001A594 /* WeekViewEventView.swift */,
 				7C4AEB9E1F4CD7240058F579 /* UIInfiniteScrollView.swift */,
 				7C1A1EC41FE4AC730036FE01 /* UIInfiniteScrollViewDataSource.swift */,
-				7C40227720222DD400EBF229 /* UIInfiniteCollectionView.swift */,
 				7C4AEB9C1F4CD7240058F579 /* Common.swift */,
 				7C4AEB9D1F4CD7240058F579 /* Extensions.swift */,
 			);
@@ -526,7 +523,6 @@
 				7CB862861F470AA0008F23EC /* AppDelegate.swift in Sources */,
 				7C91BDC31FD5AC540001A594 /* WeekViewEventView.swift in Sources */,
 				7C4AEBA21F4CD7240058F579 /* UIInfiniteScrollView.swift in Sources */,
-				7C40227820222DD400EBF229 /* UIInfiniteCollectionView.swift in Sources */,
 				7CE561631FD6428300FB44D7 /* EventDetailLauncher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
