@@ -80,7 +80,7 @@ import UIKit
      Called when a designable object is created in Interface Builder
      
      From: https://developer.apple.com/documentation/objectivec/nsobject/1402908-prepareforinterfacebuilder
-    */
+     */
     override func prepareForInterfaceBuilder() {
         self.commonInit(viewsInPageCount: 5, spacerSize: 2, scrollDirection: .horizontal)
     }
@@ -239,10 +239,6 @@ import UIKit
             let viewSet = self.dataSource.scrollViewFillContainer(containerCoordinate: viewCoordinate, containerPosition: i, containerSize: self.viewSize, completion: self.addAsyncLoadedViews)
             self.views.append(viewSet)
             
-            if (viewSet.count >= 2) {
-                print(viewSet[1].gestureRecognizers)
-            }
-            
             if (self.scrollDirection == .horizontal) {
                 self.views.sort(by: {$0[0].frame.origin.x < $1[0].frame.origin.x})
             } else {
@@ -298,7 +294,7 @@ import UIKit
      
      - Parameters:
         - views: the views that were create asynchronously
-    */
+     */
     private func addAsyncLoadedViews(views: [UIView]) {
         var index: Int = 0
         for viewSet in self.views {
@@ -322,7 +318,6 @@ import UIKit
                     }
                     
                     if (type(of: view) == WeekViewEventView.self && self.weekView != nil) {
-//                        print(view)
                         let gestureRecognizer = UITapGestureRecognizer(target: self.weekView!, action: #selector(self.weekView?.didClickOnEvent(_:)))
                         placeholderView.addGestureRecognizer(gestureRecognizer)
                     }
@@ -345,7 +340,7 @@ import UIKit
      - Parameters:
         - viewPosition: (optional) The position of the view relative to the other views that have been created (default use if both parameters are provided)
         - viewCoordinate: (optional) The coordinate of the view's frame's origin
-     */
+      */
      func jumpToView(viewPosition: Int?, viewCoordinate: CGPoint?) {
         if let viewPosition = viewPosition {
             self.loadActiveViews(startIndex: viewPosition - self.viewsInPageCount)
@@ -362,7 +357,7 @@ import UIKit
     
     /*
      Default implementation of the UIInfiniteScrollViewDataSource protocol method.
-    */
+     */
     internal func scrollViewFillContainer(containerCoordinate: CGPoint, containerPosition: Int, containerSize: CGSize, completion: @escaping ([UIView]) -> Void) -> [UIView] {
         let view: UIView = UIView(frame: CGRect(x: containerCoordinate.x, y: containerCoordinate.y, width: containerSize.width, height: containerSize.height))
         view.backgroundColor = (containerPosition % 2 == 0) ? UIColor.lightGray : UIColor.gray

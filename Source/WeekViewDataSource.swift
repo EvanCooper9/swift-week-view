@@ -24,5 +24,5 @@ protocol WeekViewDataSource {
         - weekView: the WeekView that is calling this function
         - date: the date for which to create events for
      */
-    func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent]
+    func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion, eventCompletion: @escaping ([WeekViewEvent]) -> Void) -> [WeekViewEvent]
 }

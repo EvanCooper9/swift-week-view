@@ -35,9 +35,12 @@ import SwiftDate
     private var nowCircle: UIView!
     
     public var dataSource: WeekViewDataSource! {
+        willSet {
+            self.events = []
+            print("changing dataSource \(self.events)")
+        }
         didSet {
             if (oldValue != nil) {
-                self.events = []
                 self.reloadScrollView()
                 self.reloadTimeView()
             }
@@ -129,7 +132,7 @@ import SwiftDate
         return frame1.origin.x.isEqual(to: frame2.origin.x) && frame1.origin.y.isEqual(to: frame2.origin.y) && frame1.size.width.isEqual(to: frame2.size.width) && frame1.size.height.isEqual(to: frame2.size.height)
     }
     
-    /*
+    /**
      Initialization function used by all the other init functions, to centrialize initialization
      
      - Parameters:
@@ -229,7 +232,7 @@ import SwiftDate
         self.headerHeight = header.frame.height
         
         let view: UIView = (styler.responds(to: #selector(weekViewStylerDayView(_:containerPosition:container:header:)))) ? self.styler.weekViewStylerDayView!(self, containerPosition: containerPosition, container: container, header: header) : self.weekViewStylerDayView(self, containerPosition: containerPosition, container: container, header: header)
-        let viewGestureRecognizer = UIGestureRecognizer(target: self, action: #selector(didClickOnEvent(_:)))
+        let viewGestureRecognizer = UIGestureRecognizer(target: self, action: #selector(didClickTesting(_:)))
         view.addGestureRecognizer(viewGestureRecognizer)
         
         // adding the vertical line spacing between each day
@@ -240,69 +243,77 @@ import SwiftDate
         layer.fillColor = self.colorTheme.hourLineColor.cgColor
         self.scrollView.layer.addSublayer(layer)
         
-        DispatchQueue.global(qos: .background).async {
-            let events = self.dataSource.weekViewGenerateEvents(self, date: viewDate)
+        let events = self.dataSource.weekViewGenerateEvents(self, date: viewDate, eventCompletion: { (asyncEvents) in
             DispatchQueue.main.async {
-                var eventViews: [UIView] = []
-                for event in events {
-                    let hourHeight = (self.frame.height - self.monthAndYearText.frame.height - header.frame.height) / CGFloat(self.endHour - self.startHour)
-                    let minuteHeight = hourHeight / 60
-                    let eventStartHour = event.getStart().hour
-                    let eventStartMinute = event.getStart().minute
-                    let eventEndHour = event.getEnd().hour
-                    let eventEndMinute = event.getEnd().minute
-                    var eventX = containerCoordinate.x
-                    let eventY = self.headerHeight + (hourHeight * CGFloat(eventStartHour - self.startHour)) + (minuteHeight * CGFloat(eventStartMinute))
-                    var eventWidth = containerSize.width
-                    let eventHeight = (hourHeight * CGFloat(eventEndHour - eventStartHour)) + (minuteHeight * CGFloat(eventEndMinute - eventStartMinute))
-                    
-                    // For events that overlap
-                    if (events.count > 1) {
-                        var overlappingViews: [WeekViewEvent] = []
-                        for e in events {
-                            if (event != e && event.overlaps(withEvent: e)) {
-                                overlappingViews.append(e)
-                            } else if (event == e) {
-                                overlappingViews.append(event)
-                            }
-                        }
-                        
-                        if (overlappingViews.count >= 2) {
-                            eventWidth = containerSize.width / CGFloat(overlappingViews.count)
-                            eventX = containerCoordinate.x + (CGFloat(overlappingViews.index(of: event)!) * eventWidth)
-                        }
-                    }
-                    
-                    let eventContainer: CGRect = CGRect(x: eventX, y: eventY, width: eventWidth, height: eventHeight)
-                    guard let eventView = self.styler.weekViewStylerEventView?(self, eventContainer: eventContainer, event: event) else {
-                        let eventView = self.weekViewStylerEventView(self, eventContainer: eventContainer, event: event)
-                        eventViews.append(eventView)
-                        break
-                    }
-                    
-                    var eventViewGuesture = self.weekViewGestureForInteraction(self)
-                    let delegate = self.delegate as AnyObject
-                    if (delegate.responds(to: #selector(delegate.weekViewGestureForInteraction(_:)))) {
-                        eventViewGuesture = delegate.weekViewGestureForInteraction!(self)
-                        eventViewGuesture.addTarget(self, action: #selector(self.didClickOnEvent(_:)))
-                    }
-                    
-                    eventView.addGestureRecognizer(eventViewGuesture)
-                    eventView.eventID = event.getID()
-                    eventViews.append(eventView)
-                    self.events.append(event)
-                }
-                
-                if (eventViews.count == 0) {
-                    let ghostView: UIView = UIView(frame: CGRect(x: containerCoordinate.x, y: 0, width: containerSize.width, height: 1))
-                    ghostView.backgroundColor = .clear
-                    eventViews.append(ghostView)
-                }
+                let eventViews = self.eventsToViews(events: asyncEvents, header: header, containerCoordinate: containerCoordinate, containerSize: containerSize)
                 completion(eventViews)
             }
+        })
+        
+        let eventViews = self.eventsToViews(events: events, header: header, containerCoordinate: containerCoordinate, containerSize: containerSize)
+        DispatchQueue.main.async {
+            completion(eventViews)
         }
         
         return [header, view]
+    }
+    
+    private func eventsToViews(events: [WeekViewEvent], header: UIView, containerCoordinate: CGPoint, containerSize: CGSize) -> [UIView] {
+        var eventViews: [UIView] = []
+        for event in events {
+            let hourHeight = (self.frame.height - self.monthAndYearText.frame.height - header.frame.height) / CGFloat(self.endHour - self.startHour)
+            let minuteHeight = hourHeight / 60
+            let eventStartHour = event.getStart().hour
+            let eventStartMinute = event.getStart().minute
+            let eventEndHour = event.getEnd().hour
+            let eventEndMinute = event.getEnd().minute
+            var eventX = containerCoordinate.x
+            let eventY = self.headerHeight + (hourHeight * CGFloat(eventStartHour - self.startHour)) + (minuteHeight * CGFloat(eventStartMinute))
+            var eventWidth = containerSize.width
+            let eventHeight = (hourHeight * CGFloat(eventEndHour - eventStartHour)) + (minuteHeight * CGFloat(eventEndMinute - eventStartMinute))
+            
+            // For events that overlap
+            if (self.events.count > 1) {
+                var overlappingViews: [WeekViewEvent] = []
+                overlappingViews.append(event)
+                for e in self.events {
+                    if (event.getID() != e.getID() && event.overlaps(withEvent: e)) {
+                        overlappingViews.append(e)
+                    }
+                }
+                
+                if (overlappingViews.count >= 2) {
+                    eventWidth = containerSize.width / CGFloat(overlappingViews.count / 2)
+                    eventX = containerCoordinate.x + (CGFloat(overlappingViews.index(of: event)!) * eventWidth)
+                }
+            }
+            
+            let eventContainer: CGRect = CGRect(x: eventX, y: eventY, width: eventWidth, height: eventHeight)
+            guard let eventView = self.styler.weekViewStylerEventView?(self, eventContainer: eventContainer, event: event) else {
+                let eventView = self.weekViewStylerEventView(self, eventContainer: eventContainer, event: event)
+                eventViews.append(eventView)
+                break
+            }
+            
+            var eventViewGuesture = self.weekViewGestureForInteraction(self)
+            let delegate = self.delegate as AnyObject
+            if (delegate.responds(to: #selector(delegate.weekViewGestureForInteraction(_:)))) {
+                eventViewGuesture = delegate.weekViewGestureForInteraction!(self)
+                eventViewGuesture.addTarget(self, action: #selector(self.didClickOnEvent(_:)))
+            }
+            
+            eventView.addGestureRecognizer(eventViewGuesture)
+            eventView.eventID = event.getID()
+            eventViews.append(eventView)
+            self.events.append(event)
+        }
+        
+        if (eventViews.count == 0) {
+            let ghostView: UIView = UIView(frame: CGRect(x: containerCoordinate.x, y: 0, width: containerSize.width, height: 1))
+            ghostView.backgroundColor = .clear
+            eventViews.append(ghostView)
+        }
+        return eventViews
     }
     
     /**
@@ -435,7 +446,7 @@ import SwiftDate
     /*
      Default implementation of the WeekViewDataSource protocol method.
      */
-    internal func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent] {
+    internal func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion, eventCompletion: @escaping ([WeekViewEvent]) -> Void) -> [WeekViewEvent] {
         let start: DateInRegion = date.atTime(hour: 12, minute: 0, second: 0)!
         let end: DateInRegion = date.atTime(hour: 13, minute: 30, second: 0)!
         let event: WeekViewEvent = WeekViewEvent(title: "Lunch " + String(date.day), start: start, end: end)
@@ -518,6 +529,10 @@ import SwiftDate
         return view
     }
     
+    @objc func didClickTesting(_ gesture: UIGestureRecognizer) {
+        print("something happened yay")
+    }
+    
     /**
      Fires when a view is interacted with within the WeekView. Fires the WeekViewDelegate protocol method if an event was interacted with.
      
@@ -539,3 +554,4 @@ import SwiftDate
         }
     }
 }
+
