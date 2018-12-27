@@ -2,49 +2,58 @@
 An iOS calendar library for displaying calendar events in a week view.
 
 <p align="center">
-    <img src="Media/screen4.png" width="30%" height="auto">
-    <img src="Media/screen5.gif" width="30%" height="auto">
-    <img src="Media/screen2.gif" width="30%" height="auto">
-</p> 
+    <img src="Media/screen1.png" width="30%" height="auto">
+    <img src="Media/interacting_with_events.gif" width="30%" height="auto">
+    <img src="Media/scrolling_through_events.gif" width="30%" height="auto">
+</p>
 
 ## Features
 - See calendar events in a week view
 - Asynchronously load calendar events
 - Interaction with specific events by clicking
+- Interaction with free time spaces by clicking
 - Custom styling
 - Infinite horizontal scrolling
-- Interface builder preview
-- Show a line at the current time
+
+## What's New?
+- Using [TimelineCollectionView](https://github.com/EvanCooper9/TimelineCollectionView) as a foundation over a custom UIScrollView for improved stability
+- Improved display of events that overlap
+- Improved handling of asynchronously-fetched data
+- Bug fixes
+
+## Installation
+Download [`Source`](https://github.com/EvanCooper9/swift-week-view/tree/master/Source) files and install [dependencies](https://github.com/EvanCooper9/swift-week-view#dependencies)
 
 ## Usage
-### 1. Download [source](https://github.com/EvanCooper9/swift-week-view/tree/master/Source) files and install [dependencies](https://github.com/EvanCooper9/swift-week-view#dependencies)
-
-### 2. Implement the WeekViewDataSource Protocol
-Implement the `weekViewGenerateEvents` protocol function. This function should return a list of `WeekViewEvent`s specific to the day of `date`. See [here](malcommac.github.io/SwiftDate/manipulate_dates.html#dateatunit) for SwiftDate documentation on creating date objects at specific times. Currently, events rely on a [24-hour clock](https://en.wikipedia.org/wiki/24-hour_clock).
+### 1. Implement the WeekViewDataSource Protocol
+Implement the `weekViewGenerateEvents` protocol function. This function should return a list of `WeekViewEvent`s specific to the day of `date`. Events that can be created immediately should be returned to this function. Events that require time to create should be passed to `eventCompletion`, which will overwrite previously returned events. See [here](malcommac.github.io/SwiftDate/manipulate_dates.html#dateatunit) for SwiftDate documentation on creating date objects at specific times. Currently, events rely on a [24-hour clock](https://en.wikipedia.org/wiki/24-hour_clock).
 
 ```Swift
-func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion) -> [WeekViewEvent] {
-	let start: DateInRegion = date.atTime(hour: 12, minute: 0, second: 0)!
-	let end: DateInRegion = date.atTime(hour: 13, minute: 30, second: 0)!
-	let event: WeekViewEvent = WeekViewEvent(title: "Lunch", start: start, end: end)
-	return [event]
+func weekViewGenerateEvents(_ weekView: WeekView, date: DateInRegion, eventCompletion: @escaping ([WeekViewEvent]?) -> Void) -> [WeekViewEvent]? {
+  let start: DateInRegion = date.dateBySet(hour: 12, min: 0, secs: 0)!
+  let end: DateInRegion = date.dateBySet(hour: 13, min: 0, secs: 0)!
+  let event: WeekViewEvent = WeekViewEvent(title: "Lunch", start: start, end: end)
+
+  DispatchQueue.global(.background).async {
+    // do some async work & create events...
+    eventCompletion([event, ...])
+  }
+
+  return [event]
 }
 ```
 #### Available arguments for `WeekViewEvent`
 - `title`: the title of the event
-- `start`: the start of the event
-- `end`: the end of the event
-- `color`: (Optional) the color that the event will be displayed in. Defaults to red.
+- `subtitle`: a subtitle or description of the event
+- `start`: the start time of the event
+- `end`: the end time of the event
 
-> ### Note:
-> `weekViewGenerateEvents` is already being called asynchronously with a completion handler behind the scenes, so events are added aynchronously, even if they're fetched synchronously.
-
-### 3. Initialize the instance
-#### A. Programmatically
+### 2. Initialize the instance
+#### 2A. Programmatically
 Create an instance of `WeekView`, specify it's data source, and add it as a subview.
 
 ```Swift
-let weekView: WeekView = WeekView(frame: frame, visibleDays: 5)
+let weekView = WeekView(frame: frame, visibleDays: 5)
 weekView.dataSource = self
 addSubview(weekView)
 ```
@@ -52,52 +61,42 @@ addSubview(weekView)
 - `frame`: the frame of the calendar view
 - `visibleDays`: amount of days that are visible on one page. Default = 5
 - `date`: (Optional) the day `WeekView` will initially load. Default = today
-- `startHour`: (Optional) the earliest hour that will be displayed. Default = 09:00
-- `endHour`: (Optional) the latest hour that will be displayed. Defalt = 17:00
-- `colorTheme`: (Optional) the colors used in the view. Default = `LightTheme`
-- `respondsToInteraction` (Optional) Boolean indicates if to respond to events other than scrolling. Default = `false`
 
-#### B. Storyboard
-Add a view to the storyboard and make it's class `WeekView`. Assign the view's data source programmatically. 
+#### 2B. Storyboard
+Add a view to the storyboard and set it's class `WeekView`. Assign the view's data source programmatically.
 ```Swift
 @IBOutlet weak var weekView: WeekView!
 weekView.dataSource = self
 ```
 
 ## User Interaction
-For more complex interaction with `WeekView`, implement the `WeekViewDelegate` protocol, and it's function. Set the `delegate` property of the `WeekView` instance to the class that implements the protocol. `WeekView` by default is its own delegate.
+To handle interaction with `WeekView`, implement the `WeekViewDelegate` protocol and set the `delegate` property to the implementing class.
 
 ```Swift
-weekView.delegate = self
+// Fires when a calendar event is touched on
+func weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent, view: UIView)
 
-// Fires when a calendar event is clicked and tells the delegate which event.
-weekViewDidClickOnEvent(_ weekView: WeekView, event: WeekViewEvent)
+// Fires when a space without an event is tapped
+func weekViewDidClickOnFreeTime(_ weekView: WeekView, date: DateInRegion)
 ```
 
 ## Custom Styling
-To use custom styling, implement the `WeekViewStyler` protocol, and any of the included functions. Set the `styler` propery of the `WeekView` instance to the class that implements the protocol. `WeekView` by default is its own styler.
+To use custom styling, implement the `WeekViewStyler` protocol and assign the `styler` property to the implementing class. `WeekView` by default is its own styler.
 
 ```Swift
-weekView.styler = self
-
 // Creates the view for an event
-weekViewStylerEventView(_ weekView: WeekView, eventCoordinate: CGPoint, eventSize: CGSize, event: WeekViewEvent) -> WeekViewEventView
-
-// Creates the view for a day's header
-weekViewStylerHeaderView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize) -> UIView
-
-// Creates the day's main view where the events are seen
-weekViewStylerDayView(_ weekView: WeekView, containerPosition: Int, containerCoordinate: CGPoint, containerSize: CGSize, header: UIView) -> UIView
+func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView
 ```
 
 ## Dependencies
+### [TimelineCollectionView](https://github.com/EvanCooper9/TimelineCollectionView)
+Included in [`Source`](https://github.com/EvanCooper9/swift-week-view/tree/master/Source) as a framework. Make sure to add `TimelineCollectionView.framework` to your target's `Embedded binaries`.
+
 ### [SwiftDate](https://github.com/malcommac/SwiftDate), via [Cocoapods](https://cocoapods.org)
+Currently, SwiftDate versions 5.0.x are supported
 ```ruby
-pod 'SwiftDate', '~> 4.0'
+pod 'SwiftDate', '~> 5.0'
 ```
 
 ## Example
 See the included example for basic implementation. Make sure to download the *entire* repository, and then open the `.xcworkspace` for it to work properly with the Source files and CocoaPods.
-
-## Up Next
-- Ability to scroll vertically through the full hours of the day.

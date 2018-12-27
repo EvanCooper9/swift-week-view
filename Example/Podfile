@@ -7,9 +7,7 @@ target 'SwiftWeekView' do
   use_frameworks!
 
   # Pods for SwiftWeekView
-  pod 'SwiftDate', '~> 4.0'
-  # pod 'PromiseKit', '~> 4.3'
-  # pod 'Microfutures'
+  pod 'SwiftDate', '~> 5.0'
 
   target 'SwiftWeekViewTests' do
     inherit! :search_paths

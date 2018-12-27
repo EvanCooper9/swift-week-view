@@ -30,9 +30,7 @@ class EventDetailLauncher {
     var event: WeekViewEvent?
     
     @objc func present() {
-        guard let window = UIApplication.shared.keyWindow else {
-            return
-        }
+        guard let window = UIApplication.shared.keyWindow else { return }
         
         let height: CGFloat = 100
         let buffer: CGFloat = 64
@@ -40,15 +38,14 @@ class EventDetailLauncher {
         blackView.frame = window.frame
         blackView.alpha = 0
         window.addSubview(blackView)
-        
-        
+
         eventView.frame = CGRect(x: buffer, y: window.frame.height, width: window.frame.width - (buffer * 2), height: height)
         let eventLabel = UILabel(frame: CGRect(x: 16, y: 16, width: eventView.frame.width - 32, height: (eventView.frame.height / 2) - 16))
-        eventLabel.text = event!.getTitle()
+        eventLabel.text = event!.title
         eventLabel.font = UIFont.systemFont(ofSize: 20)
         eventLabel.textAlignment = .center
         let idLabel = UILabel(frame: CGRect(x: 16, y: eventView.frame.height / 2, width: eventView.frame.width - 32, height: eventView.frame.height / 2))
-        idLabel.text = event!.getID()
+        idLabel.text = event!.id
         idLabel.font = UIFont.systemFont(ofSize: 10)
         idLabel.textAlignment = .center
         eventView.addSubview(eventLabel)
@@ -58,9 +55,7 @@ class EventDetailLauncher {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.eventView.frame.origin.y = (window.frame.height / 2) - (height / 2)
             self.blackView.alpha = 0.6
-        }) { (animationComplete) in
-            // do nothing for now
-        }
+        })
     }
     
     @objc func dismiss() {
