@@ -86,6 +86,9 @@ To use custom styling, implement the `WeekViewStyler` protocol and assign the `s
 ```Swift
 // Creates the view for an event
 func weekViewStylerEventView(_ weekView: WeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView
+
+// Create the header view for the day in the calendar. This would normally contain information about the date
+func weekViewStylerHeaderView(_ weekView: WeekView, with date: DateInRegion, in cell: UICollectionViewCell) -> UIView
 ```
 
 ## Dependencies

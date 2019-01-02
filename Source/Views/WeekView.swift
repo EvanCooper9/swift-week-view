@@ -266,16 +266,16 @@ extension WeekView {
         if let tap = tap as? WeekViewEventTapGestureRecognizer {
             delegate?.weekViewDidClickOnEvent(self, event: tap.event, view: tap.eventView)
         } else if let tap = tap as? WeekViewFreeTimeTapGestureRecognizer {
-            let location = tap.location(in: tap.view)
-            let hour = Int(floor(location.y / hourHeight)) + startHour
-            let minute = Int(floor((location.y - (CGFloat(hour - startHour) * hourHeight)) / minuteHeight))
+            let location = tap.location(in: tap.view).y - dateHeaderHeight
+            let hour = Int(floor(location / hourHeight)) + startHour
+            let minute = Int(floor((location - (CGFloat(hour - startHour) * hourHeight)) / minuteHeight))
             guard let date = tap.date?.dateBySet(hour: hour, min: minute, secs: 0) else { return }
             delegate?.weekViewDidClickOnFreeTime(self, date: date)
         }
     }
 }
 
-// MARK: - WeekViewStyler
+// MARK: - Default WeekViewStyler implementation
 
 extension WeekView: WeekViewStyler {
     var font: UIFont {
@@ -292,7 +292,7 @@ extension WeekView: WeekViewStyler {
 
     var dateHeaderHeight: CGFloat {
         get {
-            return showsDateHeader ? 30 : 0
+            return showsDateHeader ? 20 : 0
         }
     }
 
