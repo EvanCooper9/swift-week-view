@@ -1,16 +1,16 @@
 PODS:
-  - SwiftDate (5.0.13)
+  - SwiftDate (5.1.0)
 
 DEPENDENCIES:
-  - SwiftDate
+  - SwiftDate (~> 5.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - SwiftDate
 
 SPEC CHECKSUMS:
-  SwiftDate: f4aea5fa9dee812485f34041121a4cbde01b0dee
+  SwiftDate: 6329e58969a2de31cea7f1ee1143b247693196e7
 
-PODFILE CHECKSUM: 5c77eed8ffa557944d9927ac8c90cc234cfe104e
+PODFILE CHECKSUM: 21663a06176807e321cb2ca4cafdaa127aac6da8
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.9.3
