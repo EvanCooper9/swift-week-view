@@ -24,6 +24,10 @@ let package = Package(
                 .byName(name: "ECTimelineView"),
                 .byName(name: "SwiftDate")
             ],
-            path: "Sources"),
+            path: "Sources",
+            resources: [
+                .copy("Resources")
+            ]
+        ),
     ]
 )
