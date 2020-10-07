@@ -26,7 +26,7 @@ let package = Package(
             ],
             path: "Sources",
             resources: [
-                .copy("Resources")
+                .process("Resources")
             ]
         ),
     ]

@@ -8,25 +8,26 @@ import ECTimelineView
     // MARK: - Private properties
 
     private lazy var timeView: UIView = {
-        let view = UIView(frame: CGRect(x: frame.origin.x, y: frame.origin.y, width: 40, height: frame.height))
-        view.backgroundColor = self.colorTheme.baseColor
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = colorTheme.baseColor
         return view
     }()
 
     private typealias DataType = [ECWeekViewEvent]
     private typealias CellType = ECDayCell
-    private lazy var timelineCollectionView: ECTimelineView<DataType, CellType> = {
+    private lazy var timelineView: ECTimelineView<DataType, CellType> = {
         let config = ECTimelineViewConfig(visibleCells: visibleDays, scrollDirection: .horizontal)
-        let rect = CGRect(x: frame.origin.x + timeView.frame.width, y: frame.origin.y, width: frame.width - timeView.frame.width, height: frame.height)
-        let tcv = ECTimelineView<DataType, CellType>(frame: rect, config: config)
-        tcv.timelineCellDelegate = self
-        tcv.backgroundColor = .clear
-        return tcv
+        let timelineView = ECTimelineView<DataType, CellType>(frame: .zero, config: config)
+        timelineView.translatesAutoresizingMaskIntoConstraints = false
+        timelineView.timelineCellDelegate = self
+        timelineView.backgroundColor = .clear
+        return timelineView
     }()
 
     private var nowLine: CAShapeLayer!
     private var nowLinePath: CGPath {
-        let linePath = UIBezierPath(rect: CGRect(x: nowLineCenter.x, y: nowLineCenter.y, width: timelineCollectionView.contentSize.width, height: 0.1))
+        let linePath = UIBezierPath(rect: CGRect(x: nowLineCenter.x, y: nowLineCenter.y, width: timelineView.contentSize.width, height: 0.1))
         return linePath.cgPath
     }
     
@@ -48,7 +49,7 @@ import ECTimelineView
     
     public weak var dataSource: ECWeekViewDataSource? {
         didSet {
-            timelineCollectionView.timelineDataSource = self
+            timelineView.timelineDataSource = self
         }
     }
 
@@ -57,7 +58,7 @@ import ECTimelineView
     public weak var styler: ECWeekViewStyler? {
         didSet {
             if oldValue != nil {
-                timelineCollectionView.reloadData()
+                timelineView.reloadData()
             }
         }
     }
@@ -126,9 +127,20 @@ import ECTimelineView
         styler = self
 
         addHourInfo()
-        addSubview(timelineCollectionView)
         addSubview(timeView)
+        addSubview(timelineView)
         insertNowLine()
+        
+        NSLayoutConstraint.activate([
+            timeView.widthAnchor.constraint(equalToConstant: 40),
+            timeView.topAnchor.constraint(equalTo: topAnchor),
+            timeView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            timeView.leftAnchor.constraint(equalTo: leftAnchor),
+            timeView.rightAnchor.constraint(equalTo: timelineView.leftAnchor),
+            timelineView.rightAnchor.constraint(equalTo: rightAnchor),
+            timelineView.topAnchor.constraint(equalTo: topAnchor),
+            timelineView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
 
     private func framesMatch(frame1: CGRect, frame2: CGRect) -> Bool {
@@ -137,7 +149,7 @@ import ECTimelineView
 
     private func insertNowLine() {
         let now: DateInRegion = DateInRegion()
-        let linePath = UIBezierPath(rect: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)), width: timelineCollectionView.contentSize.width, height: 0.1))
+        let linePath = UIBezierPath(rect: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)), width: timelineView.contentSize.width, height: 0.1))
         nowLine = CAShapeLayer()
         nowLine.path = linePath.cgPath
         nowLine.strokeColor = nowLineColor.cgColor
@@ -145,10 +157,11 @@ import ECTimelineView
 
         nowCircle = UIView(frame: CGRect(x: 0, y: 0, width: 6, height: 6))
         nowCircle.layer.cornerRadius = 3
-        nowCircle.backgroundColor = self.nowLineColor
+        nowCircle.backgroundColor = nowLineColor
         nowCircle.clipsToBounds = true
 
-        DispatchQueue.global(qos: .userInteractive).async {
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            guard let self = self else { return }
             while true {
                 if (self.nowLineEnabled) {
                     DispatchQueue.main.async {
@@ -177,23 +190,29 @@ import ECTimelineView
      Add the hour text and horizontal line for each hour that's visible in the scrollView
      */
     private func addHourInfo() {
-        for hour in self.startHour...self.endHour {
-            let hourText = UITextView(frame: CGRect(x: timeView.frame.origin.x, y: dateHeaderHeight + hourHeight * CGFloat(hour - startHour) - font.pointSize / 2, width: timeView.frame.width, height: hourHeight))
-            hourText.removeTextInsets()
+        for hour in startHour...endHour {
+            let hourText = UILabel(frame: .zero)
+            hourText.translatesAutoresizingMaskIntoConstraints = false
+//            hourText.removeTextInsets()
             hourText.text = "\(hour):00"
             hourText.textAlignment = .right
             hourText.backgroundColor = .clear
             hourText.font = styler?.font ?? UIFont.init(descriptor: UIFontDescriptor(), size: 12)
-            hourText.textColor = self.colorTheme.hourTextColor
-            hourText.pushTextToTop()
-            hourText.isEditable = false
-            hourText.isSelectable = false
+            hourText.textColor = colorTheme.hourTextColor
+//            hourText.pushTextToTop()
+//            hourText.isEditable = false
+//            hourText.isSelectable = false
             timeView.addSubview(hourText)
+            NSLayoutConstraint.activate([
+                hourText.leftAnchor.constraint(equalTo: timeView.leftAnchor),
+                hourText.rightAnchor.constraint(equalTo: timeView.rightAnchor),
+                hourText.topAnchor.constraint(equalTo: timeView.topAnchor, constant: dateHeaderHeight + hourHeight * CGFloat(hour - startHour) - font.pointSize / 2)
+            ])
 
             let hourLayer = CAShapeLayer()
             hourLayer.strokeColor = colorTheme.hourLineColor.cgColor
             hourLayer.fillColor = colorTheme.hourLineColor.cgColor
-            let linePath = UIBezierPath(rect: CGRect(x: frame.origin.x + timeView.frame.width, y: dateHeaderHeight + hourHeight * CGFloat(hour - startHour) + frame.origin.y, width: timelineCollectionView.contentSize.width, height: 0.1))
+            let linePath = UIBezierPath(rect: CGRect(x: frame.origin.x + timeView.frame.width, y: dateHeaderHeight + hourHeight * CGFloat(hour - startHour) + frame.origin.y, width: timelineView.contentSize.width, height: 0.1))
             hourLayer.path = linePath.cgPath
             layer.addSublayer(hourLayer)
         }
@@ -311,7 +330,7 @@ extension ECWeekView: ECWeekViewStyler {
 
 extension ECWeekView: ECTimelineViewDataSource {
     public func timelineCollectionView<T, U>(_ timelineCollectionView: ECTimelineView<T, U>, dataFor index: Int, asyncClosure: @escaping (T?) -> Void) -> T? where U : UICollectionViewCell {
-        let viewDate: DateInRegion = self.initDate + index.days
+        let viewDate: DateInRegion = initDate + index.days
         let events = dataSource?.weekViewGenerateEvents(self, date: viewDate, eventCompletion: { asyncEvents in
             if let asyncEvents = asyncEvents as? T {
                 asyncClosure(asyncEvents)
