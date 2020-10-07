@@ -5,7 +5,7 @@ import SwiftDate
 /**
  Used to delegate the creation of events for the WeekView
  */
-protocol ECWeekViewDataSource: class {
+public protocol ECWeekViewDataSource: class {
     /**
      Generate and return a set of events for a specific day. Events can be returned synchronously or asynchronously
      

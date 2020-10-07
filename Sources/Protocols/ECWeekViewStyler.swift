@@ -5,7 +5,7 @@ import SwiftDate
 /**
  Used to delegate the creation of different view types within the WeekView.
  */
-protocol ECWeekViewStyler: class {
+public protocol ECWeekViewStyler: class {
     /**
      The font used by WeekView
      */

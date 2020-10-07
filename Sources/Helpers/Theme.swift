@@ -1,6 +1,6 @@
 import UIKit
 
-enum Theme {
+public enum Theme {
     case light, dark
 
     var baseColor: UIColor {

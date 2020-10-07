@@ -3,7 +3,7 @@ import UIKit
 import SwiftDate
 import ECTimelineView
 
-@IBDesignable final class ECWeekView: UIView {
+@IBDesignable public final class ECWeekView: UIView {
 
     // MARK: - Private properties
 
@@ -85,7 +85,7 @@ import ECTimelineView
         - nowLineEnabled: (Optional) specify if the "now line" will be visible. Defaults to true
         - nowLineColor: (Optional) the color of the "now line". Defaults to red
      */
-    init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion()) {
+    public init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion()) {
         super.init(frame: frame)
         commonInit(frame: frame, visibleDays: visibleDays, date: date)
     }
@@ -100,7 +100,7 @@ import ECTimelineView
         commonInit(frame: frame, visibleDays: 5, date: DateInRegion())
     }
 
-    override func prepareForInterfaceBuilder() {
+    public override func prepareForInterfaceBuilder() {
         commonInit(frame: frame, visibleDays: 5, date: DateInRegion())
     }
 
@@ -270,32 +270,32 @@ extension ECWeekView {
 // MARK: - Default WeekViewStyler implementation
 
 extension ECWeekView: ECWeekViewStyler {
-    var font: UIFont {
+    public var font: UIFont {
         get {
             return UIFont.init(descriptor: UIFontDescriptor(), size: 11)
         }
     }
 
-    var showsDateHeader: Bool {
+    public var showsDateHeader: Bool {
         get {
             return true
         }
     }
 
-    var dateHeaderHeight: CGFloat {
+    public var dateHeaderHeight: CGFloat {
         get {
             return showsDateHeader ? 20 : 0
         }
     }
 
-    func weekViewStylerECEventView(_ weekView: ECWeekView, eventContainer: CGRect, event: ECWeekViewEvent) -> UIView {
+    public func weekViewStylerECEventView(_ weekView: ECWeekView, eventContainer: CGRect, event: ECWeekViewEvent) -> UIView {
         let weekViewECEventView: ECEventView = .fromNib()
         weekViewECEventView.frame = eventContainer
         weekViewECEventView.event = event
         return weekViewECEventView
     }
 
-    func weekViewStylerHeaderView(_ weekView: ECWeekView, with date: DateInRegion, in cell: UICollectionViewCell) -> UIView {
+    public func weekViewStylerHeaderView(_ weekView: ECWeekView, with date: DateInRegion, in cell: UICollectionViewCell) -> UIView {
         let labelFrame = CGRect(x: 0, y: 0, width: cell.frame.width, height: dateHeaderHeight)
         let label = UILabel(frame: labelFrame)
         label.font = font
@@ -310,7 +310,7 @@ extension ECWeekView: ECWeekViewStyler {
 // MARK: - ECTimelineViewDataSource
 
 extension ECWeekView: ECTimelineViewDataSource {
-    func timelineCollectionView<T, U>(_ timelineCollectionView: ECTimelineView<T, U>, dataFor index: Int, asyncClosure: @escaping (T?) -> Void) -> T? where U : UICollectionViewCell {
+    public func timelineCollectionView<T, U>(_ timelineCollectionView: ECTimelineView<T, U>, dataFor index: Int, asyncClosure: @escaping (T?) -> Void) -> T? where U : UICollectionViewCell {
         let viewDate: DateInRegion = self.initDate + index.days
         let events = dataSource?.weekViewGenerateEvents(self, date: viewDate, eventCompletion: { asyncEvents in
             if let asyncEvents = asyncEvents as? T {
@@ -324,7 +324,7 @@ extension ECWeekView: ECTimelineViewDataSource {
 // MARK: - ECTimelineViewCellDelegate
 
 extension ECWeekView: ECTimelineViewCellDelegate {
-    func configure<T, U>(_ cell: U, withData data: T?) where U : UICollectionViewCell {
+    public func configure<T, U>(_ cell: U, withData data: T?) where U : UICollectionViewCell {
         guard let data = data as? DataType else { return }
         let weekViewFreeTimeTapGestureRecognizer = ECWeekViewFreeTimeTapGestureRecognizer(target: self, action: #selector(handle(tap:)), date: data.first?.start)
         cell.addGestureRecognizer(weekViewFreeTimeTapGestureRecognizer)

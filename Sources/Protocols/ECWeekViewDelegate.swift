@@ -4,7 +4,7 @@ import SwiftDate
 /**
  Used to delegate events and actions that occur.
  */
-protocol ECWeekViewDelegate: class {
+public protocol ECWeekViewDelegate: class {
     /**
      Fires when a calendar event is touched on
      

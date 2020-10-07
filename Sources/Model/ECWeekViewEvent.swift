@@ -2,13 +2,13 @@ import Foundation
 import SwiftDate
 
 public class ECWeekViewEvent: NSObject {
-    let id: String
-    let title: String
-    let subtitle: String
-    let start: DateInRegion
-    let end: DateInRegion
+    public let id: String
+    public let title: String
+    public let subtitle: String
+    public let start: DateInRegion
+    public let end: DateInRegion
     
-    init(title: String, subtitle: String, start: DateInRegion, end: DateInRegion) {
+    public init(title: String, subtitle: String, start: DateInRegion, end: DateInRegion) {
         self.id = UUID().uuidString
         self.title = title
         self.subtitle = subtitle
