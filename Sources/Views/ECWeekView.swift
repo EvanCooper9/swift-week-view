@@ -20,7 +20,7 @@ import ECTimelineView
         let config = ECTimelineViewConfig(visibleCells: visibleDays, scrollDirection: .horizontal)
         let timelineView = ECTimelineView<DataType, CellType>(frame: .zero, config: config)
         timelineView.translatesAutoresizingMaskIntoConstraints = false
-        timelineView.timelineCellDelegate = self
+        timelineView.timelineDataSource = self
         timelineView.backgroundColor = .clear
         return timelineView
     }()
@@ -193,15 +193,11 @@ import ECTimelineView
         for hour in startHour...endHour {
             let hourText = UILabel(frame: .zero)
             hourText.translatesAutoresizingMaskIntoConstraints = false
-//            hourText.removeTextInsets()
             hourText.text = "\(hour):00"
             hourText.textAlignment = .right
             hourText.backgroundColor = .clear
             hourText.font = styler?.font ?? UIFont.init(descriptor: UIFontDescriptor(), size: 12)
             hourText.textColor = colorTheme.hourTextColor
-//            hourText.pushTextToTop()
-//            hourText.isEditable = false
-//            hourText.isSelectable = false
             timeView.addSubview(hourText)
             NSLayoutConstraint.activate([
                 hourText.leftAnchor.constraint(equalTo: timeView.leftAnchor),
@@ -222,12 +218,12 @@ import ECTimelineView
 // MARK: - Placing events graphically
 
 extension ECWeekView {
-    private func placeEvents(_ events: [ECWeekViewEvent], in cell: UICollectionViewCell) -> [ECWeekViewEvent:CGRect] {
+    private func placeEvents(_ events: [ECWeekViewEvent], in cell: UICollectionViewCell) -> [ECWeekViewEvent: CGRect] {
         let threshold = 20
 
         var mutableEvents = events.sorted()
         var placedEvents = [ECWeekViewEvent]()
-        var placedEventRects = [ECWeekViewEvent:CGRect]()
+        var placedEventRects = [ECWeekViewEvent: CGRect]()
 
         while !mutableEvents.isEmpty {
             let eventsToPlace = mutableEvents.compactMap { event -> ECWeekViewEvent? in
@@ -338,11 +334,7 @@ extension ECWeekView: ECTimelineViewDataSource {
         })
         return events as? T
     }
-}
 
-// MARK: - ECTimelineViewCellDelegate
-
-extension ECWeekView: ECTimelineViewCellDelegate {
     public func configure<T, U>(_ cell: U, withData data: T?) where U : UICollectionViewCell {
         guard let data = data as? DataType else { return }
         let weekViewFreeTimeTapGestureRecognizer = ECWeekViewFreeTimeTapGestureRecognizer(target: self, action: #selector(handle(tap:)), date: data.first?.start)

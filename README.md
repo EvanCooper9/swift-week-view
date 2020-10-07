@@ -15,12 +15,6 @@ An iOS calendar library for displaying calendar events in a week view.
 - Custom styling
 - Infinite horizontal scrolling
 
-## What's New?
-- Using [ECTimelineView](https://github.com/EvanCooper9/ECTimelineView) as a foundation over a custom UIScrollView for improved stability
-- Improved display of events that overlap
-- Improved handling of asynchronously-fetched data
-- Bug fixes
-
 ## Installation
 ### Swift Package Manager
 ```
@@ -28,7 +22,7 @@ An iOS calendar library for displaying calendar events in a week view.
 ```
 
 ## Usage
-### 1. Implement the ECWeekViewDataSource Protocol
+### 1. Implement the `ECWeekViewDataSource`
 Implement the `weekViewGenerateEvents` protocol function. This function should return a list of `ECWeekViewEvent`s specific to the day of `date`. Events that can be created immediately should be returned to this function. Events that require time to create should be passed to `eventCompletion`, which will overwrite previously returned events. See [here](malcommac.github.io/SwiftDate/manipulate_dates.html#dateatunit) for SwiftDate documentation on creating date objects at specific times. Currently, events rely on a [24-hour clock](https://en.wikipedia.org/wiki/24-hour_clock).
 
 ```Swift
