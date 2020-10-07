@@ -16,7 +16,7 @@ An iOS calendar library for displaying calendar events in a week view.
 - Infinite horizontal scrolling
 
 ## What's New?
-- Using [TimelineCollectionView](https://github.com/EvanCooper9/TimelineCollectionView) as a foundation over a custom UIScrollView for improved stability
+- Using [ECTimelineView](https://github.com/EvanCooper9/ECTimelineView) as a foundation over a custom UIScrollView for improved stability
 - Improved display of events that overlap
 - Improved handling of asynchronously-fetched data
 - Bug fixes
@@ -92,8 +92,8 @@ func weekViewStylerHeaderView(_ weekView: WeekView, with date: DateInRegion, in 
 ```
 
 ## Dependencies
-### [TimelineCollectionView](https://github.com/EvanCooper9/TimelineCollectionView)
-Included in [`Source`](https://github.com/EvanCooper9/swift-week-view/tree/master/Source) as a framework. Make sure to add `TimelineCollectionView.framework` to your target's `Embedded binaries`.
+### [ECTimelineView](https://github.com/EvanCooper9/ECTimelineView)
+Included in [`Source`](https://github.com/EvanCooper9/swift-week-view/tree/master/Source) as a framework. Make sure to add `ECTimelineView.framework` to your target's `Embedded binaries`.
 
 ### [SwiftDate](https://github.com/malcommac/SwiftDate), via [Cocoapods](https://cocoapods.org)
 Currently, SwiftDate versions 5.0.x are supported
