@@ -93,16 +93,3 @@ func weekViewStylerECEventView(_ weekView: ECWeekView, eventContainer: CGRect, e
 // Create the header view for the day in the calendar. This would normally contain information about the date
 func weekViewStylerHeaderView(_ weekView: ECWeekView, with date: DateInRegion, in cell: UICollectionViewCell) -> UIView
 ```
-
-## Dependencies
-### [ECTimelineView](https://github.com/EvanCooper9/ECTimelineView)
-Included in [`Source`](https://github.com/EvanCooper9/swift-week-view/tree/master/Source) as a framework. Make sure to add `ECTimelineView.framework` to your target's `Embedded binaries`.
-
-### [SwiftDate](https://github.com/malcommac/SwiftDate), via [Cocoapods](https://cocoapods.org)
-Currently, SwiftDate versions 5.0.x are supported
-```ruby
-pod 'SwiftDate', '~> 5.0'
-```
-
-## Example
-See the included example for basic implementation. Make sure to download the *entire* repository, and then open the `.xcworkspace` for it to work properly with the Source files and CocoaPods.
