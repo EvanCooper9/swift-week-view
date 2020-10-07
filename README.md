@@ -1,4 +1,4 @@
-# Swift-Week-View
+# ECWeekView
 An iOS calendar library for displaying calendar events in a week view.
 
 <p align="center">
