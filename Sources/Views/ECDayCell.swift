@@ -1,6 +1,6 @@
 import UIKit
 
-final class DayCell: UICollectionViewCell {
+final class ECDayCell: UICollectionViewCell {
     override func prepareForReuse() {
         subviews.forEach { subview in
             subview.removeFromSuperview()

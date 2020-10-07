@@ -13,7 +13,7 @@ protocol ECWeekViewDelegate: class {
         - event: the event that was clicked
         - view: the view that was clicked
      */
-    func weekViewDidClickOnEvent(_ weekView: ECWeekView, event: WeekViewEvent, view: UIView)
+    func weekViewDidClickOnEvent(_ weekView: ECWeekView, event: ECWeekViewEvent, view: UIView)
 
     /**
      Fires when a space without an event is tapped

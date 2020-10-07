@@ -1,7 +1,7 @@
 import UIKit
 import SwiftDate
 
-final class WeekViewFreeTimeTapGestureRecognizer: UITapGestureRecognizer {
+final class ECWeekViewFreeTimeTapGestureRecognizer: UITapGestureRecognizer {
     let date: DateInRegion?
     
     init(target: Any?, action: Selector?, date: DateInRegion?) {

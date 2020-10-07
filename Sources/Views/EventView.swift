@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-final class EventView: UIView {
+final class ECEventView: UIView {
 
     private let boldAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 11)]
     private let regularAttribute: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11)]
@@ -23,7 +23,7 @@ final class EventView: UIView {
         return attributes
     }()
 
-    var event: WeekViewEvent? {
+    var event: ECWeekViewEvent? {
         didSet {
             let titleAttributed = NSAttributedString(string: event!.title, attributes: titleAttributes)
             let lineBreak = NSAttributedString(string: "\n", attributes: nil)

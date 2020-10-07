@@ -13,8 +13,8 @@ import ECTimelineView
         return view
     }()
 
-    private typealias DataType = [WeekViewEvent]
-    private typealias CellType = DayCell
+    private typealias DataType = [ECWeekViewEvent]
+    private typealias CellType = ECDayCell
     private lazy var timelineCollectionView: ECTimelineView<DataType, CellType> = {
         let config = ECTimelineViewConfig(visibleCells: visibleDays, scrollDirection: .horizontal)
         let rect = CGRect(x: frame.origin.x + timeView.frame.width, y: frame.origin.y, width: frame.width - timeView.frame.width, height: frame.height)
@@ -203,15 +203,15 @@ import ECTimelineView
 // MARK: - Placing events graphically
 
 extension ECWeekView {
-    private func placeEvents(_ events: [WeekViewEvent], in cell: UICollectionViewCell) -> [WeekViewEvent:CGRect] {
+    private func placeEvents(_ events: [ECWeekViewEvent], in cell: UICollectionViewCell) -> [ECWeekViewEvent:CGRect] {
         let threshold = 20
 
         var mutableEvents = events.sorted()
-        var placedEvents = [WeekViewEvent]()
-        var placedEventRects = [WeekViewEvent:CGRect]()
+        var placedEvents = [ECWeekViewEvent]()
+        var placedEventRects = [ECWeekViewEvent:CGRect]()
 
         while !mutableEvents.isEmpty {
-            let eventsToPlace = mutableEvents.compactMap { event -> WeekViewEvent? in
+            let eventsToPlace = mutableEvents.compactMap { event -> ECWeekViewEvent? in
                 return (event.start > mutableEvents.first!.start + threshold.minutes) ? nil : event
             }
 
@@ -235,7 +235,7 @@ extension ECWeekView {
         return placedEventRects
     }
 
-    private func rect(for event: WeekViewEvent, in rect: CGRect, overlapingEvents: [WeekViewEvent], widthIndex: Int) -> CGRect {
+    private func rect(for event: ECWeekViewEvent, in rect: CGRect, overlapingEvents: [ECWeekViewEvent], widthIndex: Int) -> CGRect {
         let eventStartHour =  event.start.hour
         let eventStartMinute = event.start.minute
         let eventEndHour = event.end.hour
@@ -255,9 +255,9 @@ extension ECWeekView {
 
 extension ECWeekView {
     @objc private func handle(tap: UITapGestureRecognizer) {
-        if let tap = tap as? WeekViewEventTapGestureRecognizer {
+        if let tap = tap as? ECWeekViewEventTapGestureRecognizer {
             delegate?.weekViewDidClickOnEvent(self, event: tap.event, view: tap.eventView)
-        } else if let tap = tap as? WeekViewFreeTimeTapGestureRecognizer {
+        } else if let tap = tap as? ECWeekViewFreeTimeTapGestureRecognizer {
             let location = tap.location(in: tap.view).y - dateHeaderHeight
             let hour = Int(floor(location / hourHeight)) + startHour
             let minute = Int(floor((location - (CGFloat(hour - startHour) * hourHeight)) / minuteHeight))
@@ -288,11 +288,11 @@ extension ECWeekView: ECWeekViewStyler {
         }
     }
 
-    func weekViewStylerEventView(_ weekView: ECWeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView {
-        let weekViewEventView: EventView = .fromNib()
-        weekViewEventView.frame = eventContainer
-        weekViewEventView.event = event
-        return weekViewEventView
+    func weekViewStylerECEventView(_ weekView: ECWeekView, eventContainer: CGRect, event: ECWeekViewEvent) -> UIView {
+        let weekViewECEventView: ECEventView = .fromNib()
+        weekViewECEventView.frame = eventContainer
+        weekViewECEventView.event = event
+        return weekViewECEventView
     }
 
     func weekViewStylerHeaderView(_ weekView: ECWeekView, with date: DateInRegion, in cell: UICollectionViewCell) -> UIView {
@@ -326,7 +326,7 @@ extension ECWeekView: ECTimelineViewDataSource {
 extension ECWeekView: ECTimelineViewCellDelegate {
     func configure<T, U>(_ cell: U, withData data: T?) where U : UICollectionViewCell {
         guard let data = data as? DataType else { return }
-        let weekViewFreeTimeTapGestureRecognizer = WeekViewFreeTimeTapGestureRecognizer(target: self, action: #selector(handle(tap:)), date: data.first?.start)
+        let weekViewFreeTimeTapGestureRecognizer = ECWeekViewFreeTimeTapGestureRecognizer(target: self, action: #selector(handle(tap:)), date: data.first?.start)
         cell.addGestureRecognizer(weekViewFreeTimeTapGestureRecognizer)
         cell.backgroundColor = .clear
 
@@ -336,8 +336,8 @@ extension ECWeekView: ECTimelineViewCellDelegate {
 
         let eventRects = placeEvents(data.sorted(), in: cell)
         data.forEach { event in
-            if let eventRect = eventRects[event], let eventView = styler?.weekViewStylerEventView(self, eventContainer: eventRect, event: event) {
-                let weekViewEventTapGestureRecognizer = WeekViewEventTapGestureRecognizer(target: self, action: #selector(handle(tap:)), event: event, eventView: eventView)
+            if let eventRect = eventRects[event], let eventView = styler?.weekViewStylerECEventView(self, eventContainer: eventRect, event: event) {
+                let weekViewEventTapGestureRecognizer = ECWeekViewEventTapGestureRecognizer(target: self, action: #selector(handle(tap:)), event: event, eventView: eventView)
                 eventView.addGestureRecognizer(weekViewEventTapGestureRecognizer)
                 cell.addSubview(eventView)
             }

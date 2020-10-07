@@ -29,7 +29,7 @@ protocol ECWeekViewStyler: class {
         - eventContainer: the container of which the eventView needs to conform to
         - event: the event it's self
      */
-    func weekViewStylerEventView(_ weekView: ECWeekView, eventContainer: CGRect, event: WeekViewEvent) -> UIView
+    func weekViewStylerECEventView(_ weekView: ECWeekView, eventContainer: CGRect, event: ECWeekViewEvent) -> UIView
     
     /**
      Create the header view for the day in the calendar. This would normally contain information about the date
