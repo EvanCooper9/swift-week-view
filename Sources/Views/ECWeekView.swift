@@ -25,24 +25,39 @@ import ECTimelineView
         return timelineView
     }()
 
-    private var nowLine: CAShapeLayer!
+    private lazy var nowLine: CAShapeLayer = {
+        let now: DateInRegion = DateInRegion()
+        let linePath = UIBezierPath(rect: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)), width: timelineView.bounds.width, height: 0.1))
+        let nowLine = CAShapeLayer()
+        nowLine.path = linePath.cgPath
+        nowLine.strokeColor = nowLineColor.cgColor
+        nowLine.fillColor = nowLineColor.cgColor
+        return nowLine
+    }()
+    
     private var nowLinePath: CGPath {
-        let linePath = UIBezierPath(rect: CGRect(x: nowLineCenter.x, y: nowLineCenter.y, width: timelineView.contentSize.width, height: 0.1))
-        return linePath.cgPath
+        UIBezierPath(rect: CGRect(x: nowLineCenter.x, y: nowLineCenter.y, width: timelineView.contentSize.width, height: 0.1)).cgPath
     }
     
-    private var nowCircle: UIView!
+    private lazy var nowCircle: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 6, height: 6))
+        view.layer.cornerRadius = 3
+        view.backgroundColor = nowLineColor
+        view.clipsToBounds = true
+        return view
+    }()
+    
     private var nowLineCenter: CGPoint {
         let now = DateInRegion()
         return CGPoint(x: timeView.frame.width, y: timeView.frame.origin.y + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)))
     }
 
     private var hourHeight: CGFloat {
-        return (frame.height - dateHeaderHeight) / CGFloat(endHour - startHour)
+        (frame.height - dateHeaderHeight) / CGFloat(endHour - startHour)
     }
 
     private var minuteHeight: CGFloat {
-        return hourHeight / 60
+        hourHeight / 60
     }
 
     // MARK: - Public properties
@@ -123,13 +138,10 @@ import ECTimelineView
         self.frame = frame
         self.visibleDays = visibleDays
         initDate = date - visibleDays.days
-
         styler = self
 
-        addHourInfo()
         addSubview(timeView)
         addSubview(timelineView)
-        insertNowLine()
         
         NSLayoutConstraint.activate([
             timeView.widthAnchor.constraint(equalToConstant: 40),
@@ -141,25 +153,12 @@ import ECTimelineView
             timelineView.topAnchor.constraint(equalTo: topAnchor),
             timelineView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-    }
-
-    private func framesMatch(frame1: CGRect, frame2: CGRect) -> Bool {
-        return frame1.origin.x.isEqual(to: frame2.origin.x) && frame1.origin.y.isEqual(to: frame2.origin.y) && frame1.size.width.isEqual(to: frame2.size.width) && frame1.size.height.isEqual(to: frame2.size.height)
+        
+        addHourInfo()
+        insertNowLine()
     }
 
     private func insertNowLine() {
-        let now: DateInRegion = DateInRegion()
-        let linePath = UIBezierPath(rect: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)), width: timelineView.contentSize.width, height: 0.1))
-        nowLine = CAShapeLayer()
-        nowLine.path = linePath.cgPath
-        nowLine.strokeColor = nowLineColor.cgColor
-        nowLine.fillColor = nowLineColor.cgColor
-
-        nowCircle = UIView(frame: CGRect(x: 0, y: 0, width: 6, height: 6))
-        nowCircle.layer.cornerRadius = 3
-        nowCircle.backgroundColor = nowLineColor
-        nowCircle.clipsToBounds = true
-
         DispatchQueue.global(qos: .userInteractive).async { [weak self] in
             guard let self = self else { return }
             while true {
@@ -176,7 +175,7 @@ import ECTimelineView
                             self.addSubview(self.nowCircle)
                         }
                     }
-                    sleep(60)
+                    sleep(15)
                 } else {
                     self.nowLine.removeFromSuperlayer()
                     self.nowCircle.removeFromSuperview()
@@ -191,24 +190,27 @@ import ECTimelineView
      */
     private func addHourInfo() {
         for hour in startHour...endHour {
-            let hourText = UILabel(frame: .zero)
-            hourText.translatesAutoresizingMaskIntoConstraints = false
-            hourText.text = "\(hour):00"
-            hourText.textAlignment = .right
-            hourText.backgroundColor = .clear
-            hourText.font = styler?.font ?? UIFont.init(descriptor: UIFontDescriptor(), size: 12)
-            hourText.textColor = colorTheme.hourTextColor
-            timeView.addSubview(hourText)
+            let label = UILabel(frame: .zero)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = "\(hour):00"
+            label.textAlignment = .right
+            label.backgroundColor = .clear
+            label.font = styler?.font ?? UIFont.init(descriptor: UIFontDescriptor(), size: 12)
+            label.textColor = colorTheme.hourTextColor
+            
+            let verticalOffset = dateHeaderHeight + hourHeight * CGFloat(hour - startHour)
+
+            timeView.addSubview(label)
             NSLayoutConstraint.activate([
-                hourText.leftAnchor.constraint(equalTo: timeView.leftAnchor),
-                hourText.rightAnchor.constraint(equalTo: timeView.rightAnchor),
-                hourText.topAnchor.constraint(equalTo: timeView.topAnchor, constant: dateHeaderHeight + hourHeight * CGFloat(hour - startHour) - font.pointSize / 2)
+                label.leftAnchor.constraint(equalTo: timeView.leftAnchor),
+                label.rightAnchor.constraint(equalTo: timeView.rightAnchor),
+                label.topAnchor.constraint(equalTo: timeView.topAnchor, constant: verticalOffset - (font.pointSize / 2))
             ])
 
             let hourLayer = CAShapeLayer()
             hourLayer.strokeColor = colorTheme.hourLineColor.cgColor
             hourLayer.fillColor = colorTheme.hourLineColor.cgColor
-            let linePath = UIBezierPath(rect: CGRect(x: frame.origin.x + timeView.frame.width, y: dateHeaderHeight + hourHeight * CGFloat(hour - startHour) + frame.origin.y, width: timelineView.contentSize.width, height: 0.1))
+            let linePath = UIBezierPath(rect: CGRect(x: timeView.bounds.maxX, y: verticalOffset, width: bounds.width - timeView.bounds.maxX, height: 0.1))
             hourLayer.path = linePath.cgPath
             layer.addSublayer(hourLayer)
         }
