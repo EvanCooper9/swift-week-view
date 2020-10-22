@@ -22,6 +22,10 @@ An iOS calendar library for displaying calendar events in a week view.
 - Bug fixes
 
 ## Installation
+### Looking for SPM?
+Checkout the [`spm-support`](https://github.com/EvanCooper9/swift-week-view/tree/spm-support) branch
+
+### From `master`
 Download [`Source`](https://github.com/EvanCooper9/swift-week-view/tree/master/Source) files and install [dependencies](https://github.com/EvanCooper9/swift-week-view#dependencies)
 
 ## Usage
