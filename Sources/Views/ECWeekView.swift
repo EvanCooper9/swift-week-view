@@ -3,7 +3,8 @@ import UIKit
 import SwiftDate
 import ECTimelineView
 
-@IBDesignable public final class ECWeekView: UIView {
+@IBDesignable
+public final class ECWeekView: UIView {
 
     // MARK: - Private properties
 
@@ -14,14 +15,12 @@ import ECTimelineView
         return view
     }()
 
-    private typealias DataType = [ECWeekViewEvent]
-    private typealias CellType = ECDayCell
-    private lazy var timelineView: ECTimelineView<DataType, CellType> = {
-        let config = ECTimelineViewConfig(visibleCells: visibleDays, scrollDirection: .horizontal)
-        let timelineView = ECTimelineView<DataType, CellType>(frame: .zero, config: config)
+    private lazy var timelineView: ECTimelineView<[ECWeekViewEvent], ECDayCell> = {
+        let timelineView = ECTimelineView<[ECWeekViewEvent], ECDayCell>()
         timelineView.translatesAutoresizingMaskIntoConstraints = false
-        timelineView.timelineDataSource = self
         timelineView.backgroundColor = .clear
+        timelineView.scrollDirection = .horizontal
+        timelineView.timelineDataSource = self
         return timelineView
     }()
 
@@ -63,22 +62,20 @@ import ECTimelineView
     // MARK: - Public properties
     
     public weak var dataSource: ECWeekViewDataSource? {
-        didSet {
-            timelineView.timelineDataSource = self
-        }
+        didSet { timelineView.timelineDataSource = self }
     }
 
-    public weak var delegate: ECWeekViewDelegate?
+    public weak var delegate: ECWeekViewDelegate? {
+        didSet { timelineView.reloadData() }
+    }
 
     public weak var styler: ECWeekViewStyler? {
-        didSet {
-            if oldValue != nil {
-                timelineView.reloadData()
-            }
-        }
+        didSet { timelineView.reloadData() }
     }
 
-    @IBInspectable public var visibleDays : Int = 5
+    @IBInspectable public var visibleDays: Int = 5 {
+        didSet { timelineView.visibleCellCount = visibleDays }
+    }
     
     public var initDate: DateInRegion = DateInRegion()
     public var startHour: Int = 9
@@ -87,53 +84,26 @@ import ECTimelineView
     public var colorTheme: Theme = .light
     public var nowLineColor: UIColor = .red
 
-    // MARK: - Public functions
+    // MARK: - Lifecycle
     
-    /**
-     Initialization function
-     
-     - Parameters:
-        - frame: the frame of the calendar view
-        - visibleDays: an instance of a ViewCreator subclass that overrides the createViewSet method
-        - date: (Optional) the day `WeekView` will initially load. Defaults to the current day
-        - startHour: (Optional) the earliest hour that will be displayed. Defaults to 09:00
-        - endHour: (Optional) the latest hour that will be displayed. Defalts to 17:00
-        - nowLineEnabled: (Optional) specify if the "now line" will be visible. Defaults to true
-        - nowLineColor: (Optional) the color of the "now line". Defaults to red
-     */
-    public init(frame: CGRect, visibleDays: Int, date: DateInRegion = DateInRegion()) {
-        super.init(frame: frame)
-        commonInit(frame: frame, visibleDays: visibleDays, date: date)
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit(frame: frame, visibleDays: 5, date: DateInRegion())
+    public init(visibleDays: Int, date: DateInRegion = DateInRegion()) {
+        self.visibleDays = visibleDays
+        super.init(frame: .zero)
+        commonInit(frame: .zero, visibleDays: visibleDays, date: date)
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        commonInit(frame: frame, visibleDays: 5, date: DateInRegion())
+        commonInit(frame: frame, visibleDays: visibleDays, date: DateInRegion())
     }
 
     public override func prepareForInterfaceBuilder() {
-        commonInit(frame: frame, visibleDays: 5, date: DateInRegion())
+        super.prepareForInterfaceBuilder()
+        commonInit(frame: frame, visibleDays: visibleDays, date: DateInRegion())
     }
 
-    // MARK: - Private functions
+    // MARK: - Private Methods
     
-    /**
-     Initialization function used by all the other init functions, to centrialize initialization
-     
-     - Parameters:
-        - frame: the frame of the calendar view
-        - visibleDays: an instance of a ViewCreator subclass that overrides the createViewSet method
-        - date: the day `WeekView` will initially load
-        - startHour: the earliest hour that will be displayed
-        - endHour: the latest hour that will be displayed
-        - nowLineEnabled: specify if the "now line" will be visible
-        - nowLineColor: the color of the "now line"
-     */
     private func commonInit(frame: CGRect, visibleDays: Int, date: DateInRegion) {
         self.frame = frame
         self.visibleDays = visibleDays
@@ -185,9 +155,6 @@ import ECTimelineView
         }
     }
     
-    /**
-     Add the hour text and horizontal line for each hour that's visible in the scrollView
-     */
     private func addHourInfo() {
         for hour in startHour...endHour {
             let label = UILabel(frame: .zero)
@@ -288,21 +255,15 @@ extension ECWeekView {
 
 extension ECWeekView: ECWeekViewStyler {
     public var font: UIFont {
-        get {
-            return UIFont.init(descriptor: UIFontDescriptor(), size: 11)
-        }
+        get { .init(descriptor: .init(), size: 11) }
     }
 
     public var showsDateHeader: Bool {
-        get {
-            return true
-        }
+        get { true }
     }
 
     public var dateHeaderHeight: CGFloat {
-        get {
-            return showsDateHeader ? 20 : 0
-        }
+        get { 20 }
     }
 
     public func weekViewStylerECEventView(_ weekView: ECWeekView, eventContainer: CGRect, event: ECWeekViewEvent) -> UIView {
@@ -312,7 +273,8 @@ extension ECWeekView: ECWeekViewStyler {
         return weekViewECEventView
     }
 
-    public func weekViewStylerHeaderView(_ weekView: ECWeekView, with date: DateInRegion, in cell: UICollectionViewCell) -> UIView {
+    public func weekViewStylerHeaderView(_ weekView: ECWeekView, with date: DateInRegion, in cell: UICollectionViewCell) -> UIView? {
+        guard showsDateHeader else { return nil }
         let labelFrame = CGRect(x: 0, y: 0, width: cell.frame.width, height: dateHeaderHeight)
         let label = UILabel(frame: labelFrame)
         label.font = font
@@ -327,8 +289,8 @@ extension ECWeekView: ECWeekViewStyler {
 // MARK: - ECTimelineViewDataSource
 
 extension ECWeekView: ECTimelineViewDataSource {
-    public func timelineCollectionView<T, U>(_ timelineCollectionView: ECTimelineView<T, U>, dataFor index: Int, asyncClosure: @escaping (T?) -> Void) -> T? where U : UICollectionViewCell {
-        let viewDate: DateInRegion = initDate + index.days
+    public func timelineView<T, U>(_ timelineView: ECTimelineView<T, U>, dataFor index: Int, asyncClosure: @escaping (T?) -> Void) -> T? where U : UICollectionViewCell {
+        let viewDate = initDate + index.days
         let events = dataSource?.weekViewGenerateEvents(self, date: viewDate, eventCompletion: { asyncEvents in
             if let asyncEvents = asyncEvents as? T {
                 asyncClosure(asyncEvents)
@@ -338,7 +300,7 @@ extension ECWeekView: ECTimelineViewDataSource {
     }
 
     public func configure<T, U>(_ cell: U, withData data: T?) where U : UICollectionViewCell {
-        guard let data = data as? DataType else { return }
+        guard let data = data as? [ECWeekViewEvent] else { return }
         let weekViewFreeTimeTapGestureRecognizer = ECWeekViewFreeTimeTapGestureRecognizer(target: self, action: #selector(handle(tap:)), date: data.first?.start)
         cell.addGestureRecognizer(weekViewFreeTimeTapGestureRecognizer)
         cell.backgroundColor = .clear

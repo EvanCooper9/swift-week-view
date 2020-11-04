@@ -16,7 +16,7 @@
 		7C5416D8252DEF2300CEDF8C /* ECWeekViewExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5416D7252DEF2300CEDF8C /* ECWeekViewExampleTests.swift */; };
 		7C5416E3252DEF2300CEDF8C /* ECWeekViewExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5416E2252DEF2300CEDF8C /* ECWeekViewExampleUITests.swift */; };
 		7C5416F8252DF03300CEDF8C /* EventDetailLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5416F7252DF03300CEDF8C /* EventDetailLauncher.swift */; };
-		7CAADCB7252E951600950276 /* ECWeekView in Frameworks */ = {isa = PBXBuildFile; productRef = 7CAADCB6252E951600950276 /* ECWeekView */; };
+		7C880195252FC0F800D543BE /* ECWeekView in Frameworks */ = {isa = PBXBuildFile; productRef = 7C880194252FC0F800D543BE /* ECWeekView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +52,7 @@
 		7C5416E2252DEF2300CEDF8C /* ECWeekViewExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECWeekViewExampleUITests.swift; sourceTree = "<group>"; };
 		7C5416E4252DEF2300CEDF8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7C5416F7252DF03300CEDF8C /* EventDetailLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailLauncher.swift; sourceTree = "<group>"; };
-		7CAADCB2252E94E100950276 /* ECWeekView */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ECWeekView; path = ..; sourceTree = "<group>"; };
+		7C880190252FC0DF00D543BE /* ECWeekView */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ECWeekView; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CAADCB7252E951600950276 /* ECWeekView in Frameworks */,
+				7C880195252FC0F800D543BE /* ECWeekView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,7 +91,7 @@
 		7C5416B4252DEF2200CEDF8C = {
 			isa = PBXGroup;
 			children = (
-				7CAADCB2252E94E100950276 /* ECWeekView */,
+				7C880190252FC0DF00D543BE /* ECWeekView */,
 				7C5416BF252DEF2200CEDF8C /* ECWeekViewExample */,
 				7C5416D6252DEF2300CEDF8C /* ECWeekViewExampleTests */,
 				7C5416E1252DEF2300CEDF8C /* ECWeekViewExampleUITests */,
@@ -160,7 +160,7 @@
 			);
 			name = ECWeekViewExample;
 			packageProductDependencies = (
-				7CAADCB6252E951600950276 /* ECWeekView */,
+				7C880194252FC0F800D543BE /* ECWeekView */,
 			);
 			productName = ECWeekViewExample;
 			productReference = 7C5416BD252DEF2200CEDF8C /* ECWeekViewExample.app */;
@@ -467,7 +467,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.evancooper.ECWeekViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -486,7 +486,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.evancooper.ECWeekViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -616,7 +616,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7CAADCB6252E951600950276 /* ECWeekView */ = {
+		7C880194252FC0F800D543BE /* ECWeekView */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ECWeekView;
 		};
