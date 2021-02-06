@@ -2,6 +2,7 @@ import EventKit
 import Foundation
 
 public protocol CalendarManaging {
+    var authorizationStatus: EKAuthorizationStatus { get }
     var eventStore: EKEventStore { get }
     func eventsFor(day date: Date, completion: (([EKEvent]) -> Void)?)
     func requestCalendarAccess(completion: ((Bool) -> Void)?)

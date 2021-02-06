@@ -49,10 +49,7 @@ struct TimeView: View {
 
     private func startTimer() {
         let midnightToday = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
-
-        time = Calendar.current.date(bySettingHour: 8, minute: 30, second: 0, of: Date())!.timeIntervalSince(midnightToday)
-//        time = Date().timeIntervalSince(midnightToday)
-
+        time = Date().timeIntervalSince(midnightToday)
         let interval: TimeInterval = 1.minutes
         Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
             time += interval
