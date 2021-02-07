@@ -9,9 +9,11 @@ public struct WeekView: View {
 
     @State private var offset: CGPoint = .init(x: 1000, y: 110)
     
-    public init(viewModel: ViewModel) {
+    public init(viewModel: ViewModel = .init()) {
         self.viewModel = viewModel
     }
+
+    // MARK: - Public Properties
 
     public var body: some View {
         GeometryReader { geometry in
@@ -44,6 +46,8 @@ public struct WeekView: View {
         }
     }
 
+    // MARK: - Private Methods
+
     private func contentHeight(for geometry: GeometryProxy) -> CGFloat {
         let secondHeight = geometry.size.height / CGFloat(viewModel.visibleHours) / 60 / 60
         return secondHeight * CGFloat(24.hours)
@@ -75,9 +79,6 @@ extension WeekView {
         private var negativeRefrenceDate: Date
         private var positiveReferenceDate: Date
 
-        private lazy var loadedDays = visibleDays * 3
-
-        private var contentOffset = CGPoint.zero
         private var contentSize = CGSize.zero
         private var scrollViewSize = CGSize.zero
 
@@ -87,7 +88,7 @@ extension WeekView {
 
         // MARK: - Lifecycle
 
-        public init(calendarManager: CalendarManaging, visibleDays: Int, visibleHours: Int) {
+        public init(calendarManager: CalendarManaging = CalendarManager(), visibleDays: Int = 1, visibleHours: Int = 12) {
 
             self.calendarManager = calendarManager
             self.visibleDays = visibleDays
@@ -98,40 +99,31 @@ extension WeekView {
             negativeRefrenceDate = initialReferenceDate.addingTimeInterval(TimeInterval(-visibleDays.days))
 
             NotificationCenter.default.addObserver(forName: .EKEventStoreChanged, object: nil, queue: .main) { [weak self] notification in
-                guard let self = self else { return }
-                guard let calendarDataChanged = notification.userInfo?["EKEventStoreCalendarDataChangedUserInfoKey"] as? Bool, calendarDataChanged else { return }
-                print(notification)
+                guard let self = self, notification.isCalendarDataChanged else { return }
                 self.fetchEvents(loadDirection: .all)
-                    .sink { days in
-                        self.days = days
-                    }
+                    .sink { self.days = $0 }
                     .store(in: &self.cancellables)
             }
 
+            // put some initial data to display an empty calendar
+            days = (0..<loadCount(for: .all)).map { day in
+                let date = negativeRefrenceDate.advanced(by: TimeInterval(day.days))
+                return CalendarDay(date: date, events: [], eventStore: calendarManager.eventStore)
+            }
+
             fetchEvents(loadDirection: .all)
-                .sink { days in
-                    self.days = days
-                }
+                .sink { self.days = $0 }
                 .store(in: &cancellables)
         }
 
         // MARK: - Public Methods
 
         func contentOffsetChanged(_ contentOffset: CGPoint, with contentSize: CGSize, scrollViewSize: CGSize, scrollViewProxy: ScrollViewProxy) {
-            self.contentOffset = contentOffset
             self.contentSize = contentSize
             self.scrollViewSize = scrollViewSize
 
             if !initialContentLoaded {
                 initialContentLoaded.toggle()
-
-                if calendarManager.authorizationStatus != .authorized {
-                    // put some initial data to display an empty calendar
-                    days = (0..<loadCount(for: .all)).map { day in
-                        let date = negativeRefrenceDate.advanced(by: TimeInterval(day.days))
-                        return CalendarDay(date: date, events: [], eventStore: calendarManager.eventStore)
-                    }
-                }
 
                 let middleDay = days[visibleDays]
                 DispatchQueue.main.asyncAfter(deadline: .now()) {
@@ -143,9 +135,9 @@ extension WeekView {
         func didEndDecelerating(_ contentOffset: CGPoint, scrollViewProxy: ScrollViewProxy) {
             guard !days.isEmpty else { return }
 
-            if contentOffset.x == 0 {
+            if contentOffset.x <= 0 {
                 let oldReferenceDate = negativeRefrenceDate
-                negativeRefrenceDate.addTimeInterval(-loadedDays.days)
+                negativeRefrenceDate.addTimeInterval(-loadCount(for: .negative).days)
                 fetchEvents(loadDirection: .negative)
                     .sink { [weak self] days in
                         guard let self = self else { return }
@@ -157,7 +149,7 @@ extension WeekView {
                     }
                     .store(in: &cancellables)
             } else if contentOffset.x >= contentSize.width - scrollViewSize.width {
-                positiveReferenceDate.addTimeInterval(loadedDays.days)
+                positiveReferenceDate.addTimeInterval(loadCount(for: .positive).days)
                 fetchEvents(loadDirection: .positive)
                     .sink { [weak self] days in
                         guard let self = self else { return }
@@ -177,16 +169,7 @@ extension WeekView {
 
         private func fetchEvents(loadDirection: LoadDirection) -> AnyPublisher<[CalendarDay], Never> {
 
-            let loadCount: Int = {
-                switch loadDirection {
-                case .all:
-                    return Int(negativeRefrenceDate.distance(to: positiveReferenceDate) / 1.days)
-                case .positive, .negative:
-                    return loadedDays
-                }
-            }()
-
-            let loads = (0..<loadCount)
+            let days = (0..<loadCount(for: loadDirection))
                 .map { day -> Date in
                     (loadDirection.positive ? positiveReferenceDate : negativeRefrenceDate)
                         .addingTimeInterval(TimeInterval(day.days))
@@ -194,7 +177,7 @@ extension WeekView {
                 .map { day(for: $0) }
 
             return Publishers
-                .MergeMany(loads)
+                .MergeMany(days)
                 .receive(on: RunLoop.main)
                 .collect()
                 .map { $0.sorted() }
@@ -216,7 +199,7 @@ extension WeekView {
             case .all:
                 return Int(negativeRefrenceDate.distance(to: positiveReferenceDate) / 1.days)
             case .positive, .negative:
-                return loadedDays
+                return visibleDays * 3
             }
         }
     }
@@ -231,8 +214,7 @@ struct WeekView_Previews: PreviewProvider {
 
         func eventsFor(day date: Date, completion: (([EKEvent]) -> Void)?) {
             var events = [EKEvent]()
-            events.append(WeekView_Previews.event(with: "Event A", location: "Ottawa", for: date))
-//            events.append(WeekView_Previews.event(with: "Event B", location: "Ottawa", for: date))
+            events.append(WeekView_Previews.event(with: "Interview @Apple", location: "Ottawa", for: date))
             events.append(WeekView_Previews.event(with: "My Birthday", for: date, isAllDay: true))
             completion?(events)
         }

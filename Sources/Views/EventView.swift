@@ -59,8 +59,8 @@ struct EventView_Preview: PreviewProvider {
 
     private static var event: EKEvent {
         let event = EKEvent(eventStore: eventStore)
-        event.title = "Preview Content"
-        event.location = "Hintonburg"
+        event.title = "Interview @Apple"
+        event.location = "Cupertino, CA"
         event.startDate = Date()
         event.endDate = Date().addingTimeInterval(1.hours)
         event.calendar = calendar

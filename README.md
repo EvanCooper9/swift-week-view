@@ -22,13 +22,7 @@ import ECWeekView
 
 struct ContentView: View {
     var body: some View {
-        WeekView(
-            viewModel: .init(
-                calendarManager: CalendarManager(), 
-                visibleDays: 2, 
-                visibleHours: 12
-            )
-        )
+        WeekView()
     }
 }
 ```

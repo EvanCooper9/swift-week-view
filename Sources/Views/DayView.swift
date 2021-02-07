@@ -181,8 +181,7 @@ struct DayView_Preview: PreviewProvider {
 
     private static var calendarDay: CalendarDay {
         var events = [EKEvent]()
-        events.append(event(with: "Interview A"))
-        events.append(event(with: "Interview B"))
+        events.append(event(with: "Interview @Apple", location: "Cupertino, CA"))
         events.append(event(with: "My Birthday", isAllDay: true))
         return .init(date: Date(), events: events, eventStore: eventStore)
     }

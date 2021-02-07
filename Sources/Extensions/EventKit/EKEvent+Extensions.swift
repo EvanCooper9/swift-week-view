@@ -17,13 +17,13 @@ public extension EKEvent {
 
         let startEndComparison = event.startDate.compare(endDate)
         let startsBeforeEnd = startEndComparison == .orderedAscending
-        let startsAfterEnd = startEndComparison == .orderedDescending
-        let startsSameEnd = startEndComparison == .orderedSame
+//        let startsAfterEnd = startEndComparison == .orderedDescending
+//        let startsSameEnd = startEndComparison == .orderedSame
 
         let endStartComparison = event.endDate.compare(startDate)
-        let endsBeforeStart = endStartComparison == .orderedAscending
+//        let endsBeforeStart = endStartComparison == .orderedAscending
         let endsAfterStart = endStartComparison == .orderedDescending
-        let endSameStart = endStartComparison == .orderedSame
+//        let endSameStart = endStartComparison == .orderedSame
 
         let endComparison = event.endDate.compare(endDate)
         let endsBeforeEnd = endComparison == .orderedAscending
