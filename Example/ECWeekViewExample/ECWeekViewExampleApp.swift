@@ -5,7 +5,7 @@ import SwiftUI
 struct ECWeekViewExampleApp: App {
     var body: some Scene {
         WindowGroup {
-            WeekView()
+            ECWeekView()
         }
     }
 }

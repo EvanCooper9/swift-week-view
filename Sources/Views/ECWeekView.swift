@@ -3,7 +3,7 @@ import EventKit
 import ECScrollView
 import SwiftUI
 
-public struct WeekView: View {
+public struct ECWeekView: View {
 
     @ObservedObject private var viewModel: ViewModel
 
@@ -54,7 +54,7 @@ public struct WeekView: View {
     }
 }
 
-extension WeekView {
+extension ECWeekView {
 
     public final class ViewModel: ObservableObject {
 
@@ -205,7 +205,7 @@ extension WeekView {
     }
 }
 
-struct WeekView_Previews: PreviewProvider {
+struct ECWeekView_Previews: PreviewProvider {
 
     private struct PreviewCalendarManager: CalendarManaging {
         var authorizationStatus: EKAuthorizationStatus { .authorized }
@@ -214,20 +214,20 @@ struct WeekView_Previews: PreviewProvider {
 
         func eventsFor(day date: Date, completion: (([EKEvent]) -> Void)?) {
             var events = [EKEvent]()
-            events.append(WeekView_Previews.event(with: "Interview @Apple", location: "Ottawa", for: date))
-            events.append(WeekView_Previews.event(with: "My Birthday", for: date, isAllDay: true))
+            events.append(ECWeekView_Previews.event(with: "Interview @Apple", location: "Ottawa", for: date))
+            events.append(ECWeekView_Previews.event(with: "My Birthday", for: date, isAllDay: true))
             completion?(events)
         }
     }
 
     private static let calendarManager = PreviewCalendarManager(eventStore: eventStore)
 
-    private static var viewModel: WeekView.ViewModel {
+    private static var viewModel: ECWeekView.ViewModel {
         .init(calendarManager: calendarManager, visibleDays: 2, visibleHours: 12)
     }
 
     static var previews: some View {
-        WeekView(viewModel: viewModel)
+        ECWeekView(viewModel: viewModel)
             .preferredColorScheme(.dark)
     }
 }
