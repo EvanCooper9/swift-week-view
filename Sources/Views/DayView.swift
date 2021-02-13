@@ -4,6 +4,16 @@ import SwiftUI
 
 struct DayView: View {
 
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var backgroundColor: Color {
+        colorScheme == .dark ? Color(white: 0.1) : .systemBackground
+    }
+
+    private var shadowColor: Color {
+        colorScheme == .dark ? Color(white: 0) : Color(.lightGray).opacity(0.5)
+    }
+
     @State var day: CalendarDay
     @State private var time: TimeInterval = 0
     @State private var showAllDay = false
@@ -13,10 +23,10 @@ struct DayView: View {
             .font(.caption)
             .padding([.top, .bottom], 6)
             .padding([.leading, .trailing], 8)
-            .background(Color.white)
+            .background(backgroundColor)
             .clipShape(Capsule())
             .padding([.top, .leading, .trailing], 8)
-            .shadow(color: Color(.lightGray).opacity(0.5), radius: 5, x: 0, y: 0)
+            .shadow(color: shadowColor, radius: 5, x: 0, y: 0)
     }
 
     var body: some View {
@@ -187,7 +197,12 @@ struct DayView_Preview: PreviewProvider {
     }
 
     static var previews: some View {
-        DayView(day: calendarDay)
-            .previewLayout(.fixed(width: 300, height: 1000))
+        Group {
+            DayView(day: calendarDay)
+                .preferredColorScheme(.dark)
+                .previewLayout(.fixed(width: 300, height: 1000))
+            DayView(day: calendarDay)
+                .previewLayout(.fixed(width: 300, height: 1000))
+        }
     }
 }

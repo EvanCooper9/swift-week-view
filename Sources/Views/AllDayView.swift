@@ -8,16 +8,28 @@ struct AllDayEventView: View {
 
     @State private var presentEditEvent = false
 
-    private var color: Color { Color(event.calendar.cgColor) }
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var backgroundColor: Color {
+        colorScheme == .dark ? Color(white: 0.1) : .systemBackground
+    }
+
+    private var shadowColor: Color {
+        colorScheme == .dark ? Color(white: 0) : Color(.lightGray).opacity(0.5)
+    }
+
+    private var eventColor: Color {
+        Color(event.calendar.cgColor)
+    }
 
     var body: some View {
         Text(event.title)
             .font(.caption)
             .padding(5)
-            .foregroundColor(color)
+            .foregroundColor(eventColor)
             .cornerRadius(2)
             .frame(maxWidth: .infinity)
-            .background(color.opacity(0.2))
+            .background(eventColor.opacity(0.2))
             .onTapGesture { presentEditEvent.toggle() }
             .sheet(isPresented: $presentEditEvent) {
                 EventEditView(event: event, eventStore: eventStore)
@@ -31,6 +43,15 @@ struct AllDayView: View {
     let eventStore: EKEventStore
 
     @State private var show = false
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var backgroundColor: Color {
+        colorScheme == .dark ? Color(white: 0.1) : .systemBackground
+    }
+
+    private var shadowColor: Color {
+        colorScheme == .dark ? Color(white: 0) : Color(.lightGray).opacity(0.5)
+    }
 
     var body: some View {
         VStack {
@@ -39,8 +60,8 @@ struct AllDayView: View {
                     ForEach(events) { AllDayEventView(event: $0, eventStore: eventStore) }
                 }
                 .padding(2)
-                .background(Color.white)
-                .shadow(color: Color(.lightGray).opacity(0.5), radius: 5, x: 0, y: 0)
+                .background(backgroundColor)
+                .shadow(color: shadowColor, radius: 5, x: 0, y: 0)
             }
 
             HStack {
@@ -56,9 +77,9 @@ struct AllDayView: View {
                 }
                 .padding([.top, .bottom], 6)
                 .padding([.leading, .trailing], 8)
-                .background(Color.white)
+                .background(backgroundColor)
                 .clipShape(Capsule())
-                .shadow(color: Color(.lightGray).opacity(0.5), radius: 5, x: 0, y: 0)
+                .shadow(color: shadowColor, radius: 5, x: 0, y: 0)
                 .onTapGesture { show.toggle() }
             }
 
@@ -89,6 +110,7 @@ struct AllDayView_Previews: PreviewProvider {
 
     static var previews: some View {
         AllDayView(events: [event, event, event], eventStore: eventStore)
+            .preferredColorScheme(.dark)
             .previewLayout(.fixed(width: 500, height: 300))
             .previewDevice(nil)
     }

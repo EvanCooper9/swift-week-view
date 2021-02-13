@@ -31,7 +31,6 @@ struct TimeView: View {
                             .zIndex(.infinity)
                     }
                     .foregroundColor(.red)
-                    .background(Color.white)
                     .offset(y: CGFloat(time) * secondHeight(for: geometry))
                     .offset(y: -6.5) // not sure why but this aligns it properly
 
@@ -75,6 +74,7 @@ struct TimeView: View {
 struct TimeView_Preivews: PreviewProvider {
     static var previews: some View {
         TimeView(visibleHours: 14)
+            .preferredColorScheme(.dark)
             .previewLayout(.fixed(width: 40, height: 1000))
     }
 }

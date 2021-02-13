@@ -228,5 +228,6 @@ struct WeekView_Previews: PreviewProvider {
 
     static var previews: some View {
         WeekView(viewModel: viewModel)
+            .preferredColorScheme(.dark)
     }
 }
