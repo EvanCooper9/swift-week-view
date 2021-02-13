@@ -1,321 +1,233 @@
-import Foundation
-import UIKit
-import SwiftDate
-import ECTimelineView
+import Combine
+import EventKit
+import ECScrollView
+import SwiftUI
 
-@IBDesignable
-public final class ECWeekView: UIView {
+public struct ECWeekView: View {
 
-    // MARK: - Private properties
+    @ObservedObject private var viewModel: ViewModel
 
-    private lazy var timeView: UIView = {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = colorTheme.baseColor
-        return view
-    }()
-
-    private lazy var timelineView: ECTimelineView<[ECWeekViewEvent], ECDayCell> = {
-        let timelineView = ECTimelineView<[ECWeekViewEvent], ECDayCell>()
-        timelineView.translatesAutoresizingMaskIntoConstraints = false
-        timelineView.backgroundColor = .clear
-        timelineView.scrollDirection = .horizontal
-        timelineView.timelineDataSource = self
-        return timelineView
-    }()
-
-    private lazy var nowLine: CAShapeLayer = {
-        let now: DateInRegion = DateInRegion()
-        let linePath = UIBezierPath(rect: CGRect(x: timeView.frame.width, y: timeView.frame.origin.y + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)), width: timelineView.bounds.width, height: 0.1))
-        let nowLine = CAShapeLayer()
-        nowLine.path = linePath.cgPath
-        nowLine.strokeColor = nowLineColor.cgColor
-        nowLine.fillColor = nowLineColor.cgColor
-        return nowLine
-    }()
+    @State private var offset: CGPoint = .init(x: 1000, y: 110)
     
-    private var nowLinePath: CGPath {
-        UIBezierPath(rect: CGRect(x: nowLineCenter.x, y: nowLineCenter.y, width: timelineView.contentSize.width, height: 0.1)).cgPath
-    }
-    
-    private lazy var nowCircle: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 6, height: 6))
-        view.layer.cornerRadius = 3
-        view.backgroundColor = nowLineColor
-        view.clipsToBounds = true
-        return view
-    }()
-    
-    private var nowLineCenter: CGPoint {
-        let now = DateInRegion()
-        return CGPoint(x: timeView.frame.width, y: timeView.frame.origin.y + (hourHeight * CGFloat(now.hour - startHour)) + ((hourHeight/60) * CGFloat(now.minute)))
+    public init(viewModel: ViewModel = .init()) {
+        self.viewModel = viewModel
     }
 
-    private var hourHeight: CGFloat {
-        (frame.height - dateHeaderHeight) / CGFloat(endHour - startHour)
-    }
+    // MARK: - Public Properties
 
-    private var minuteHeight: CGFloat {
-        hourHeight / 60
-    }
-
-    // MARK: - Public properties
-    
-    public weak var dataSource: ECWeekViewDataSource? {
-        didSet { timelineView.timelineDataSource = self }
-    }
-
-    public weak var delegate: ECWeekViewDelegate? {
-        didSet { timelineView.reloadData() }
-    }
-
-    public weak var styler: ECWeekViewStyler? {
-        didSet { timelineView.reloadData() }
-    }
-
-    @IBInspectable public var visibleDays: Int = 5 {
-        didSet { timelineView.visibleCellCount = visibleDays }
-    }
-    
-    public var initDate: DateInRegion = DateInRegion()
-    public var startHour: Int = 9
-    public var endHour: Int = 17
-    public var nowLineEnabled: Bool = true
-    public var colorTheme: Theme = .light
-    public var nowLineColor: UIColor = .red
-
-    // MARK: - Lifecycle
-    
-    public init(visibleDays: Int, date: DateInRegion = DateInRegion()) {
-        self.visibleDays = visibleDays
-        super.init(frame: .zero)
-        commonInit(frame: .zero, visibleDays: visibleDays, date: date)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit(frame: frame, visibleDays: visibleDays, date: DateInRegion())
-    }
-
-    public override func prepareForInterfaceBuilder() {
-        super.prepareForInterfaceBuilder()
-        commonInit(frame: frame, visibleDays: visibleDays, date: DateInRegion())
+    public var body: some View {
+        GeometryReader { geometry in
+            ScrollView(showsIndicators: false) {
+                VStack {
+                    Spacer()
+                    HStack(spacing: 0) {
+                        TimeView(visibleHours: viewModel.visibleHours)
+                            .frame(width: 45)
+                            .padding(.leading, 3)
+                        GeometryReader { geometry in
+                            ECScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 0) {
+                                    ForEach(viewModel.days, id: \.id) { day in
+                                        DayView(day: day).frame(width: geometry.size.width / CGFloat(viewModel.visibleDays))
+                                    }
+                                }
+                            }
+                            .didEndDecelerating { offset, proxy in
+                                viewModel.didEndDecelerating(offset, scrollViewProxy: proxy)
+                            }
+                            .onContentOffsetChanged { offset, size, proxy in
+                                viewModel.contentOffsetChanged(offset, with: size, scrollViewSize: geometry.size, scrollViewProxy: proxy)
+                            }
+                        }
+                    }
+                    .frame(height: contentHeight(for: geometry))
+                }
+            }
+        }
     }
 
     // MARK: - Private Methods
-    
-    private func commonInit(frame: CGRect, visibleDays: Int, date: DateInRegion) {
-        self.frame = frame
-        self.visibleDays = visibleDays
-        initDate = date - visibleDays.days
-        styler = self
 
-        addSubview(timeView)
-        addSubview(timelineView)
-        
-        NSLayoutConstraint.activate([
-            timeView.widthAnchor.constraint(equalToConstant: 40),
-            timeView.topAnchor.constraint(equalTo: topAnchor),
-            timeView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            timeView.leftAnchor.constraint(equalTo: leftAnchor),
-            timeView.rightAnchor.constraint(equalTo: timelineView.leftAnchor),
-            timelineView.rightAnchor.constraint(equalTo: rightAnchor),
-            timelineView.topAnchor.constraint(equalTo: topAnchor),
-            timelineView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-        
-        addHourInfo()
-        insertNowLine()
+    private func contentHeight(for geometry: GeometryProxy) -> CGFloat {
+        let secondHeight = geometry.size.height / CGFloat(viewModel.visibleHours) / 60 / 60
+        return secondHeight * CGFloat(24.hours)
     }
+}
 
-    private func insertNowLine() {
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            guard let self = self else { return }
-            while true {
-                if (self.nowLineEnabled) {
-                    DispatchQueue.main.async {
-                        self.nowLine.removeFromSuperlayer()
-                        self.nowCircle.removeFromSuperview()
+extension ECWeekView {
 
-                        let now = DateInRegion()
-                        if (now.hour > self.startHour && now.hour < self.endHour) {
-                            self.nowCircle.center = self.nowLineCenter
-                            self.nowLine.path = self.nowLinePath
-                            self.layer.addSublayer(self.nowLine)
-                            self.addSubview(self.nowCircle)
+    public final class ViewModel: ObservableObject {
+
+        private enum LoadDirection {
+            case all, positive, negative
+
+            var all: Bool { self == .all }
+            var positive: Bool { self == .positive }
+            var negative: Bool { self == .negative }
+        }
+
+        // MARK: - Public Properties
+
+        @Published public var visibleDays: Int
+        @Published public var visibleHours: Int
+        @Published public var days = [CalendarDay]()
+
+        // MARK: - Private Properties
+
+        private let calendarManager: CalendarManaging
+
+        private var negativeRefrenceDate: Date
+        private var positiveReferenceDate: Date
+
+        private var contentSize = CGSize.zero
+        private var scrollViewSize = CGSize.zero
+
+        private var initialContentLoaded = false
+
+        private var cancellables = Set<AnyCancellable>()
+
+        // MARK: - Lifecycle
+
+        public init(calendarManager: CalendarManaging = CalendarManager(), visibleDays: Int = 1, visibleHours: Int = 12) {
+
+            self.calendarManager = calendarManager
+            self.visibleDays = visibleDays
+            self.visibleHours = visibleHours
+
+            let initialReferenceDate = Calendar.current.date(bySettingHour: 0, minute: 0, second: 1, of: Date())!
+            positiveReferenceDate = initialReferenceDate.addingTimeInterval(TimeInterval(visibleDays.days))
+            negativeRefrenceDate = initialReferenceDate.addingTimeInterval(TimeInterval(-visibleDays.days))
+
+            NotificationCenter.default.addObserver(forName: .EKEventStoreChanged, object: nil, queue: .main) { [weak self] notification in
+                guard let self = self, notification.isCalendarDataChanged else { return }
+                self.fetchEvents(loadDirection: .all)
+                    .sink { self.days = $0 }
+                    .store(in: &self.cancellables)
+            }
+
+            // put some initial data to display an empty calendar
+            days = (0..<loadCount(for: .all)).map { day in
+                let date = negativeRefrenceDate.advanced(by: TimeInterval(day.days))
+                return CalendarDay(date: date, events: [], eventStore: calendarManager.eventStore)
+            }
+
+            fetchEvents(loadDirection: .all)
+                .sink { self.days = $0 }
+                .store(in: &cancellables)
+        }
+
+        // MARK: - Public Methods
+
+        func contentOffsetChanged(_ contentOffset: CGPoint, with contentSize: CGSize, scrollViewSize: CGSize, scrollViewProxy: ScrollViewProxy) {
+            self.contentSize = contentSize
+            self.scrollViewSize = scrollViewSize
+
+            if !initialContentLoaded {
+                initialContentLoaded.toggle()
+
+                let middleDay = days[visibleDays]
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
+                    scrollViewProxy.scrollTo(middleDay.id, anchor: .leading)
+                }
+            }
+        }
+
+        func didEndDecelerating(_ contentOffset: CGPoint, scrollViewProxy: ScrollViewProxy) {
+            guard !days.isEmpty else { return }
+
+            if contentOffset.x <= 0 {
+                let oldReferenceDate = negativeRefrenceDate
+                negativeRefrenceDate.addTimeInterval(-loadCount(for: .negative).days)
+                fetchEvents(loadDirection: .negative)
+                    .sink { [weak self] days in
+                        guard let self = self else { return }
+                        self.days.insert(contentsOf: days, at: 0)
+                        guard let day = self.days.first(where: { $0.date.isSameDay(as: oldReferenceDate) }) else { return }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0001) {
+                            scrollViewProxy.scrollTo(day.id, anchor: .leading)
                         }
                     }
-                    sleep(15)
-                } else {
-                    self.nowLine.removeFromSuperlayer()
-                    self.nowCircle.removeFromSuperview()
-                    break
+                    .store(in: &cancellables)
+            } else if contentOffset.x >= contentSize.width - scrollViewSize.width {
+                positiveReferenceDate.addTimeInterval(loadCount(for: .positive).days)
+                fetchEvents(loadDirection: .positive)
+                    .sink { [weak self] days in
+                        guard let self = self else { return }
+                        var days = days
+                        self.days = self.days.map { day in
+                            guard let sameDay = days.first(where: { $0.date == day.date }) else { return day }
+                            if let index = days.firstIndex(of: sameDay) { days.remove(at: index) }
+                            return sameDay
+                        }
+                        self.days.append(contentsOf: days)
+                    }
+                    .store(in: &cancellables)
+            }
+        }
+
+        // MARK: - Private Methods
+
+        private func fetchEvents(loadDirection: LoadDirection) -> AnyPublisher<[CalendarDay], Never> {
+
+            let days = (0..<loadCount(for: loadDirection))
+                .map { day -> Date in
+                    (loadDirection.positive ? positiveReferenceDate : negativeRefrenceDate)
+                        .addingTimeInterval(TimeInterval(day.days))
+                }
+                .map { day(for: $0) }
+
+            return Publishers
+                .MergeMany(days)
+                .receive(on: RunLoop.main)
+                .collect()
+                .map { $0.sorted() }
+                .eraseToAnyPublisher()
+        }
+
+        private func day(for date: Date) -> Future<CalendarDay, Never> {
+            Future() { [weak self] result in
+                guard let self = self else { return }
+                self.calendarManager.eventsFor(day: date) { events in
+                    let day = CalendarDay(date: date, events: events, eventStore: self.calendarManager.eventStore)
+                    result(.success(day))
                 }
             }
         }
-    }
-    
-    private func addHourInfo() {
-        for hour in startHour...endHour {
-            let label = UILabel(frame: .zero)
-            label.translatesAutoresizingMaskIntoConstraints = false
-            label.text = "\(hour):00"
-            label.textAlignment = .right
-            label.backgroundColor = .clear
-            label.font = styler?.font ?? UIFont.init(descriptor: UIFontDescriptor(), size: 12)
-            label.textColor = colorTheme.hourTextColor
-            
-            let verticalOffset = dateHeaderHeight + hourHeight * CGFloat(hour - startHour)
 
-            timeView.addSubview(label)
-            NSLayoutConstraint.activate([
-                label.leftAnchor.constraint(equalTo: timeView.leftAnchor),
-                label.rightAnchor.constraint(equalTo: timeView.rightAnchor),
-                label.topAnchor.constraint(equalTo: timeView.topAnchor, constant: verticalOffset - (font.pointSize / 2))
-            ])
-
-            let hourLayer = CAShapeLayer()
-            hourLayer.strokeColor = colorTheme.hourLineColor.cgColor
-            hourLayer.fillColor = colorTheme.hourLineColor.cgColor
-            let linePath = UIBezierPath(rect: CGRect(x: timeView.bounds.maxX, y: verticalOffset, width: bounds.width - timeView.bounds.maxX, height: 0.1))
-            hourLayer.path = linePath.cgPath
-            layer.addSublayer(hourLayer)
+        private func loadCount(for loadDirection: LoadDirection) -> Int {
+            switch loadDirection {
+            case .all:
+                return Int(negativeRefrenceDate.distance(to: positiveReferenceDate) / 1.days)
+            case .positive, .negative:
+                return visibleDays * 3
+            }
         }
     }
 }
 
-// MARK: - Placing events graphically
+struct ECWeekView_Previews: PreviewProvider {
 
-extension ECWeekView {
-    private func placeEvents(_ events: [ECWeekViewEvent], in cell: UICollectionViewCell) -> [ECWeekViewEvent: CGRect] {
-        let threshold = 20
+    private struct PreviewCalendarManager: CalendarManaging {
+        var authorizationStatus: EKAuthorizationStatus { .authorized }
 
-        var mutableEvents = events.sorted()
-        var placedEvents = [ECWeekViewEvent]()
-        var placedEventRects = [ECWeekViewEvent: CGRect]()
+        var eventStore: EKEventStore
 
-        while !mutableEvents.isEmpty {
-            let eventsToPlace = mutableEvents.compactMap { event -> ECWeekViewEvent? in
-                return (event.start > mutableEvents.first!.start + threshold.minutes) ? nil : event
-            }
-
-            var eventGroupRect = CGRect(x: 0, y: dateHeaderHeight, width: cell.bounds.width, height: cell.bounds.height - dateHeaderHeight)
-            placedEvents.reversed().forEach { placedEvent in
-                if let firstEventToPlace = eventsToPlace.first, let placedEventRect = placedEventRects[placedEvent], firstEventToPlace.overlaps(with: placedEvent) {
-                    let groupRectHeight = cell.bounds.height - placedEventRect.minY
-                    let overlapOffset: CGFloat = 5
-                    eventGroupRect = CGRect(x: placedEventRect.minX + overlapOffset, y: placedEventRect.minY, width: placedEventRect.width - overlapOffset, height: groupRectHeight)
-                }
-            }
-
-            for (index, event) in eventsToPlace.enumerated() {
-                placedEventRects[event] = rect(for: event, in: eventGroupRect, overlapingEvents: eventsToPlace, widthIndex: index)
-            }
-
-            mutableEvents.removeFirst(eventsToPlace.count)
-            placedEvents.append(contentsOf: eventsToPlace)
-        }
-
-        return placedEventRects
-    }
-
-    private func rect(for event: ECWeekViewEvent, in rect: CGRect, overlapingEvents: [ECWeekViewEvent], widthIndex: Int) -> CGRect {
-        let eventStartHour =  event.start.hour
-        let eventStartMinute = event.start.minute
-        let eventEndHour = event.end.hour
-        let eventEndMinute = event.end.minute
-        let eventY = (hourHeight * CGFloat(eventStartHour - startHour)) + (minuteHeight * CGFloat(eventStartMinute)) + dateHeaderHeight
-        let eventHeight = (hourHeight * CGFloat(eventEndHour - eventStartHour)) + (minuteHeight * CGFloat(eventEndMinute - eventStartMinute))
-
-        let eventWidth = rect.width / CGFloat(overlapingEvents.count)
-        let eventX: CGFloat = rect.minX + (eventWidth * CGFloat(widthIndex))
-
-        let rectInset: CGFloat = 0.5
-        return CGRect(x: eventX + rectInset, y: eventY + rectInset, width: eventWidth - (2 * rectInset), height: eventHeight - (2 * rectInset))
-    }
-}
-
-// MARK: - Gesture recognizer selectors
-
-extension ECWeekView {
-    @objc private func handle(tap: UITapGestureRecognizer) {
-        if let tap = tap as? ECWeekViewEventTapGestureRecognizer {
-            delegate?.weekViewDidClickOnEvent(self, event: tap.event, view: tap.eventView)
-        } else if let tap = tap as? ECWeekViewFreeTimeTapGestureRecognizer {
-            let location = tap.location(in: tap.view).y - dateHeaderHeight
-            let hour = Int(floor(location / hourHeight)) + startHour
-            let minute = Int(floor((location - (CGFloat(hour - startHour) * hourHeight)) / minuteHeight))
-            guard let date = tap.date?.dateBySet(hour: hour, min: minute, secs: 0) else { return }
-            delegate?.weekViewDidClickOnFreeTime(self, date: date)
+        func eventsFor(day date: Date, completion: (([EKEvent]) -> Void)?) {
+            var events = [EKEvent]()
+            events.append(ECWeekView_Previews.event(with: "Interview @Apple", location: "Ottawa", for: date))
+            events.append(ECWeekView_Previews.event(with: "My Birthday", for: date, isAllDay: true))
+            completion?(events)
         }
     }
-}
 
-// MARK: - Default WeekViewStyler implementation
+    private static let calendarManager = PreviewCalendarManager(eventStore: eventStore)
 
-extension ECWeekView: ECWeekViewStyler {
-    public var font: UIFont {
-        get { .init(descriptor: .init(), size: 11) }
+    private static var viewModel: ECWeekView.ViewModel {
+        .init(calendarManager: calendarManager, visibleDays: 2, visibleHours: 12)
     }
 
-    public var showsDateHeader: Bool {
-        get { true }
-    }
-
-    public var dateHeaderHeight: CGFloat {
-        get { 20 }
-    }
-
-    public func weekViewStylerECEventView(_ weekView: ECWeekView, eventContainer: CGRect, event: ECWeekViewEvent) -> UIView {
-        let weekViewECEventView: ECEventView = .fromNib()
-        weekViewECEventView.frame = eventContainer
-        weekViewECEventView.event = event
-        return weekViewECEventView
-    }
-
-    public func weekViewStylerHeaderView(_ weekView: ECWeekView, with date: DateInRegion, in cell: UICollectionViewCell) -> UIView? {
-        guard showsDateHeader else { return nil }
-        let labelFrame = CGRect(x: 0, y: 0, width: cell.frame.width, height: dateHeaderHeight)
-        let label = UILabel(frame: labelFrame)
-        label.font = font
-        label.text = date.toFormat("EEE d")
-        label.textColor = .black
-        label.textAlignment = .center
-        return label
-    }
-}
-
-
-// MARK: - ECTimelineViewDataSource
-
-extension ECWeekView: ECTimelineViewDataSource {
-    public func timelineView<T, U>(_ timelineView: ECTimelineView<T, U>, dataFor index: Int, asyncClosure: @escaping (T?) -> Void) -> T? where U : UICollectionViewCell {
-        let viewDate = initDate + index.days
-        let events = dataSource?.weekViewGenerateEvents(self, date: viewDate, eventCompletion: { asyncEvents in
-            if let asyncEvents = asyncEvents as? T {
-                asyncClosure(asyncEvents)
-            }
-        })
-        return events as? T
-    }
-
-    public func configure<T, U>(_ cell: U, withData data: T?) where U : UICollectionViewCell {
-        guard let data = data as? [ECWeekViewEvent] else { return }
-        let weekViewFreeTimeTapGestureRecognizer = ECWeekViewFreeTimeTapGestureRecognizer(target: self, action: #selector(handle(tap:)), date: data.first?.start)
-        cell.addGestureRecognizer(weekViewFreeTimeTapGestureRecognizer)
-        cell.backgroundColor = .clear
-
-        if let date = data.first?.start, let cellHeader = styler?.weekViewStylerHeaderView(self, with: date, in: cell) {
-            cell.addSubview(cellHeader)
-        }
-
-        let eventRects = placeEvents(data.sorted(), in: cell)
-        data.forEach { event in
-            if let eventRect = eventRects[event], let eventView = styler?.weekViewStylerECEventView(self, eventContainer: eventRect, event: event) {
-                let weekViewEventTapGestureRecognizer = ECWeekViewEventTapGestureRecognizer(target: self, action: #selector(handle(tap:)), event: event, eventView: eventView)
-                eventView.addGestureRecognizer(weekViewEventTapGestureRecognizer)
-                cell.addSubview(eventView)
-            }
-        }
+    static var previews: some View {
+        ECWeekView(viewModel: viewModel)
+            .preferredColorScheme(.dark)
     }
 }

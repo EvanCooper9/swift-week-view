@@ -7,152 +7,103 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7C5416C1252DEF2200CEDF8C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5416C0252DEF2200CEDF8C /* AppDelegate.swift */; };
-		7C5416C3252DEF2200CEDF8C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5416C2252DEF2200CEDF8C /* SceneDelegate.swift */; };
-		7C5416C5252DEF2200CEDF8C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5416C4252DEF2200CEDF8C /* ViewController.swift */; };
-		7C5416C8252DEF2200CEDF8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5416C6252DEF2200CEDF8C /* Main.storyboard */; };
-		7C5416CA252DEF2300CEDF8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C5416C9252DEF2300CEDF8C /* Assets.xcassets */; };
-		7C5416CD252DEF2300CEDF8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5416CB252DEF2300CEDF8C /* LaunchScreen.storyboard */; };
-		7C5416D8252DEF2300CEDF8C /* ECWeekViewExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5416D7252DEF2300CEDF8C /* ECWeekViewExampleTests.swift */; };
-		7C5416E3252DEF2300CEDF8C /* ECWeekViewExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5416E2252DEF2300CEDF8C /* ECWeekViewExampleUITests.swift */; };
-		7C5416F8252DF03300CEDF8C /* EventDetailLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5416F7252DF03300CEDF8C /* EventDetailLauncher.swift */; };
-		7C880195252FC0F800D543BE /* ECWeekView in Frameworks */ = {isa = PBXBuildFile; productRef = 7C880194252FC0F800D543BE /* ECWeekView */; };
+		C1BAF3D525CE482500DB2116 /* ECWeekViewExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BAF3D425CE482500DB2116 /* ECWeekViewExampleApp.swift */; };
+		C1BAF3D925CE482500DB2116 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BAF3D825CE482500DB2116 /* Assets.xcassets */; };
+		C1BAF3DC25CE482500DB2116 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1BAF3DB25CE482500DB2116 /* Preview Assets.xcassets */; };
+		C1BAF3E925CE487300DB2116 /* ECWeekView in Frameworks */ = {isa = PBXBuildFile; productRef = C1BAF3E825CE487300DB2116 /* ECWeekView */; };
+		C1BAF3EA25CE487300DB2116 /* ECWeekView in Embed Frameworks */ = {isa = PBXBuildFile; productRef = C1BAF3E825CE487300DB2116 /* ECWeekView */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		7C5416D4252DEF2300CEDF8C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C5416B5252DEF2200CEDF8C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7C5416BC252DEF2200CEDF8C;
-			remoteInfo = ECWeekViewExample;
+/* Begin PBXCopyFilesBuildPhase section */
+		C1BAF3EB25CE487300DB2116 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C1BAF3EA25CE487300DB2116 /* ECWeekView in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7C5416DF252DEF2300CEDF8C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C5416B5252DEF2200CEDF8C /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7C5416BC252DEF2200CEDF8C;
-			remoteInfo = ECWeekViewExample;
-		};
-/* End PBXContainerItemProxy section */
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7C5416BD252DEF2200CEDF8C /* ECWeekViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ECWeekViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C5416C0252DEF2200CEDF8C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7C5416C2252DEF2200CEDF8C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7C5416C4252DEF2200CEDF8C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7C5416C7252DEF2200CEDF8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		7C5416C9252DEF2300CEDF8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		7C5416CC252DEF2300CEDF8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		7C5416CE252DEF2300CEDF8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7C5416D3252DEF2300CEDF8C /* ECWeekViewExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECWeekViewExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C5416D7252DEF2300CEDF8C /* ECWeekViewExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECWeekViewExampleTests.swift; sourceTree = "<group>"; };
-		7C5416D9252DEF2300CEDF8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7C5416DE252DEF2300CEDF8C /* ECWeekViewExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ECWeekViewExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C5416E2252DEF2300CEDF8C /* ECWeekViewExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECWeekViewExampleUITests.swift; sourceTree = "<group>"; };
-		7C5416E4252DEF2300CEDF8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7C5416F7252DF03300CEDF8C /* EventDetailLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDetailLauncher.swift; sourceTree = "<group>"; };
-		7C880190252FC0DF00D543BE /* ECWeekView */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ECWeekView; path = ..; sourceTree = "<group>"; };
+		C1BAF3D125CE482500DB2116 /* ECWeekViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ECWeekViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1BAF3D425CE482500DB2116 /* ECWeekViewExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ECWeekViewExampleApp.swift; sourceTree = "<group>"; };
+		C1BAF3D825CE482500DB2116 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C1BAF3DB25CE482500DB2116 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C1BAF3DD25CE482500DB2116 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C1BAF3E525CE486B00DB2116 /* swift-week-view */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "swift-week-view"; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		7C5416BA252DEF2200CEDF8C /* Frameworks */ = {
+		C1BAF3CE25CE482500DB2116 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C880195252FC0F800D543BE /* ECWeekView in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7C5416D0252DEF2300CEDF8C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7C5416DB252DEF2300CEDF8C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				C1BAF3E925CE487300DB2116 /* ECWeekView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7C377F0F252E244500260B9F /* Frameworks */ = {
+		C1BAF3C825CE482500DB2116 = {
+			isa = PBXGroup;
+			children = (
+				C1BAF3E525CE486B00DB2116 /* swift-week-view */,
+				C1BAF3D325CE482500DB2116 /* ECWeekViewExample */,
+				C1BAF3D225CE482500DB2116 /* Products */,
+				C1BAF3E725CE487300DB2116 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C1BAF3D225CE482500DB2116 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C1BAF3D125CE482500DB2116 /* ECWeekViewExample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C1BAF3D325CE482500DB2116 /* ECWeekViewExample */ = {
+			isa = PBXGroup;
+			children = (
+				C1BAF3D425CE482500DB2116 /* ECWeekViewExampleApp.swift */,
+				C1BAF3D825CE482500DB2116 /* Assets.xcassets */,
+				C1BAF3DD25CE482500DB2116 /* Info.plist */,
+				C1BAF3DA25CE482500DB2116 /* Preview Content */,
+			);
+			path = ECWeekViewExample;
+			sourceTree = "<group>";
+		};
+		C1BAF3DA25CE482500DB2116 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				C1BAF3DB25CE482500DB2116 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C1BAF3E725CE487300DB2116 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		7C5416B4252DEF2200CEDF8C = {
-			isa = PBXGroup;
-			children = (
-				7C880190252FC0DF00D543BE /* ECWeekView */,
-				7C5416BF252DEF2200CEDF8C /* ECWeekViewExample */,
-				7C5416D6252DEF2300CEDF8C /* ECWeekViewExampleTests */,
-				7C5416E1252DEF2300CEDF8C /* ECWeekViewExampleUITests */,
-				7C5416BE252DEF2200CEDF8C /* Products */,
-				7C377F0F252E244500260B9F /* Frameworks */,
-			);
-			sourceTree = "<group>";
-		};
-		7C5416BE252DEF2200CEDF8C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7C5416BD252DEF2200CEDF8C /* ECWeekViewExample.app */,
-				7C5416D3252DEF2300CEDF8C /* ECWeekViewExampleTests.xctest */,
-				7C5416DE252DEF2300CEDF8C /* ECWeekViewExampleUITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		7C5416BF252DEF2200CEDF8C /* ECWeekViewExample */ = {
-			isa = PBXGroup;
-			children = (
-				7C5416C0252DEF2200CEDF8C /* AppDelegate.swift */,
-				7C5416C2252DEF2200CEDF8C /* SceneDelegate.swift */,
-				7C5416C4252DEF2200CEDF8C /* ViewController.swift */,
-				7C5416F7252DF03300CEDF8C /* EventDetailLauncher.swift */,
-				7C5416C6252DEF2200CEDF8C /* Main.storyboard */,
-				7C5416C9252DEF2300CEDF8C /* Assets.xcassets */,
-				7C5416CB252DEF2300CEDF8C /* LaunchScreen.storyboard */,
-				7C5416CE252DEF2300CEDF8C /* Info.plist */,
-			);
-			path = ECWeekViewExample;
-			sourceTree = "<group>";
-		};
-		7C5416D6252DEF2300CEDF8C /* ECWeekViewExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				7C5416D7252DEF2300CEDF8C /* ECWeekViewExampleTests.swift */,
-				7C5416D9252DEF2300CEDF8C /* Info.plist */,
-			);
-			path = ECWeekViewExampleTests;
-			sourceTree = "<group>";
-		};
-		7C5416E1252DEF2300CEDF8C /* ECWeekViewExampleUITests */ = {
-			isa = PBXGroup;
-			children = (
-				7C5416E2252DEF2300CEDF8C /* ECWeekViewExampleUITests.swift */,
-				7C5416E4252DEF2300CEDF8C /* Info.plist */,
-			);
-			path = ECWeekViewExampleUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7C5416BC252DEF2200CEDF8C /* ECWeekViewExample */ = {
+		C1BAF3D025CE482500DB2116 /* ECWeekViewExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7C5416E7252DEF2300CEDF8C /* Build configuration list for PBXNativeTarget "ECWeekViewExample" */;
+			buildConfigurationList = C1BAF3E025CE482500DB2116 /* Build configuration list for PBXNativeTarget "ECWeekViewExample" */;
 			buildPhases = (
-				7C5416B9252DEF2200CEDF8C /* Sources */,
-				7C5416BA252DEF2200CEDF8C /* Frameworks */,
-				7C5416BB252DEF2200CEDF8C /* Resources */,
+				C1BAF3CD25CE482500DB2116 /* Sources */,
+				C1BAF3CE25CE482500DB2116 /* Frameworks */,
+				C1BAF3CF25CE482500DB2116 /* Resources */,
+				C1BAF3EB25CE487300DB2116 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -160,71 +111,27 @@
 			);
 			name = ECWeekViewExample;
 			packageProductDependencies = (
-				7C880194252FC0F800D543BE /* ECWeekView */,
+				C1BAF3E825CE487300DB2116 /* ECWeekView */,
 			);
 			productName = ECWeekViewExample;
-			productReference = 7C5416BD252DEF2200CEDF8C /* ECWeekViewExample.app */;
+			productReference = C1BAF3D125CE482500DB2116 /* ECWeekViewExample.app */;
 			productType = "com.apple.product-type.application";
-		};
-		7C5416D2252DEF2300CEDF8C /* ECWeekViewExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7C5416EA252DEF2300CEDF8C /* Build configuration list for PBXNativeTarget "ECWeekViewExampleTests" */;
-			buildPhases = (
-				7C5416CF252DEF2300CEDF8C /* Sources */,
-				7C5416D0252DEF2300CEDF8C /* Frameworks */,
-				7C5416D1252DEF2300CEDF8C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7C5416D5252DEF2300CEDF8C /* PBXTargetDependency */,
-			);
-			name = ECWeekViewExampleTests;
-			productName = ECWeekViewExampleTests;
-			productReference = 7C5416D3252DEF2300CEDF8C /* ECWeekViewExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		7C5416DD252DEF2300CEDF8C /* ECWeekViewExampleUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7C5416ED252DEF2300CEDF8C /* Build configuration list for PBXNativeTarget "ECWeekViewExampleUITests" */;
-			buildPhases = (
-				7C5416DA252DEF2300CEDF8C /* Sources */,
-				7C5416DB252DEF2300CEDF8C /* Frameworks */,
-				7C5416DC252DEF2300CEDF8C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7C5416E0252DEF2300CEDF8C /* PBXTargetDependency */,
-			);
-			name = ECWeekViewExampleUITests;
-			productName = ECWeekViewExampleUITests;
-			productReference = 7C5416DE252DEF2300CEDF8C /* ECWeekViewExampleUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		7C5416B5252DEF2200CEDF8C /* Project object */ = {
+		C1BAF3C925CE482500DB2116 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
 				TargetAttributes = {
-					7C5416BC252DEF2200CEDF8C = {
-						CreatedOnToolsVersion = 12.0.1;
-					};
-					7C5416D2252DEF2300CEDF8C = {
-						CreatedOnToolsVersion = 12.0.1;
-						TestTargetID = 7C5416BC252DEF2200CEDF8C;
-					};
-					7C5416DD252DEF2300CEDF8C = {
-						CreatedOnToolsVersion = 12.0.1;
-						TestTargetID = 7C5416BC252DEF2200CEDF8C;
+					C1BAF3D025CE482500DB2116 = {
+						CreatedOnToolsVersion = 12.4;
 					};
 				};
 			};
-			buildConfigurationList = 7C5416B8252DEF2200CEDF8C /* Build configuration list for PBXProject "ECWeekViewExample" */;
+			buildConfigurationList = C1BAF3CC25CE482500DB2116 /* Build configuration list for PBXProject "ECWeekViewExample" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -232,111 +139,41 @@
 				en,
 				Base,
 			);
-			mainGroup = 7C5416B4252DEF2200CEDF8C;
-			packageReferences = (
-			);
-			productRefGroup = 7C5416BE252DEF2200CEDF8C /* Products */;
+			mainGroup = C1BAF3C825CE482500DB2116;
+			productRefGroup = C1BAF3D225CE482500DB2116 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7C5416BC252DEF2200CEDF8C /* ECWeekViewExample */,
-				7C5416D2252DEF2300CEDF8C /* ECWeekViewExampleTests */,
-				7C5416DD252DEF2300CEDF8C /* ECWeekViewExampleUITests */,
+				C1BAF3D025CE482500DB2116 /* ECWeekViewExample */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		7C5416BB252DEF2200CEDF8C /* Resources */ = {
+		C1BAF3CF25CE482500DB2116 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C5416CD252DEF2300CEDF8C /* LaunchScreen.storyboard in Resources */,
-				7C5416CA252DEF2300CEDF8C /* Assets.xcassets in Resources */,
-				7C5416C8252DEF2200CEDF8C /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7C5416D1252DEF2300CEDF8C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7C5416DC252DEF2300CEDF8C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				C1BAF3DC25CE482500DB2116 /* Preview Assets.xcassets in Resources */,
+				C1BAF3D925CE482500DB2116 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		7C5416B9252DEF2200CEDF8C /* Sources */ = {
+		C1BAF3CD25CE482500DB2116 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C5416C5252DEF2200CEDF8C /* ViewController.swift in Sources */,
-				7C5416C1252DEF2200CEDF8C /* AppDelegate.swift in Sources */,
-				7C5416C3252DEF2200CEDF8C /* SceneDelegate.swift in Sources */,
-				7C5416F8252DF03300CEDF8C /* EventDetailLauncher.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7C5416CF252DEF2300CEDF8C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7C5416D8252DEF2300CEDF8C /* ECWeekViewExampleTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7C5416DA252DEF2300CEDF8C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7C5416E3252DEF2300CEDF8C /* ECWeekViewExampleUITests.swift in Sources */,
+				C1BAF3D525CE482500DB2116 /* ECWeekViewExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		7C5416D5252DEF2300CEDF8C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7C5416BC252DEF2200CEDF8C /* ECWeekViewExample */;
-			targetProxy = 7C5416D4252DEF2300CEDF8C /* PBXContainerItemProxy */;
-		};
-		7C5416E0252DEF2300CEDF8C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7C5416BC252DEF2200CEDF8C /* ECWeekViewExample */;
-			targetProxy = 7C5416DF252DEF2300CEDF8C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		7C5416C6252DEF2200CEDF8C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7C5416C7252DEF2200CEDF8C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		7C5416CB252DEF2300CEDF8C /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7C5416CC252DEF2300CEDF8C /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
-		7C5416E5252DEF2300CEDF8C /* Debug */ = {
+		C1BAF3DE25CE482500DB2116 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -387,7 +224,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -397,7 +234,7 @@
 			};
 			name = Debug;
 		};
-		7C5416E6252DEF2300CEDF8C /* Release */ = {
+		C1BAF3DF25CE482500DB2116 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -442,7 +279,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -452,14 +289,17 @@
 			};
 			name = Release;
 		};
-		7C5416E8252DEF2300CEDF8C /* Debug */ = {
+		C1BAF3E125CE482500DB2116 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"ECWeekViewExample/Preview Content\"";
 				DEVELOPMENT_TEAM = HP22MNWU5C;
+				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = ECWeekViewExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -467,18 +307,21 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.evancooper.ECWeekViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		7C5416E9252DEF2300CEDF8C /* Release */ = {
+		C1BAF3E225CE482500DB2116 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"ECWeekViewExample/Preview Content\"";
 				DEVELOPMENT_TEAM = HP22MNWU5C;
+				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = ECWeekViewExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -486,129 +329,27 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.evancooper.ECWeekViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
-		7C5416EB252DEF2300CEDF8C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HP22MNWU5C;
-				INFOPLIST_FILE = ECWeekViewExampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.evancooper.ECWeekViewExampleTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ECWeekViewExample.app/ECWeekViewExample";
-			};
-			name = Debug;
-		};
-		7C5416EC252DEF2300CEDF8C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HP22MNWU5C;
-				INFOPLIST_FILE = ECWeekViewExampleTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.evancooper.ECWeekViewExampleTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ECWeekViewExample.app/ECWeekViewExample";
-			};
-			name = Release;
-		};
-		7C5416EE252DEF2300CEDF8C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HP22MNWU5C;
-				INFOPLIST_FILE = ECWeekViewExampleUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.evancooper.ECWeekViewExampleUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ECWeekViewExample;
-			};
-			name = Debug;
-		};
-		7C5416EF252DEF2300CEDF8C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HP22MNWU5C;
-				INFOPLIST_FILE = ECWeekViewExampleUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.evancooper.ECWeekViewExampleUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = ECWeekViewExample;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7C5416B8252DEF2200CEDF8C /* Build configuration list for PBXProject "ECWeekViewExample" */ = {
+		C1BAF3CC25CE482500DB2116 /* Build configuration list for PBXProject "ECWeekViewExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7C5416E5252DEF2300CEDF8C /* Debug */,
-				7C5416E6252DEF2300CEDF8C /* Release */,
+				C1BAF3DE25CE482500DB2116 /* Debug */,
+				C1BAF3DF25CE482500DB2116 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7C5416E7252DEF2300CEDF8C /* Build configuration list for PBXNativeTarget "ECWeekViewExample" */ = {
+		C1BAF3E025CE482500DB2116 /* Build configuration list for PBXNativeTarget "ECWeekViewExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7C5416E8252DEF2300CEDF8C /* Debug */,
-				7C5416E9252DEF2300CEDF8C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7C5416EA252DEF2300CEDF8C /* Build configuration list for PBXNativeTarget "ECWeekViewExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7C5416EB252DEF2300CEDF8C /* Debug */,
-				7C5416EC252DEF2300CEDF8C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7C5416ED252DEF2300CEDF8C /* Build configuration list for PBXNativeTarget "ECWeekViewExampleUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7C5416EE252DEF2300CEDF8C /* Debug */,
-				7C5416EF252DEF2300CEDF8C /* Release */,
+				C1BAF3E125CE482500DB2116 /* Debug */,
+				C1BAF3E225CE482500DB2116 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -616,11 +357,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7C880194252FC0F800D543BE /* ECWeekView */ = {
+		C1BAF3E825CE487300DB2116 /* ECWeekView */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ECWeekView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 7C5416B5252DEF2200CEDF8C /* Project object */;
+	rootObject = C1BAF3C925CE482500DB2116 /* Project object */;
 }
