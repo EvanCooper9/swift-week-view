@@ -1,4 +1,7 @@
 # ECWeekView
+
+See the [swiftui](https://github.com/EvanCooper9/swift-week-view/tree/swiftui) branch for updates.
+
 An iOS calendar library for displaying calendar events in a week view.
 
 <p align="center">
