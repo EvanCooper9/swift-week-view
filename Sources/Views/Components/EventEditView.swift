@@ -20,8 +20,8 @@ struct EventEditView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: EKEventEditViewController, context: Context) {}
 }
 
-final class EventEditViewDelegate: NSObject, EKEventEditViewDelegate {
-    func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
+final class EventEditViewDelegate: NSObject, @preconcurrency EKEventEditViewDelegate {
+    @MainActor func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
         defer { controller.dismiss(animated: true) }
         guard let event = controller.event else { return }
 

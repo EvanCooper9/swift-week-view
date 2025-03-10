@@ -1,6 +1,6 @@
 import EventKit
 
-extension EKEvent: Identifiable {}
+extension EKEvent: @retroactive Identifiable {}
 
 public extension EKEvent {
     private var cal: Calendar { .current }
@@ -41,7 +41,7 @@ public extension EKEvent {
     }
 }
 
-extension EKEvent: Comparable {
+extension EKEvent: @retroactive Comparable {
     public static func < (lhs: EKEvent, rhs: EKEvent) -> Bool {
         let comparison = lhs.compareStartDate(with: rhs)
         guard comparison != .orderedSame else { return lhs.title < rhs.title }

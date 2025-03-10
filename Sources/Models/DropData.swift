@@ -2,7 +2,7 @@ import CoreGraphics
 import Foundation
 import MobileCoreServices
 
-public final class DropData: NSObject, Codable, NSItemProviderWriting, NSItemProviderReading {
+public final class DropData: NSObject, Codable, NSItemProviderWriting, NSItemProviderReading, Sendable {
 
     public static var readableTypeIdentifiersForItemProvider: [String] { [(kUTTypeData) as String] }
     public static var writableTypeIdentifiersForItemProvider: [String] { [(kUTTypeData) as String] }
